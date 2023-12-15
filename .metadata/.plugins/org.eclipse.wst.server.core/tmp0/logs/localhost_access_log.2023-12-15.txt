@@ -1,0 +1,4 @@
+127.0.0.1 - - [15/Dec/2023:07:44:39 +0100] "GET / HTTP/1.1" 404 994
+127.0.0.1 - - [15/Dec/2023:07:44:40 +0100] "GET /WebProject-CellammareGabrielApplicationSecurity/ HTTP/1.1" 404 1090
+127.0.0.1 - - [15/Dec/2023:07:47:25 +0100] "GET /WebProject-CellammareGabrielApplicationSecurity/NewFile.jsp HTTP/1.1" 200 133
+127.0.0.1 - - [15/Dec/2023:07:47:51 +0100] "GET /WebProject-CellammareGabrielApplicationSecurity/ HTTP/1.1" 404 1090
