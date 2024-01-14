@@ -1,0 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Registrazione</title>
+<style>
+<%@
+include
+ 
+file
+="/
+WEB-INF
+/
+css
+/
+style
+.css
+"%
+>
+</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Registrazione</h1>
+		<form action="registrazione.do" method="post"
+			enctype="multipart/form-data">
+			<div class="field">
+				<label for="email">Email</label> <input type="email" name="email"
+					id="email" required>
+			</div>
+			<div class="field">
+				<label for="password">Password</label> <input type="password"
+					name="password" id="password" required>
+			</div>
+			<div class="field">
+				<label for="retype-password">Reinserisci password</label> <input
+					type="password" name="retype-password" id="retype-password"
+					required>
+			</div>
+			<div class="field">
+				<label for="image">Immagine di profilo</label> <input type="file"
+					name="image" id="image" required>
+			</div>
+			<input type="submit" value="Registrati">
+		</form>
+	</div>
+</body>
+</html>
