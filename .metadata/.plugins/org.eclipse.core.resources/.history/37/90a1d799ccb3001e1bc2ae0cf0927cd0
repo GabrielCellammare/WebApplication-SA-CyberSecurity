@@ -1,0 +1,41 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Homepage Web Application</title>
+
+
+<style>
+<%@
+include
+ 
+file
+="/
+WEB-INF
+/
+css
+/
+styleLogin
+.css
+"%
+>
+</style>
+
+</head>
+<body>
+
+	<div class="container">
+
+		<h1>Visualizzazione proposte progettuali</h1>
+
+		<div class="barra">
+			<a href="#">Visualizza altre proposte</a> <a href="#">Logout</a> <a
+				href="#">Carica una nuova proposta</a>
+		</div>
+
+	</div>
+
+</body>
+</html>

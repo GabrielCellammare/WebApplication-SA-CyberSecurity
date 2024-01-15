@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Homepage Web Application</title>
+    
+        <style>
+         	<%@include file="/WEB-INF/css/styleIndexLogged.css"%>
+         </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="logout.jsp" class="button">Logout</a>
+            <a href="caricaProposta.jsp" class="button">Carica Proposta</a>
+        </div>
+        <div class="proposte">
+            <!-- Qui puoi inserire il codice per visualizzare le proposte progettuali -->
+        </div>
+    </div>
+</body>
+</html>

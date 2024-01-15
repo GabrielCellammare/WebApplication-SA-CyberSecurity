@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Progettazione</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h1>Visualizzazione proposte progettuali</h1>
+
+  <div class="barra">
+    <a href="#">Inserisci proposta</a>
+    <a href="#">Logout</a>
+  </div>
+
+  <div class="schermata">
+    <%-- Inserisci qui il codice per visualizzare le proposte progettuali --%>
+  </div>
+
+</div>
+
+</body>
+</html>

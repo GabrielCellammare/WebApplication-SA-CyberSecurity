@@ -1,0 +1,44 @@
+@charset "ISO-8859-1";
+body {
+    font-family: sans-serif;
+    background-color: #ececff;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 80vw;
+    padding: 5vw;
+    background-color: #8ac1ff;
+    opacity: 0.9;
+    border-radius: 30px;
+    border:1px solid #001328;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.proposte {
+    /* Qui puoi inserire lo stile per le proposte progettuali */
+}
