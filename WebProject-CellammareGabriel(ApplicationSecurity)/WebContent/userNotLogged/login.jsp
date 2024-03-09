@@ -25,6 +25,7 @@
                     <label for="remember">Ricordami</label>
                 </div>
                 <input type="submit" value="Accedi">
+                <a href="index.jsp" class="btn">Indietro</a>
             </form>
         </div>
     </body>

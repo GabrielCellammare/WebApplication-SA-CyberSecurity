@@ -6,9 +6,9 @@
 <head>
 <title>Homepage Web Application</title>
     
-        <style>
-         	<%@include file="/WEB-INF/css/styleIndexLogged.css"%>
-         </style>
+ <style>
+ <%@include file="/WEB-INF/css/styleIndexLogged.css"%>
+ </style>
 
 </head>
 <body>
@@ -16,14 +16,7 @@
         <h1>Proposte progettuali</h1>
         <div class="navbar-buttons">
             <a href="caricaProposta.jsp" class="button">Carica Proposta</a>
-            <div class="dropdown">
-                <img src="path_to_profile_image.jpg" alt="Profilo" class="profile-image">
-                <div class="dropdown-content">
-                    <a href="logout.jsp">Logout</a>
-                    <a href="modificaProfilo.jsp">Modifica</a>
-                </div>
-            </div>
-
+             <a href="logout.jsp" class="button">Logout</a>
         </div>
     </div>
     <div class="container">

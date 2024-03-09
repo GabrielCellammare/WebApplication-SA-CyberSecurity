@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Web Application Gabriel Cellammare</title>
     <!-- Il mio file css -->
-    <style><%@include file="/WEB-INF/css/style.css"%></style>
+    <style><%@include file="/WEB-INF/css/styleIndex.css"%></style>
 </head>
 <body>
     <div class="container">
@@ -13,7 +13,7 @@
         <p>Effettuare una scelta</p>
         <div class="buttons">
             <a href="login.jsp" class="btn btn-primary">Login</a>
-            <a href="register.jsp" class="btn btn-secondary">Registrazione</a>
+            <a href="registration.jsp" class="btn btn-secondary">Registrazione</a>
         </div>
     </div>
 </body>

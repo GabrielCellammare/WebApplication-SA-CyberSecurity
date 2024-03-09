@@ -11,22 +11,15 @@
     <body>
         <div class="container">
             <h1>Registrazione Web Application</h1>
-            <form action="registrazione.do" method="post" enctype="multipart/form-data">
-            	<div class="field">
-                    <label for="name">Nome</label>
-                    <input type="name" name="name" id="name" required>
-                </div>
-                <div class="field">
-                    <label for="surname">Cognome</label>
-                    <input type="surname" name="surname" id="surname" required>
-                </div>
+            <form action="RegistrationServlet" method="post" enctype="multipart/form-data">
                 <div class="field">
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email" required>
                 </div>
                 <div class="field">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" required>
+                    <input type="password" name="password" id="password" 
+                    placeholder="Minimo 8 caratteri con un carattere speciale, un numero e una Lettera Maiuscola" required>
                 </div>
                 <div class="field">
                     <label for="retype-password">Reinserisci password</label>
@@ -34,9 +27,10 @@
                 </div>
                 <div class="field">
                     <label for="image">Immagine di profilo</label>
-                    <input type="file" name="image" id="image">
+                    <input type="file" name="profileImage" id="profileImage">
                 </div>
                 <input type="submit" value="Registrati">
+                <a href="index.jsp" class="btn">Indietro</a>
             </form>
 
         </div>

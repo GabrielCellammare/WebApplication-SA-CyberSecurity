@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
+    <fullyQualifiedTypeName name="application.util.EmailChecker"/>
+    <fullyQualifiedTypeName name="application.util.PasswordManager"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.Part"/>
+    <fullyQualifiedTypeName name="org.apache.tika.Tika"/>
+    <fullyQualifiedTypeName name="application.util.FileChecker"/>
+</qualifiedTypeNameHistroy>
