@@ -1,0 +1,13 @@
+package messageDisplay;
+
+import javax.swing.JLabel;
+
+public class Label {
+	private JLabel label;
+
+	Label(String message) {
+        this.label = new JLabel(message);
+        add(label);
+    }
+
+}

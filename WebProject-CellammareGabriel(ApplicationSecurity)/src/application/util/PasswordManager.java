@@ -17,7 +17,7 @@ public class PasswordManager {
 			}
 		}
 	}
-	
+
 	public static byte[] concatenateAndHash(byte[] password, byte[] salt) {
 		try {
 			// Alloca un nuovo array di byte con dimensioni totali
@@ -33,9 +33,9 @@ public class PasswordManager {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
 			// Calcola l'hash dell'array di byte concatenato
-			
+
 			clearBytes(password);
-			
+
 			return digest.digest(concatenatedData);
 
 		} catch (NoSuchAlgorithmException e) {
@@ -56,97 +56,44 @@ public class PasswordManager {
 
 	public static boolean isStrongPassword(byte[] password) {
 
-		boolean value = isLengthValid(password) && containsUpperCase(password) && containsLowerCase(password) && containsDigit(password)
-				&& containsSpecialCharacter(password);
-		
-		clearBytes(password);
-		
-		return value;
-	}
-
-	private static boolean isLengthValid(byte[] password) {
-
-		boolean value = password.length >= 8;
-		
-		clearBytes(password);
-		
-		return value;
-	}
-
-	private static boolean containsUpperCase(byte[] password) {
-
+		boolean valueLenght = password.length >= 8;
 		boolean hasUpperCase = false;
+		boolean hasLowerCase = false;
+		boolean hasDigit = false;
+		boolean hasSpecialChar = false;
 
 		for (byte b : password) {
+
 			char c = (char) b;
+
+			System.out.println(c);
 
 			if (Character.isUpperCase(c)) {
 				hasUpperCase = true;    
 			}
 
-
-		}
-		
-		clearBytes(password);
-		
-		return hasUpperCase;
-	}
-
-	private static boolean containsLowerCase(byte[] password) {
-
-		boolean hasLowerCase = false;
-
-		for (byte b : password) {
-			char c = (char) b;
-
 			if (Character.isLowerCase(c)) {
 				hasLowerCase = true;    
 			}
-
-
-		}
-		
-		clearBytes(password);
-		
-		return hasLowerCase;
-	}
-
-
-	private static boolean containsDigit(byte[] password) {
-
-		boolean hasDigit = false;
-
-		for (byte b : password) {
-			char c = (char) b;
 
 			if (Character.isDigit(c)) {
 				hasDigit = true;    
 			}
 
-
-		}
-		
-		clearBytes(password);
-		
-		return hasDigit;
-	}
-
-
-	private static boolean containsSpecialCharacter(byte[] password) {
-
-		boolean hasSpecialChar = false;
-		for(byte b:password) {
-			char charPassword= (char) b;
-
-			for (char c: specialCharacters) {
-				if(charPassword==c) {
+			for (char specialChar: specialCharacters) {
+				if(c==specialChar) {
 					hasSpecialChar=true;
 				}
 			}
+
+
+
 		}
-		
+
 		clearBytes(password);
-		
-		return hasSpecialChar;
+
+		return (valueLenght) && (hasUpperCase) && (hasLowerCase) && (hasDigit) && (hasSpecialChar);
+
 	}
+
 }

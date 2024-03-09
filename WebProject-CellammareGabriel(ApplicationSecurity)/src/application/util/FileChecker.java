@@ -1,20 +1,13 @@
 package application.util;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
 
 import org.apache.tika.Tika;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
-import pannel.CustomMessage;
+import customMessage.DisplayMessage;
 
-//import pannel.CustomMessage;
 
 public class FileChecker {
 
@@ -31,7 +24,7 @@ public static boolean checkImageFile(Part filePart) throws IOException {
 				
 				if (filePart.getSize() > maxSizeInBytes) {
 					// Il file è troppo grande
-					CustomMessage.showPanel("L'immagine selezionata supera la dimensione massima consentita che è di 5 MB");
+					DisplayMessage.showPanel("L'immagine selezionata supera la dimensione massima consentita che è di 5 MB");
 					return false;
 
 				}
@@ -42,16 +35,16 @@ public static boolean checkImageFile(Part filePart) throws IOException {
 
 				} else {
 
-					CustomMessage.showPanel("Il file non è un'immagine valida.");
+					DisplayMessage.showPanel("Il file non è un'immagine valida.");
 					return false;
 				}
 			} else {
 
-				CustomMessage.showPanel("Estensione del file non supportata.");
+				DisplayMessage.showPanel("Estensione del file non supportata.");
 				return false;
 			}
 		} else {
-			CustomMessage.showPanel("Nessun file caricato");
+			DisplayMessage.showPanel("Nessun file caricato");
 			return false;
 
 		}

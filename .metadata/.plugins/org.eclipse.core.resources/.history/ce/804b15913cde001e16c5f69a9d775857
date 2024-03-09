@@ -1,0 +1,14 @@
+package application.util;
+
+import java.util.regex.Pattern;
+
+public final class EmailChecker {
+	
+	
+	final static Pattern ptr = Pattern.compile("^[\\\\w!#$%&’*+/=?`{|}~^-]+(?:\\\\.[\\\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,6}$");
+	
+	public static boolean isValidEmail(String email) {
+		return ptr.matcher(email).matches();
+	}
+
+}
