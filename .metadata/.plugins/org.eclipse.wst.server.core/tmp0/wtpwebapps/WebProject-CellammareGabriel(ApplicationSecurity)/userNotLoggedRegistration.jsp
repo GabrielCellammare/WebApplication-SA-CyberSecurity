@@ -26,8 +26,9 @@
                     <input type="password" name="retype-password" id="retype-password" required>
                 </div>
                 <div class="field">
-                    <label for="image">Immagine di profilo</label>
-                    <input type="file" name="profileImage" id="profileImage">
+                    <label for="image">Immagine di profilo (Max 5MB)</label>
+                    <input type="file" name="profileImage" id="profileImage" required>
+                    <p>(Formati accettati: PNG,JPG,JPEG)</p>
                 </div>
                 <input type="submit" value="Registrati">
                 <a href="userNotLoggedIndex.jsp" class="btn">Indietro</a>

@@ -20,21 +20,17 @@ public class PasswordManager {
 
 	public static byte[] concatenateAndHash(byte[] password, byte[] salt) {
 		try {
-			// Alloca un nuovo array di byte con dimensioni totali
+
 			byte[] concatenatedData = new byte[password.length + salt.length];
 
-			// Copia i dati dal primo array di byte al nuovo array
+
 			System.arraycopy(password, 0, concatenatedData, 0, password.length);
 
-			// Copia i dati dal secondo array di byte al nuovo array
+
 			System.arraycopy(salt, 0, concatenatedData, password.length, salt.length);
 
-			// Ottieni un'istanza di MessageDigest con l'algoritmo SHA-256
+
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-
-			// Calcola l'hash dell'array di byte concatenato
-
-			clearBytes(password);
 
 			return digest.digest(concatenatedData);
 
@@ -66,7 +62,6 @@ public class PasswordManager {
 
 			char c = (char) b;
 
-			System.out.println(c);
 
 			if (Character.isUpperCase(c)) {
 				hasUpperCase = true;    
@@ -90,9 +85,7 @@ public class PasswordManager {
 
 		}
 
-		clearBytes(password);
-
-		return (valueLenght) && (hasUpperCase) && (hasLowerCase) && (hasDigit) && (hasSpecialChar);
+		return ((valueLenght) && (hasUpperCase) && (hasLowerCase) && (hasDigit) && (hasSpecialChar));
 
 	}
 

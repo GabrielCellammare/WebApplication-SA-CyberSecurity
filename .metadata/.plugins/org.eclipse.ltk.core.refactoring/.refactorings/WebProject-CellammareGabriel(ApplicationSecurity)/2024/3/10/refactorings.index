@@ -30,3 +30,7 @@
 1710000530799	Rename resource 'UserNotLoggedIndex.jsp'
 1710000535131	Rename resource 'UserNotLoggedLogin.jsp'
 1710000538710	Rename resource 'UserNotLoggedRegistration.jsp'
+1710095262099	Rename package 'application.Servlet'
+1710095334292	Copy compilation units
+1710095349572	Delete element
+1710095603956	Rename type 'userRegistration'

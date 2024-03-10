@@ -9,4 +9,12 @@
     <fullyQualifiedTypeName name="messageDisplay.DisplayMessage"/>
     <fullyQualifiedTypeName name="org.apache.tika.Tika"/>
     <fullyQualifiedTypeName name="java.nio.file.Paths"/>
+    <fullyQualifiedTypeName name="org.apache.tika.exception.TikaException"/>
+    <fullyQualifiedTypeName name="org.xml.sax.SAXException"/>
+    <fullyQualifiedTypeName name="org.apache.tika.sax.BodyContentHandler"/>
+    <fullyQualifiedTypeName name="com.drew.metadata.Metadata"/>
+    <fullyQualifiedTypeName name="java.io.FileInputStream"/>
+    <fullyQualifiedTypeName name="org.apache.tika.metadata.Metadata"/>
+    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
+    <fullyQualifiedTypeName name="model.Dao.RegistrationDAO"/>
 </qualifiedTypeNameHistroy>

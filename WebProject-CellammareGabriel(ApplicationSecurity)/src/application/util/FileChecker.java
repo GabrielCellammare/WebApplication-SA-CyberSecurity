@@ -1,29 +1,28 @@
 package application.util;
 import java.io.IOException;
 import java.nio.file.Paths;
-
 import javax.servlet.http.Part;
-
 import org.apache.tika.Tika;
 
-import customMessage.DisplayMessage;
+import application.util.customMessage.DisplayMessage;
+
+
 
 
 public class FileChecker {
 
-public static boolean checkImageFile(Part filePart) throws IOException {
-		
+	public static boolean checkImageFile(Part filePart) throws IOException{
+
 		if (filePart != null && filePart.getSize() > 0) {
 			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
 			String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
-			
+
 			if ("jpeg".equals(fileExtension) || "jpg".equals(fileExtension) || "png".equals(fileExtension)) {
-				
+
 				long maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
-				
+
 				if (filePart.getSize() > maxSizeInBytes) {
-					// Il file è troppo grande
 					DisplayMessage.showPanel("L'immagine selezionata supera la dimensione massima consentita che è di 5 MB");
 					return false;
 
@@ -38,11 +37,15 @@ public static boolean checkImageFile(Part filePart) throws IOException {
 					DisplayMessage.showPanel("Il file non è un'immagine valida.");
 					return false;
 				}
+				
+				
 			} else {
 
 				DisplayMessage.showPanel("Estensione del file non supportata.");
 				return false;
 			}
+			
+			
 		} else {
 			DisplayMessage.showPanel("Nessun file caricato");
 			return false;
@@ -50,4 +53,6 @@ public static boolean checkImageFile(Part filePart) throws IOException {
 		}
 		return true;
 	}
+
+
 }

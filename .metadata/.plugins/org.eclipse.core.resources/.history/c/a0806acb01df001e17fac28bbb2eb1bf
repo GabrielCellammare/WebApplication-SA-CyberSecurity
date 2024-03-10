@@ -1,0 +1,85 @@
+package application.util;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Paths;
+
+import javax.servlet.http.Part;
+
+import org.apache.tika.Tika;
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.sax.BodyContentHandler;
+
+import com.drew.metadata.Metadata;
+
+import customMessage.DisplayMessage;
+
+import java.io.FileInputStream; 
+import java.io.IOException;
+import org.apache.tika.exception. TikaException; 
+import org.apache.tika.metadata.Metadata;
+import  org.apache.tika.parser.Parser;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.AutoDetectParser;
+
+import org.apache.tika.sax. BodyContentHandler;
+import org xml say SAXException:
+
+
+public class FileChecker {
+
+	public static boolean checkImageFile(Part filePart) throws IOException {
+
+		if (filePart != null && filePart.getSize() > 0) {
+			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+
+			String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+
+			if ("jpeg".equals(fileExtension) || "jpg".equals(fileExtension) || "png".equals(fileExtension)) {
+
+				long maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
+
+				if (filePart.getSize() > maxSizeInBytes) {
+					DisplayMessage.showPanel("L'immagine selezionata supera la dimensione massima consentita che è di 5 MB");
+					return false;
+
+				}
+				Tika tika = new Tika();
+				String contentType = tika.detect(filePart.getInputStream());
+
+				if (contentType != null && contentType.startsWith("image/")) {
+
+				} else {
+
+					DisplayMessage.showPanel("Il file non è un'immagine valida.");
+					return false;
+				}
+			} else {
+
+				DisplayMessage.showPanel("Estensione del file non supportata.");
+				return false;
+			}
+		} else {
+			DisplayMessage.showPanel("Nessun file caricato");
+			return false;
+
+		}
+		return true;
+	}
+
+	public static void printMetadata(String fileName) throws IOException,TikaException{
+		long start = System.currentTimeMillis();
+		BodyContentHandler handler = new BodyContentHandler();
+		Metadata metadata = new Metadata();
+		FileInputStream content = new FileInputStream(fileName);
+		Parser parser = new AutoDetectParser();
+		parser.parse(content, handler, metadata, new ParseContext());
+		for(String name metadata.names())
+		{
+		}
+		System.out.println(name + "\t" + metadata.get(name));
+		System.out.println("...extracting file..." + (System.currentTimeMillis()
+				-
+				start));
+	}
+
+}

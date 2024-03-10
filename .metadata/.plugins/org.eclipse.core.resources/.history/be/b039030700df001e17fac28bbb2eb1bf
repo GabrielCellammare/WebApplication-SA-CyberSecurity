@@ -1,0 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registrazione Web Application Cellammare Gabriel</title>
+         <style>
+         	<%@include file="/WEB-INF/css/styleRegistration.css"%>
+         </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Registrazione Web Application</h1>
+            <form method="post" action="RegistrationServlet" enctype="multipart/form-data">
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required>
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" 
+                    placeholder="Minimo 8 caratteri con un carattere speciale, un numero e una Lettera Maiuscola" required>
+                </div>
+                <div class="field">
+                    <label for="retype-password">Reinserisci password</label>
+                    <input type="password" name="retype-password" id="retype-password" required>
+                </div>
+                <div class="field">
+                    <label for="image">Immagine di profilo (Max 5MB)</label>
+                    <input type="file" name="profileImage" id="profileImage" required>
+                    <p>(Formati accettati: Png,JPG,JPEG)</p>
+                </div>
+                <input type="submit" value="Registrati">
+                <a href="userNotLoggedIndex.jsp" class="btn">Indietro</a>
+            </form>
+
+        </div>
+    </body>
+</html>
