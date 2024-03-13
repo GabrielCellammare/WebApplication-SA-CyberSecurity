@@ -15,6 +15,9 @@
     <fullyQualifiedTypeName name="com.drew.metadata.Metadata"/>
     <fullyQualifiedTypeName name="java.io.FileInputStream"/>
     <fullyQualifiedTypeName name="org.apache.tika.metadata.Metadata"/>
-    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
     <fullyQualifiedTypeName name="model.Dao.RegistrationDAO"/>
+    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
+    <fullyQualifiedTypeName name="model.Dao.db.DatabaseConnection"/>
+    <fullyQualifiedTypeName name="model.Dao.db.DatabaseQuery"/>
+    <fullyQualifiedTypeName name="application.util.ImageProfileFileChecker"/>
 </qualifiedTypeNameHistroy>

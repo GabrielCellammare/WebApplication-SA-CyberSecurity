@@ -1,0 +1,24 @@
+db.url=jdbc:mysql://localhost/exam_webapp
+
+
+
+db.urlRead=jdbc:mysql://127.0.0.1:3306/?user=userRead_webApp
+db.urlWrite=jdbc:mysql://127.0.0.1:3306/?user=userWrite_webApp
+db.schema_name=webapplication_cellammaregabriel
+
+db.username_read=userRead_webApp
+db.password_read=9`>"rUI;/5F6XZB8
+
+db.username_write=userWrite_webApp
+db.password_write=XU,9~b0A:u"e$1e6
+
+db.query_userLogin=SELECT * FROM users WHERE username=? AND password=?
+db.query_userRegistration=INSERT INTO user (email, password, profileimage) VALUES (?,?,?)
+db.query_userSalt=INSERT INTO sales (user, user_sale) VALUES (?,?)
+db.query_userAlreadyExist=SELECT COUNT(*) AS count FROM user WHERE email=?
+db.query_takeUserSale=SELECT user_sale FROM sales WHERE user=?
+db.query_insertProposta=INSERT INTO proposte (username, file, nome_file) VALUES (?, ?, ?)
+db.query_takeUsernameAndProposta=SELECT username, file, nome_file FROM proposte
+
+
+aes.key=aqdJCF3haB2sUuS0u6vT0NpfAGnHiHh+GTd8W7pM1t8=

@@ -81,6 +81,9 @@
 
     <!-- Define an AJP 1.3 Connector on port 8009 -->
     <Connector port="8009" protocol="AJP/1.3" redirectPort="8443"/>
+    
+    
+	<Connector SSLEnabled="true" acceptCount="100" clientAuth="false" disableUploadTimeOut="true" enableLookups="false" keystoreFile="C:\KeyWebApp\www.securewebappcellammaregabriel.jks" keystorePass="Hjal_og@76[1]2" maxThreads="200" port="8443" protocol="HTTP/1.1" scheme="https" secure="true" sslProtocol="TLS"/>
 
 
     <!-- An Engine represents the entry point (within Catalina) that processes

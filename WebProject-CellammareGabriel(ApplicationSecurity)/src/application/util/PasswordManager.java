@@ -6,8 +6,8 @@ import java.security.SecureRandom;
 
 public class PasswordManager {
 
-	final static int saltLength = 16;
-	final static char[] specialCharacters = {'!','@','#','$','%','^','&','.','*','(',')','-','_','+','=','<','>','?','.'};
+	private final static SecureRandom secureRandom = new SecureRandom();
+	private final static char[] specialCharacters = {'!','@','#','$','%','^','&','.','*','(',')','-','_','+','=','<','>','?','.'};
 
 	public static void clearBytes(byte[] password) {
 		if (password != null) {
@@ -43,8 +43,7 @@ public class PasswordManager {
 	public static byte[] generateRandomBytes(int saltLenghts) {
 
 
-		byte[] salt = new byte[saltLength];
-		SecureRandom secureRandom = new SecureRandom();
+		byte[] salt = new byte[saltLenghts];
 		secureRandom.nextBytes(salt);
 
 		return salt;

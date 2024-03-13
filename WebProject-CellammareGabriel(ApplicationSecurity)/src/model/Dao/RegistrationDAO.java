@@ -9,14 +9,14 @@ import java.sql.SQLException;
 
 import javax.servlet.http.Part;
 
-import database.ConnessioniDatabase;
-import pannel.CustomMessage;
-import query.DatabaseQuery;
+import application.util.customMessage.DisplayMessage;
+import model.Dao.db.DatabaseConnection;
+import model.Dao.db.DatabaseQuery;
 
 public class RegistrationDAO {
 	
-
-	public static boolean userRegistration(String username, byte[] password, byte[] sale, Part filePart)
+	
+	public static boolean userRegistration(String email, byte[] password, byte[] salt, Part filePart)
 			throws IOException {
 		Connection con_write = null;
 		Connection con_read = null;
@@ -24,18 +24,18 @@ public class RegistrationDAO {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			con_write = ConnessioniDatabase.getConnectionWrite();
-			con_read = ConnessioniDatabase.getConnectionRead();
+			con_write = DatabaseConnection.getConnectionWrite();
+			con_read = DatabaseConnection.getConnectionRead();
 
 			// Verifica se l'utente esiste già
-			if (userAlreadyExists(username, con_read) > 0) {
-				CustomMessage.showPanel("Utente già registrato!");
+			if (userAlreadyExists(email, con_read) > 0) {
+				DisplayMessage.showPanel("Utente già registrato!");
 				return false; 
 			}
 
 			
 			try (PreparedStatement ps = con_write.prepareStatement(DatabaseQuery.registrationUserQuery())) {
-				ps.setString(1, username);
+				ps.setString(1, email);
 				ps.setBytes(2, password);
 
 				InputStream fileContent = filePart.getInputStream();
@@ -45,16 +45,13 @@ public class RegistrationDAO {
 
 				// Imposta lo stato a true se almeno una riga è stata aggiornata
 				boolean status = (rowsAffected > 0);
-				CustomMessage.showPanel("Registrazione effettuata con successo!");
-
-				
+	
 				if (status) {
-					try (PreparedStatement psSale = con_write.prepareStatement(DatabaseQuery.userSaleQuery())) {
-						psSale.setString(1, username);
-						psSale.setBytes(2, sale);
+					try (PreparedStatement psSalt = con_write.prepareStatement(DatabaseQuery.registrationUserSaltQuery())) {
+						psSalt.setString(1, email);
+						psSalt.setBytes(2, salt);
 
-						
-						int rowsAffectedSale = psSale.executeUpdate();
+						int rowsAffectedSale = psSalt.executeUpdate();
 
 						return (rowsAffectedSale > 0); // Restituisci true se anche la seconda query ha avuto successo
 					}
@@ -79,7 +76,7 @@ public class RegistrationDAO {
 				}
 			}
 		}
-		CustomMessage.showPanel("Non è stato possibile terminare la registrazione!");
+		DisplayMessage.showPanel("Non è stato possibile terminare la registrazione!");
 		return false; 
 	}
 

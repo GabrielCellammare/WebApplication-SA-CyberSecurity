@@ -13,7 +13,7 @@ import javax.servlet.http.Part;
 
 
 import application.util.EmailChecker;
-import application.util.FileChecker;
+import application.util.ImageProfileFileChecker;
 import application.util.PasswordManager;
 import application.util.customMessage.DisplayMessage;
 import model.Dao.RegistrationDAO;
@@ -48,7 +48,7 @@ public class RegistrationServlet extends HttpServlet {
 		if (EmailChecker.isValidEmail(email)) {
 			if (PasswordManager.isStrongPassword(password)) {
 				if (Arrays.equals(password, retypePassword)) {
-					if (FileChecker.checkImageFile(filePart)) {
+					if (ImageProfileFileChecker.checkImageFile(filePart)) {
 
 						byte[] salt = PasswordManager.generateRandomBytes(16);
 						byte[] SaltedPassword = PasswordManager.concatenateAndHash(password, salt);
@@ -62,7 +62,6 @@ public class RegistrationServlet extends HttpServlet {
 								filePart = null;
 								PasswordManager.clearBytes(SaltedPassword);
 								PasswordManager.clearBytes(salt);
-
 								response.sendRedirect("userNotLoggedLogin.jsp");
 								DisplayMessage.showPanel("Registrazione effettuata correttamente!");
 								
@@ -90,9 +89,9 @@ public class RegistrationServlet extends HttpServlet {
 					} else {
 						email=null;
 						filePart=null;
-						DisplayMessage.showPanel("Immagine non valida!");
 						PasswordManager.clearBytes(password);
 						PasswordManager.clearBytes(retypePassword);
+						DisplayMessage.showPanel("Immagine non valida!");
 						request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 
 					}
