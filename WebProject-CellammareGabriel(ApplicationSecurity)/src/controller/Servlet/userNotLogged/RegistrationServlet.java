@@ -24,20 +24,20 @@ import model.Dao.RegistrationDAO;
 @WebServlet("/RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RegistrationServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public RegistrationServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String email = request.getParameter("email");
@@ -64,16 +64,16 @@ public class RegistrationServlet extends HttpServlet {
 								PasswordManager.clearBytes(salt);
 								response.sendRedirect("userNotLoggedLogin.jsp");
 								DisplayMessage.showPanel("Registrazione effettuata correttamente!");
-								
+
 							} else {
 
 								email = null;
 								PasswordManager.clearBytes(SaltedPassword);
 								PasswordManager.clearBytes(salt);
-								
+
 								DisplayMessage.showPanel("Errore durante la registrazione!");
 								request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
-								
+
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -84,8 +84,8 @@ public class RegistrationServlet extends HttpServlet {
 							PasswordManager.clearBytes(salt);
 							request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 						}
-						
-						
+
+
 					} else {
 						email=null;
 						filePart=null;
@@ -126,3 +126,7 @@ public class RegistrationServlet extends HttpServlet {
 	}
 
 }
+
+
+
+

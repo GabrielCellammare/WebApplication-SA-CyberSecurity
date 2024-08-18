@@ -18,10 +18,13 @@ public class RegistrationDAO {
 	
 	public static boolean userRegistration(String email, byte[] password, byte[] salt, Part filePart)
 			throws IOException {
+		
+		//Connessioni per scrittura e lettura
 		Connection con_write = null;
 		Connection con_read = null;
 
 		try {
+			//Inizializza il driver per comunicare con il dB
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			con_write = DatabaseConnection.getConnectionWrite();
@@ -29,7 +32,7 @@ public class RegistrationDAO {
 
 			// Verifica se l'utente esiste già
 			if (userAlreadyExists(email, con_read) > 0) {
-				DisplayMessage.showPanel("Utente già registrato!");
+				DisplayMessage.showPanel("Utente già registrato! Email già presente");
 				return false; 
 			}
 

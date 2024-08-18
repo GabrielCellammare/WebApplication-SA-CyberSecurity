@@ -1,0 +1,7 @@
+127.0.0.1 - - [23/Jul/2024:08:04:44 +0200] "GET / HTTP/1.1" 404 994
+127.0.0.1 - - [23/Jul/2024:08:04:46 +0200] "GET /WebProject-CellammareGabrielApplicationSecurity/ HTTP/1.1" 302 -
+127.0.0.1 - - [23/Jul/2024:08:04:49 +0200] "GET /WebProject-CellammareGabrielApplicationSecurity/ HTTP/1.1" 200 1466
+127.0.0.1 - - [23/Jul/2024:08:04:53 +0200] "GET /WebProject-CellammareGabrielApplicationSecurity/userNotLoggedLogin.jsp HTTP/1.1" 200 2486
+127.0.0.1 - - [23/Jul/2024:08:05:15 +0200] "GET /WebProject-CellammareGabrielApplicationSecurity/userNotLoggedIndex.jsp HTTP/1.1" 200 1466
+127.0.0.1 - - [23/Jul/2024:08:05:16 +0200] "GET /WebProject-CellammareGabrielApplicationSecurity/userNotLoggedRegistration.jsp HTTP/1.1" 200 2878
+127.0.0.1 - - [23/Jul/2024:08:05:25 +0200] "GET /WebProject-CellammareGabrielApplicationSecurity/userNotLoggedIndex.jsp HTTP/1.1" 200 1466

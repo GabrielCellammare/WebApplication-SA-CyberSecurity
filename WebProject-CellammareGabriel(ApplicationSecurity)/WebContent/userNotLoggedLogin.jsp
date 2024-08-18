@@ -11,7 +11,7 @@
     <body>
         <div class="container">
             <h1>Login Web Application</h1>
-            <form action="login.do" method="post">
+            <form action="LoginServlet" method="post">
                 <div class="field">
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email" required>

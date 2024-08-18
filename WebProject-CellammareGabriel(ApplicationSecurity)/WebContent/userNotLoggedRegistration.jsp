@@ -26,7 +26,7 @@
                     <input type="password" name="retype-password" id="retype-password" required>
                 </div>
                 <div class="field">
-                    <label for="image">Immagine di profilo (Max 5MB)</label>
+                    <label for="image">Immagine del profilo (Max 5MB)</label>
                     <input type="file" name="profileImage" id="profileImage" required>
                     <p>(Formati accettati: PNG,JPG,JPEG)</p>
                 </div>

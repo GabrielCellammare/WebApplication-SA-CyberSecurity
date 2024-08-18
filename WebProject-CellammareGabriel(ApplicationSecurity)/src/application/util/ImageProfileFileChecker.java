@@ -3,6 +3,12 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import javax.servlet.http.Part;
 import org.apache.tika.Tika;
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.sax.BodyContentHandler;
 
 import application.util.customMessage.DisplayMessage;
 
@@ -10,10 +16,21 @@ import application.util.customMessage.DisplayMessage;
 
 
 public class ImageProfileFileChecker {
-	
+
 	private final static long maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
 
 	public static boolean checkImageFile(Part filePart) throws IOException{
+		
+		Tika tika = new Tika();
+
+		
+		try {
+			printMetadata(filePart);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 		if (filePart != null && filePart.getSize() > 0) {
 			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
@@ -27,32 +44,66 @@ public class ImageProfileFileChecker {
 					return false;
 
 				}
-				Tika tika = new Tika();
+				
 				String contentType = tika.detect(filePart.getInputStream());
-
+				
 				if (contentType != null && contentType.startsWith("image/")) {
+					return true;
 
 				} else {
 
 					DisplayMessage.showPanel("Il file non è un'immagine valida.");
 					return false;
 				}
-				
-				
+
+
 			} else {
 
 				DisplayMessage.showPanel("Estensione del file non supportata.");
 				return false;
 			}
-			
-			
+
+
 		} else {
 			DisplayMessage.showPanel("Nessun file caricato");
 			return false;
 
 		}
-		return true;
+
 	}
 
 
+
+
+	private static void printMetadata(Part filePart) throws Exception {
+
+		Tika tika = new Tika();
+
+		String fileType = tika.detect(filePart.getInputStream());
+		System.out.println("Content Type: " + fileType);
+
+		// Estrae i metadati
+		BodyContentHandler handler = new BodyContentHandler();
+		Metadata metadata = new Metadata();
+		Parser parser = new AutoDetectParser();
+		ParseContext parseContext = new ParseContext();
+
+		try {
+			parser.parse(filePart.getInputStream(), handler, metadata, parseContext);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+	
+		} catch (TikaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Stampa i metadati
+		String[] metadataNames = metadata.names();
+		for (String name : metadataNames) {
+			System.out.println(name + ": " + metadata.get(name));
+		}
+
+	}
 }

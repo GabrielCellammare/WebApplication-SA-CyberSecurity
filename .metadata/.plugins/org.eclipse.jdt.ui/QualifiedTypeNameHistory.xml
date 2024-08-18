@@ -2,7 +2,6 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
     <fullyQualifiedTypeName name="application.util.EmailChecker"/>
-    <fullyQualifiedTypeName name="application.util.PasswordManager"/>
     <fullyQualifiedTypeName name="javax.servlet.http.Part"/>
     <fullyQualifiedTypeName name="application.util.FileChecker"/>
     <fullyQualifiedTypeName name="javax.swing.JPanel"/>
@@ -10,14 +9,19 @@
     <fullyQualifiedTypeName name="org.apache.tika.Tika"/>
     <fullyQualifiedTypeName name="java.nio.file.Paths"/>
     <fullyQualifiedTypeName name="org.apache.tika.exception.TikaException"/>
-    <fullyQualifiedTypeName name="org.xml.sax.SAXException"/>
-    <fullyQualifiedTypeName name="org.apache.tika.sax.BodyContentHandler"/>
     <fullyQualifiedTypeName name="com.drew.metadata.Metadata"/>
-    <fullyQualifiedTypeName name="java.io.FileInputStream"/>
-    <fullyQualifiedTypeName name="org.apache.tika.metadata.Metadata"/>
     <fullyQualifiedTypeName name="model.Dao.RegistrationDAO"/>
-    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
     <fullyQualifiedTypeName name="model.Dao.db.DatabaseConnection"/>
     <fullyQualifiedTypeName name="model.Dao.db.DatabaseQuery"/>
     <fullyQualifiedTypeName name="application.util.ImageProfileFileChecker"/>
+    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
+    <fullyQualifiedTypeName name="application.util.PasswordManager"/>
+    <fullyQualifiedTypeName name="java.io.FileInputStream"/>
+    <fullyQualifiedTypeName name="org.apache.tika.sax.BodyContentHandler"/>
+    <fullyQualifiedTypeName name="org.apache.tika.metadata.Metadata"/>
+    <fullyQualifiedTypeName name="org.apache.tika.parser.Parser"/>
+    <fullyQualifiedTypeName name="org.apache.tika.parser.ParseContext"/>
+    <fullyQualifiedTypeName name="org.apache.tika.parser.AutoDetectParser"/>
+    <fullyQualifiedTypeName name="jdk.internal.org.xml.sax.SAXException"/>
+    <fullyQualifiedTypeName name="org.xml.sax.SAXException"/>
 </qualifiedTypeNameHistroy>
