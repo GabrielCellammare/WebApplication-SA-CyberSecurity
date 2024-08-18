@@ -25,7 +25,7 @@ public class ImageProfileFileChecker {
 
 		
 		try {
-			printMetadata(filePart);
+			printMetadata(filePart, tika);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,9 +75,7 @@ public class ImageProfileFileChecker {
 
 
 
-	private static void printMetadata(Part filePart) throws Exception {
-
-		Tika tika = new Tika();
+	private static void printMetadata(Part filePart, Tika tika) throws Exception {
 
 		String fileType = tika.detect(filePart.getInputStream());
 		System.out.println("Content Type: " + fileType);

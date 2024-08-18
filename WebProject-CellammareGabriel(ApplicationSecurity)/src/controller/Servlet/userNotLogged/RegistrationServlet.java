@@ -13,6 +13,7 @@ import javax.servlet.http.Part;
 
 
 import application.util.EmailChecker;
+import application.util.Encryption;
 import application.util.ImageProfileFileChecker;
 import application.util.PasswordManager;
 import application.util.customMessage.DisplayMessage;
@@ -61,16 +62,19 @@ public class RegistrationServlet extends HttpServlet {
 								email = null;
 								filePart = null;
 								PasswordManager.clearBytes(SaltedPassword);
+								PasswordManager.clearBytes(password);
+								PasswordManager.clearBytes(retypePassword);
 								PasswordManager.clearBytes(salt);
 								response.sendRedirect("userNotLoggedLogin.jsp");
 								DisplayMessage.showPanel("Registrazione effettuata correttamente!");
 
 							} else {
-
 								email = null;
+								filePart = null;
 								PasswordManager.clearBytes(SaltedPassword);
+								PasswordManager.clearBytes(password);
+								PasswordManager.clearBytes(retypePassword);
 								PasswordManager.clearBytes(salt);
-
 								DisplayMessage.showPanel("Errore durante la registrazione!");
 								request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 
@@ -78,6 +82,8 @@ public class RegistrationServlet extends HttpServlet {
 						} catch (Exception e) {
 							e.printStackTrace();
 							DisplayMessage.showPanel("Errore durante la registrazione!");
+							email = null;
+							filePart = null;
 							PasswordManager.clearBytes(SaltedPassword);
 							PasswordManager.clearBytes(password);
 							PasswordManager.clearBytes(retypePassword);
@@ -87,8 +93,8 @@ public class RegistrationServlet extends HttpServlet {
 
 
 					} else {
-						email=null;
-						filePart=null;
+						email = null;
+						filePart = null;
 						PasswordManager.clearBytes(password);
 						PasswordManager.clearBytes(retypePassword);
 						DisplayMessage.showPanel("Immagine non valida!");
@@ -96,8 +102,8 @@ public class RegistrationServlet extends HttpServlet {
 
 					}
 				} else {
-					email=null;
-					filePart=null;
+					email = null;
+					filePart = null;
 					PasswordManager.clearBytes(password);
 					PasswordManager.clearBytes(retypePassword);
 					DisplayMessage.showPanel("Le password non corrispondono!");
@@ -105,8 +111,8 @@ public class RegistrationServlet extends HttpServlet {
 
 				}
 			} else {
-				email=null;
-				filePart=null;
+				email = null;
+				filePart = null;
 				PasswordManager.clearBytes(password);
 				PasswordManager.clearBytes(retypePassword);
 				DisplayMessage.showPanel("La password non rispetta i requisiti minimi di sicurezza!");
@@ -115,8 +121,8 @@ public class RegistrationServlet extends HttpServlet {
 			}
 
 		} else {
-			email=null;
-			filePart=null;
+			email = null;
+			filePart = null;
 			PasswordManager.clearBytes(password);
 			PasswordManager.clearBytes(retypePassword);
 			DisplayMessage.showPanel("L'email contiene caratteri non validi!");

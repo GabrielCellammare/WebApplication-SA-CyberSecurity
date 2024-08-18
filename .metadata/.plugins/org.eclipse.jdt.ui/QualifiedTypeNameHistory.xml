@@ -24,4 +24,7 @@
     <fullyQualifiedTypeName name="org.apache.tika.parser.AutoDetectParser"/>
     <fullyQualifiedTypeName name="jdk.internal.org.xml.sax.SAXException"/>
     <fullyQualifiedTypeName name="org.xml.sax.SAXException"/>
+    <fullyQualifiedTypeName name="com.mysql.cj.jdbc.result.ResultSetMetaData"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSetMetaData"/>
+    <fullyQualifiedTypeName name="application.util.Encryption"/>
 </qualifiedTypeNameHistroy>

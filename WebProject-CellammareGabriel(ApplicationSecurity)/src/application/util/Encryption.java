@@ -18,7 +18,7 @@ public class Encryption {
 	private static SecretKey secretKey;
 
 	
-	static byte[] encrypt(byte[] data) throws Exception {
+	public static byte[] encrypt(byte[] data) throws Exception {
 		SecretKey key = getSecretKey();
 		if (key != null) {
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
@@ -30,7 +30,7 @@ public class Encryption {
 		}
 	}
 
-	static byte[] decrypt(byte[] encryptedBytes) throws Exception {
+	public static byte[] decrypt(byte[] encryptedBytes) throws Exception {
 		SecretKey key = getSecretKey();
 		if (key != null) {
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");

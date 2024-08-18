@@ -14,11 +14,11 @@ import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
 public class RegistrationDAO {
-	
-	
+
+
 	public static boolean userRegistration(String email, byte[] password, byte[] salt, Part filePart)
 			throws IOException {
-		
+
 		//Connessioni per scrittura e lettura
 		Connection con_write = null;
 		Connection con_read = null;
@@ -37,6 +37,7 @@ public class RegistrationDAO {
 			}
 
 			
+			//registratione nella tabella user
 			try (PreparedStatement ps = con_write.prepareStatement(DatabaseQuery.registrationUserQuery())) {
 				ps.setString(1, email);
 				ps.setBytes(2, password);
@@ -48,16 +49,35 @@ public class RegistrationDAO {
 
 				// Imposta lo stato a true se almeno una riga è stata aggiornata
 				boolean status = (rowsAffected > 0);
-	
+				
+				//se effettuata correttamente, effettuo la query per ricavare l'id dell'utente registrato
 				if (status) {
-					try (PreparedStatement psSalt = con_write.prepareStatement(DatabaseQuery.registrationUserSaltQuery())) {
-						psSalt.setString(1, email);
-						psSalt.setBytes(2, salt);
+					int id_user=0;
+					try (PreparedStatement psIdSelect = con_read.prepareStatement(DatabaseQuery.registrationUserId())) {
+						psIdSelect.setString(1, email);
 
-						int rowsAffectedSale = psSalt.executeUpdate();
+						try (ResultSet rs = psIdSelect.executeQuery()) {
+							if (rs.next()) {
+								id_user=rs.getInt("id"); 
+								System.out.println("\nID = " + id_user);
+							}
+						}
 
-						return (rowsAffectedSale > 0); // Restituisci true se anche la seconda query ha avuto successo
 					}
+					
+					//una volta individuato l'id, registro tramite l'id il salt nella tabella apposita
+					try (PreparedStatement psSalt = con_write.prepareStatement(DatabaseQuery.registrationUserSaltQuery())) {
+						if(id_user>0) {
+							psSalt.setInt(1, id_user);
+
+							psSalt.setBytes(2, salt);
+
+							int rowsAffectedSale = psSalt.executeUpdate();
+
+							return (rowsAffectedSale > 0); // Restituisci true se anche la seconda query ha avuto successo
+						}
+					}
+
 				}
 			}
 		} catch (ClassNotFoundException | SQLException e) {
@@ -97,7 +117,7 @@ public class RegistrationDAO {
 
 		return 0; 
 	}
-	
-	
+
+
 
 }

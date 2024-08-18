@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.JsonObject;
 
+import application.util.Encryption;
 import application.util.PasswordManager;
 import application.util.customMessage.DisplayMessage;
 
@@ -74,8 +75,8 @@ public class LoginServlet extends HttpServlet {
 					pad_password = pad(password);
 					pad_username = pad(byte_username);
 
-					byte_encryptedUsername = Aes.encrypt(pad_username);
-					byte_encryptedPassword = Aes.encrypt(pad_password);
+					byte_encryptedUsername = Encryption.encrypt(pad_username);
+					byte_encryptedPassword = Encryption.encrypt(pad_password);
 
 				} catch (IllegalArgumentException e) {
 					System.out.println("ERRORE FUNZIONI getBytes/pad/Aes.Encrypt: " + e.getMessage());
