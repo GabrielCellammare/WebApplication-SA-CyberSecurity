@@ -13,9 +13,8 @@ import javax.servlet.http.Part;
 
 
 import application.util.EmailChecker;
-import application.util.Encryption;
 import application.util.ImageProfileFileChecker;
-import application.util.PasswordManager;
+import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
 import model.Dao.RegistrationDAO;
 
@@ -53,6 +52,7 @@ public class RegistrationServlet extends HttpServlet {
 
 						byte[] salt = PasswordManager.generateRandomBytes(16);
 						byte[] SaltedPassword = PasswordManager.concatenateAndHash(password, salt);
+						
 						PasswordManager.clearBytes(password);
 						PasswordManager.clearBytes(retypePassword);
 
@@ -62,8 +62,6 @@ public class RegistrationServlet extends HttpServlet {
 								email = null;
 								filePart = null;
 								PasswordManager.clearBytes(SaltedPassword);
-								PasswordManager.clearBytes(password);
-								PasswordManager.clearBytes(retypePassword);
 								PasswordManager.clearBytes(salt);
 								response.sendRedirect("userNotLoggedLogin.jsp");
 								DisplayMessage.showPanel("Registrazione effettuata correttamente!");
@@ -72,23 +70,19 @@ public class RegistrationServlet extends HttpServlet {
 								email = null;
 								filePart = null;
 								PasswordManager.clearBytes(SaltedPassword);
-								PasswordManager.clearBytes(password);
-								PasswordManager.clearBytes(retypePassword);
 								PasswordManager.clearBytes(salt);
-								DisplayMessage.showPanel("Errore durante la registrazione!");
 								request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
+								DisplayMessage.showPanel("Errore durante la registrazione!");
 
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
-							DisplayMessage.showPanel("Errore durante la registrazione!");
 							email = null;
 							filePart = null;
 							PasswordManager.clearBytes(SaltedPassword);
-							PasswordManager.clearBytes(password);
-							PasswordManager.clearBytes(retypePassword);
 							PasswordManager.clearBytes(salt);
 							request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
+							DisplayMessage.showPanel("Errore durante la registrazione!");
 						}
 
 
@@ -97,8 +91,8 @@ public class RegistrationServlet extends HttpServlet {
 						filePart = null;
 						PasswordManager.clearBytes(password);
 						PasswordManager.clearBytes(retypePassword);
-						DisplayMessage.showPanel("Immagine non valida!");
 						request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
+						DisplayMessage.showPanel("Immagine non valida!");
 
 					}
 				} else {
@@ -106,8 +100,8 @@ public class RegistrationServlet extends HttpServlet {
 					filePart = null;
 					PasswordManager.clearBytes(password);
 					PasswordManager.clearBytes(retypePassword);
-					DisplayMessage.showPanel("Le password non corrispondono!");
 					request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
+					DisplayMessage.showPanel("Le password non corrispondono!");
 
 				}
 			} else {
@@ -115,9 +109,9 @@ public class RegistrationServlet extends HttpServlet {
 				filePart = null;
 				PasswordManager.clearBytes(password);
 				PasswordManager.clearBytes(retypePassword);
-				DisplayMessage.showPanel("La password non rispetta i requisiti minimi di sicurezza!");
 				request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
-
+				DisplayMessage.showPanel("La password non rispetta i requisiti minimi di sicurezza!");
+				
 			}
 
 		} else {
@@ -125,8 +119,8 @@ public class RegistrationServlet extends HttpServlet {
 			filePart = null;
 			PasswordManager.clearBytes(password);
 			PasswordManager.clearBytes(retypePassword);
-			DisplayMessage.showPanel("L'email contiene caratteri non validi!");
 			request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
+			DisplayMessage.showPanel("L'email contiene caratteri non validi!");
 
 		}
 	}

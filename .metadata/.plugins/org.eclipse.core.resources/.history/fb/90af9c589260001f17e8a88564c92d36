@@ -1,0 +1,61 @@
+package application.util.entity;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Dao.db.DatabaseConnection;
+import model.Dao.db.DatabaseQuery;
+
+
+public class Proposal {
+	private String username;
+	private String fileName;
+	private String contenutoHtml;
+
+	public Proposal(String username, String fileName, String contenutoHtml) {
+		this.username = username;
+		this.fileName = fileName;
+		this.contenutoHtml = contenutoHtml;
+	}
+
+	public static List<Proposal> getProposals() {
+		List<Proposal> proposals = new ArrayList<>();
+
+		try (Connection connection_read = DatabaseConnection.getConnectionRead();
+				PreparedStatement ps_proposal = connection_read.prepareStatement(DatabaseQuery.takeUsernameAndProposta());
+				ResultSet resultSet = ps_proposal.executeQuery()) {
+
+			while (resultSet.next()) {
+				String username = resultSet.getString("username");
+				String fileName = resultSet.getString("nome_file");
+				String contenutoHtml = resultSet.getString("file");
+
+				Proposal proposta = new Proposal(username, fileName, contenutoHtml);
+				proposals.add(proposta);
+			}
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return proposals;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getContenutoHtml() {
+		return contenutoHtml;
+	}
+
+	public String getfileName() {
+		return fileName;
+	}
+}

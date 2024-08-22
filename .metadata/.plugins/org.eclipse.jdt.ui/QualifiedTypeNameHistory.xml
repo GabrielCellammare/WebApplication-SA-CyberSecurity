@@ -12,10 +12,7 @@
     <fullyQualifiedTypeName name="com.drew.metadata.Metadata"/>
     <fullyQualifiedTypeName name="model.Dao.RegistrationDAO"/>
     <fullyQualifiedTypeName name="model.Dao.db.DatabaseConnection"/>
-    <fullyQualifiedTypeName name="model.Dao.db.DatabaseQuery"/>
     <fullyQualifiedTypeName name="application.util.ImageProfileFileChecker"/>
-    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
-    <fullyQualifiedTypeName name="application.util.PasswordManager"/>
     <fullyQualifiedTypeName name="java.io.FileInputStream"/>
     <fullyQualifiedTypeName name="org.apache.tika.sax.BodyContentHandler"/>
     <fullyQualifiedTypeName name="org.apache.tika.metadata.Metadata"/>
@@ -27,4 +24,8 @@
     <fullyQualifiedTypeName name="com.mysql.cj.jdbc.result.ResultSetMetaData"/>
     <fullyQualifiedTypeName name="java.sql.ResultSetMetaData"/>
     <fullyQualifiedTypeName name="application.util.Encryption"/>
+    <fullyQualifiedTypeName name="model.Dao.db.DatabaseQuery"/>
+    <fullyQualifiedTypeName name="application.util.PasswordManager"/>
+    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
+    <fullyQualifiedTypeName name="model.Dao.LoginDAO"/>
 </qualifiedTypeNameHistroy>

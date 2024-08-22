@@ -1,0 +1,89 @@
+package controller.Servlet.userLogged;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+import com.google.gson.Gson;
+
+import application.util.entity.Proposal;
+
+/**
+ * Servlet implementation class UploadProposalServlet
+ */
+@WebServlet("/UploadProposalServlet")
+public class UploadProposalServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public UploadProposalServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+		List<Proposal> proposte = Proposal.getProposals();
+
+		// Converti la lista in JSON
+		String jsonProposte = new Gson().toJson(proposte);
+
+		// Invia la risposta JSON
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(jsonProposte);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		Part filePart = request.getPart("Proposta progettuale");
+		String nomeUtente = request.getParameter("nomeUtente");
+
+		if (CheckFile.checkPropostaFile(filePart, getServletContext())) {
+
+			String cleanedHtml = CheckFile.processFile(filePart);
+
+			String nomeFile = CheckFile.getFileName(filePart);
+			// Aggiungi il contenuto filtrato all'oggetto request
+			request.setAttribute("contenutoFiltrato", cleanedHtml);
+			byte[] htmlBytes = cleanedHtml.getBytes(StandardCharsets.UTF_8);
+
+			try {
+				if (PropostaDao.uploadFile(nomeUtente, htmlBytes, nomeFile)) {
+					CustomMessage.showPanel("La proposta è stata correttamente caricata!");
+
+					// Invia il contenuto filtrato come risposta AJAX
+					response.setContentType("text/plain");
+					response.getWriter().write(cleanedHtml);
+				} else {
+					CustomMessage.showPanel("Non è stato possibile caricare il file della proposta!");
+					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			}
+		} else {
+			CustomMessage.showPanel("File non valido!");
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		}
+	}
+
+}

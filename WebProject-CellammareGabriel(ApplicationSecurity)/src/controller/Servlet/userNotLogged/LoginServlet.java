@@ -2,7 +2,6 @@ package controller.Servlet.userNotLogged;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Base64;
 
 import javax.servlet.ServletException;
@@ -15,9 +14,10 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.JsonObject;
 
-import application.util.Encryption;
-import application.util.PasswordManager;
+import application.util.cryptography.Encryption;
+import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
+import model.Dao.LoginDAO;
 
 
 /**
@@ -43,93 +43,59 @@ public class LoginServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=UTF-8");
 
-		HttpSession session = request.getSession();
 
-		session = request.getSession();	
+		byte[] byte_encryptedEmail = null;
+		byte[] pad_email = null;
 
-		String string_encryptedUsername = null;
-		String string_encryptedPassword = null;
-
-		byte[] byte_encryptedUsername = null;
-		byte[] byte_encryptedPassword = null;
-
-		byte[] pad_username = null;
-		byte[] pad_password = null;
-
-		byte[] byte_username = null;
-
-		String nomeUtente = request.getParameter("email");
+		String email = request.getParameter("email");
 		byte[] password = request.getParameter("password").getBytes();
 		boolean ricordami = request.getParameter("remember") != null;
+		byte[] byte_email = email.getBytes(java.nio.charset.StandardCharsets.UTF_8); 
+		pad_email = Encryption.addPadding(byte_email);
 
-		String string_Password = byteArrayToString(password);
+
+		try {
+			byte_encryptedEmail = Encryption.encrypt(pad_email);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		String base64EncodedEmail = Base64.getEncoder().encodeToString(byte_encryptedEmail);
+
 
 		if (ricordami) {
-			try {
-
-				try {
-					// CONVERTO LA STRINGA IN BYTE
-					byte_username = nomeUtente.getBytes(java.nio.charset.StandardCharsets.UTF_8); 
-
-					// AGGIUNGO IL PADDING PER EVITARE PROBLEMI DI DECIFRATURA ED EFFETTUO LA CIFRATURA
-					pad_password = pad(password);
-					pad_username = pad(byte_username);
-
-					byte_encryptedUsername = Encryption.encrypt(pad_username);
-					byte_encryptedPassword = Encryption.encrypt(pad_password);
-
-				} catch (IllegalArgumentException e) {
-					System.out.println("ERRORE FUNZIONI getBytes/pad/Aes.Encrypt: " + e.getMessage());
-					e.printStackTrace();
-				}
-
-				string_encryptedUsername = byteArrayToString(byte_encryptedUsername);
-				string_encryptedPassword = byteArrayToString(byte_encryptedPassword);
-
-				System.out.println("Encrypted username: " + string_encryptedUsername);
-				System.out.println("Encrypted username: " + string_encryptedPassword);
-
-			} catch (Exception e) {
-				System.out.println("Errore durante l'encrypt di username e/o password");
-				e.printStackTrace();
-			}
-
-			String base64EncodedUsername = Base64.getEncoder().encodeToString(byte_encryptedUsername);
-			String base64EncodedPassword = Base64.getEncoder().encodeToString(byte_encryptedPassword);
 
 			try {
-				if (LoginDao.isUserValid(nomeUtente, password)) {
-					//session = request.getSession();
-					//session.setAttribute("username", nomeUtente);
+				if (LoginDAO.isUserValid(email, password)) {
 
-					Cookie usernameCookie = new Cookie("username", base64EncodedUsername);
-					Cookie passwordCookie = new Cookie("password", base64EncodedPassword);
 
-					usernameCookie.setPath("/");
-					passwordCookie.setPath("/");
-
-					usernameCookie.setMaxAge(10 * 60); // 10 minuti
-					passwordCookie.setMaxAge(10 * 60); // 10 minuti
-
-					response.addCookie(usernameCookie);
-					response.addCookie(passwordCookie);
-
-					request.setAttribute("nomeUtente", nomeUtente);
+					HttpSession session = request.getSession(true);
+					session.setAttribute("userEmail", base64EncodedEmail);
 					request.setAttribute("login", true); //Se questa variabile non viene inizializzata su true, l'utente non riesce ad accedere a benvenuto.jsp
+					byte[] token = PasswordManager.generateRandomBytes(base64EncodedEmail.length());
+					if(LoginDAO.storeCookie(base64EncodedEmail, token)) {
 
-					PasswordManager.clearBytes(password);
-					nomeUtente = null;
+						Cookie rememberMeCookie = new Cookie("rememberme", base64EncodedEmail + ":" + token);
+						rememberMeCookie.setMaxAge(60 * 60 * 24 * 30); // 30 giorni
+						rememberMeCookie.setHttpOnly(true); // Protezione contro XSS
+						rememberMeCookie.setPath("/"); // Accessibile da tutto il sito
+						response.addCookie(rememberMeCookie);
 
-					request.getRequestDispatcher("benvenuto.jsp").forward(request, response);
+						PasswordManager.clearBytes(password);
+						email = null;
+						request.getRequestDispatcher("userLoggedIndex.jsp").forward(request, response);
+					}else {
+						DisplayMessage.showPanel("Sembra che la registrazione del cookie non sia andata a buon fine.");
+						request.getRequestDispatcher("/userNotLoggedLogin.jsp").forward(request, response);
+					}
+					
 				} else {
-					System.out.println("ERRORE metodo isUserValid checked - username: " + nomeUtente);
-					System.out.println("ERRORE metodo isUserValid checked - password: " + string_Password);
-
-					nomeUtente = null;
+					email = null;
 					PasswordManager.clearBytes(password);
 
 					DisplayMessage.showPanel("Sembra che questo utente non esista! Controlla i dati inseriti.");
-					request.getRequestDispatcher("/login.jsp").forward(request, response);
+					request.getRequestDispatcher("/userNotLoggedLogin.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -138,27 +104,21 @@ public class LoginServlet extends HttpServlet {
 		} else {
 
 			try {
-				if (LoginDao.isUserValid(nomeUtente, password)) {
-
-					//session = request.getSession();
-					//session.setAttribute("username", nomeUtente);
+				if (LoginDAO.isUserValid(email, password)) {
 
 					request.setAttribute("login", true); //Se questa variabile non viene inizializzata su true, l'utente non riesce ad accedere a benvenuto.jsp
-					request.setAttribute("nomeUtente", nomeUtente);
 
 					PasswordManager.clearBytes(password);
-					nomeUtente = null;
+					email = null;
 
-					request.getRequestDispatcher("benvenuto.jsp").forward(request, response);
+					request.getRequestDispatcher("userLoggedIndex.jsp").forward(request, response);
 				} else {
-					System.out.println("ERRORE metodo isUserValid 2 - username: " + nomeUtente);
-					System.out.println("ERRORE metodo isUserValid 2 - password: " + string_Password);
 
-					nomeUtente = null;
+					email = null;
 					PasswordManager.clearBytes(password);
 
 					DisplayMessage.showPanel("Password errata! Riprova.");
-					request.getRequestDispatcher("/login.jsp").forward(request, response);
+					request.getRequestDispatcher("/userNotLoggedLogin.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -169,34 +129,9 @@ public class LoginServlet extends HttpServlet {
 	}
 
 
-	private byte[] pad(byte[] bytes) {
-		int paddingLength = 16 - bytes.length % 16;
-		byte[] paddingBytes = new byte[paddingLength];
-		Arrays.fill(paddingBytes, (byte) 0x00);
 
-		return Arrays.copyOf(bytes, bytes.length + paddingLength);
-	}
 
-	private static String byteArrayToString(byte[] byteArray) {
-		return new String(byteArray, StandardCharsets.UTF_8);
-	}
-
-	private static byte[] removePadding(byte[] bytes) {
-		int paddingValue = bytes[bytes.length - 1]; // Ottieni l'ultimo byte, che rappresenta il valore di padding
-		int unpaddedLength = bytes.length - paddingValue;
-
-		// Verifica se i byte finali sono effettivamente byte di padding con valore diverso da zero
-		for (int i = unpaddedLength; i < bytes.length; i++) {
-			if (bytes[i] != 0x00) {
-				// I byte finali non sono tutti byte di padding, restituisci l'array originale
-				return bytes;
-			}
-		}
-
-		// Ritorna il nuovo array senza i byte di padding
-		return Arrays.copyOf(bytes, unpaddedLength);
-	}
-
+/**
 	private void checkCookie(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 		request.setCharacterEncoding("UTF-8");
@@ -241,14 +176,14 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("Uno dei due cookie non è stato trovato, interrompo");
 		} else {
 			try {
-				byte[] decryptedUsernameBytesCookie = Aes.decrypt(byte_encryptedUsernameCookie);
-				byte[] decryptedPasswordBytesCookie = Aes.decrypt(byte_encryptedPasswordCookie);
+				byte[] decryptedUsernameBytesCookie = Encryption.decrypt(byte_encryptedUsernameCookie);
+				byte[] decryptedPasswordBytesCookie = Encryption.decrypt(byte_encryptedPasswordCookie);
 
-				decryptedUsernameBytesCookie = removePadding(decryptedUsernameBytesCookie);
-				decryptedPasswordBytesCookie = removePadding(decryptedPasswordBytesCookie);
+				decryptedUsernameBytesCookie = Encryption.removePadding(decryptedUsernameBytesCookie);
+				decryptedPasswordBytesCookie = Encryption.removePadding(decryptedPasswordBytesCookie);
 
-				usernameCookie = byteArrayToString(decryptedUsernameBytesCookie);
-				passwordCookie = byteArrayToString(decryptedPasswordBytesCookie);
+				usernameCookie = Encryption.byteArrayToString(decryptedUsernameBytesCookie);
+				passwordCookie = Encryption.byteArrayToString(decryptedPasswordBytesCookie);
 
 				// RIEMPIRE IL FORM DEL login.jsp con questi dati se non sono nulli
 				request.setAttribute("decryptedUsername", usernameCookie);
@@ -265,6 +200,7 @@ public class LoginServlet extends HttpServlet {
 
 		response.getWriter().write(cookieData.toString());
 	}
+	**/
 }
 
 

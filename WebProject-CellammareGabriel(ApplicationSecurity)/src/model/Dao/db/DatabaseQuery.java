@@ -61,6 +61,7 @@ public class DatabaseQuery {
 	}
 	
 	public static String registrationUserId() {
+		
 		Properties appProperties = new Properties();
 
 		try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.ini")) {
@@ -74,7 +75,7 @@ public class DatabaseQuery {
 			return null;
 		}
 
-		return appProperties.getProperty("db.query_userIdRegistration");
+		return appProperties.getProperty("db.query_registrationUserId");
 
 	}
 
@@ -108,12 +109,30 @@ public class DatabaseQuery {
 			}
 			appProperties.load(input);
 		} catch (IOException e) {
-			System.out.println("Query DatabaseQuery - takeUserSale");
+			System.out.println("Query DatabaseQuery - takeUserSalt");
 			e.printStackTrace();
 			return null;
 		}
 
 		return appProperties.getProperty("db.query_takeUserSalt");
+	}
+	
+	public static String insertCookie() {
+		Properties appProperties = new Properties();
+
+		try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.ini")) {
+			if (input == null) {
+				System.out.println("File di configurazione config.ini non trovato.");
+				return null;
+			}
+			appProperties.load(input);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return appProperties.getProperty("db.query_insertCookie");
+
 	}
 
 	public static String insertProposta() {
@@ -135,7 +154,7 @@ public class DatabaseQuery {
 		return appProperties.getProperty("db.query_insertProposta");
 	}
 
-	public static String takeUsernameAndProposta() {
+	public static String takeEmailAndProposal() {
 
 		Properties appProperties = new Properties();
 
