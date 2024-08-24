@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+
+body {
+    font-family: sans-serif;
+    background-color: #ececff;
+}
+.navbar {
+    display: flex; /* Utilizza Flexbox per disporre gli elementi in una riga */
+    align-items: center; /* Allinea verticalmente il contenuto al centro */
+    justify-content: space-between; /* Mantiene il titolo a sinistra e i pulsanti a destra */
+    padding: 20px;
+    background-color: #8ac1ff;
+    border: 1px solid #001328;
+}
+
+.navbar h1 {
+    margin: 0; /* Rimuove il margine per il titolo per centrarlo verticalmente */
+    font-size: 24px; /* Opzionale: ridimensiona il titolo se necessario */
+}
+
+.navbar-buttons {
+    gap: 5px; /* Spaziatura tra i pulsanti */
+    margin-left: auto; /* Spinge i pulsanti al lato destro */
+}
+
+.button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.welcome-message {
+    text-align: center; /* Centra il messaggio di benvenuto */
+    margin-top: 10px; /* Aggiunge un po' di margine sopra il messaggio */
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+
+
+.container {
+    margin: 0 auto;
+    max-width: 80vw;
+    padding: 5vw;
+    background-color: #8ac1ff;
+    opacity: 0.9;
+    border-radius: 30px;
+    border:1px solid #001328;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.form-container {
+    margin-top: 10px; /* Aggiungi uno spazio per separare il form dal resto della navbar */
+}
+
+table {
+    width: auto; /* Cambia la larghezza della tabella per adattarla meglio alla navbar */
+    margin-top: 10px;
+}
+
+
+

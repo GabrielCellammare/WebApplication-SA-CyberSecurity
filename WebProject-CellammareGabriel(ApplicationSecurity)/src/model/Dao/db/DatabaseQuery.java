@@ -135,7 +135,7 @@ public class DatabaseQuery {
 
 	}
 
-	public static String insertProposta() {
+	public static String insertProposal() {
 
 		Properties appProperties = new Properties();
 
@@ -151,7 +151,7 @@ public class DatabaseQuery {
 			return null;
 		}
 
-		return appProperties.getProperty("db.query_insertProposta");
+		return appProperties.getProperty("db.query_insertProposal");
 	}
 
 	public static String takeEmailAndProposal() {
@@ -165,12 +165,12 @@ public class DatabaseQuery {
 			}
 			appProperties.load(input);
 		} catch (IOException e) {
-			System.out.println("Query DatabaseQuery - takeUsernameAndProposta");
+			System.out.println("Query DatabaseQuery - Query DatabaseQuery - takeEmailAndProposal");
 			e.printStackTrace();
 			return null;
 		}
 
-		return appProperties.getProperty("db.query_takeUsernameAndProposta");
+		return appProperties.getProperty("db.query_takeEmailAndProposal");
 	}
 
 }

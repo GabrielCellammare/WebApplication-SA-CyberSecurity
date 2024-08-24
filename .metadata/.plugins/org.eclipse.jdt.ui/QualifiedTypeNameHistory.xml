@@ -2,16 +2,13 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
     <fullyQualifiedTypeName name="application.util.EmailChecker"/>
-    <fullyQualifiedTypeName name="javax.servlet.http.Part"/>
     <fullyQualifiedTypeName name="application.util.FileChecker"/>
     <fullyQualifiedTypeName name="javax.swing.JPanel"/>
     <fullyQualifiedTypeName name="messageDisplay.DisplayMessage"/>
     <fullyQualifiedTypeName name="org.apache.tika.Tika"/>
-    <fullyQualifiedTypeName name="java.nio.file.Paths"/>
     <fullyQualifiedTypeName name="org.apache.tika.exception.TikaException"/>
     <fullyQualifiedTypeName name="com.drew.metadata.Metadata"/>
     <fullyQualifiedTypeName name="model.Dao.RegistrationDAO"/>
-    <fullyQualifiedTypeName name="model.Dao.db.DatabaseConnection"/>
     <fullyQualifiedTypeName name="application.util.ImageProfileFileChecker"/>
     <fullyQualifiedTypeName name="java.io.FileInputStream"/>
     <fullyQualifiedTypeName name="org.apache.tika.sax.BodyContentHandler"/>
@@ -24,8 +21,17 @@
     <fullyQualifiedTypeName name="com.mysql.cj.jdbc.result.ResultSetMetaData"/>
     <fullyQualifiedTypeName name="java.sql.ResultSetMetaData"/>
     <fullyQualifiedTypeName name="application.util.Encryption"/>
-    <fullyQualifiedTypeName name="model.Dao.db.DatabaseQuery"/>
     <fullyQualifiedTypeName name="application.util.PasswordManager"/>
-    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
     <fullyQualifiedTypeName name="model.Dao.LoginDAO"/>
+    <fullyQualifiedTypeName name="model.Dao.db.DatabaseConnection"/>
+    <fullyQualifiedTypeName name="model.Dao.db.DatabaseQuery"/>
+    <fullyQualifiedTypeName name="application.util.entity.Proposal"/>
+    <fullyQualifiedTypeName name="javax.servlet.ServletContext"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.Part"/>
+    <fullyQualifiedTypeName name="java.io.IOException"/>
+    <fullyQualifiedTypeName name="java.nio.file.Paths"/>
+    <fullyQualifiedTypeName name="java.nio.file.Path"/>
+    <fullyQualifiedTypeName name="application.util.ProposalChecker"/>
+    <fullyQualifiedTypeName name="model.Dao.ProposalDAO"/>
+    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
 </qualifiedTypeNameHistroy>

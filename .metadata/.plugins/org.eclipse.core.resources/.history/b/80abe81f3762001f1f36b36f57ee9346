@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+body {
+    font-family: sans-serif;
+    background-color: #ececff;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #8ac1ff;
+    border: 1px solid #001328;
+}
+
+.navbar h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.navbar-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    margin: 0;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.welcome-message {
+    text-align: center;
+    margin-top: 10px;
+}
+
+

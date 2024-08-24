@@ -23,7 +23,7 @@ public class ProposalDAO {
 			con_write = DatabaseConnection.getConnectionWrite();
 			con_read = DatabaseConnection.getConnectionRead();
 
-			try (PreparedStatement ps_proposal = con_write.prepareStatement(DatabaseQuery.insertProposta())) {
+			try (PreparedStatement ps_proposal = con_write.prepareStatement(DatabaseQuery.insertProposal())) {
 
 				int id_user=0;
 				try (PreparedStatement psIdSelect = con_read.prepareStatement(DatabaseQuery.registrationUserId())) {

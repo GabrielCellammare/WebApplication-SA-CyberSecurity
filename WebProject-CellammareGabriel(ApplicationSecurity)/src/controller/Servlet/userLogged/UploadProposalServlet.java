@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import model.Dao.ProposalDAO;
 /**
  * Servlet implementation class UploadProposalServlet
  */
+@MultipartConfig
 @WebServlet("/UploadProposalServlet")
 public class UploadProposalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -40,7 +42,7 @@ public class UploadProposalServlet extends HttpServlet {
 
 
 		List<Proposal> proposte = Proposal.getProposals();
-
+		
 		// Converti la lista in JSON
 		String jsonProposte = new Gson().toJson(proposte);
 
@@ -48,7 +50,7 @@ public class UploadProposalServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(jsonProposte);
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -56,20 +58,21 @@ public class UploadProposalServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		Part filePart = request.getPart("Proposta progettuale");
-		String nomeUtente = request.getParameter("nomeUtente");
+		Part filePart = request.getPart("proposal");
+		String email = request.getParameter("userEmail");
+		DisplayMessage.showPanel(email);
 
 		if (ProposalChecker.checkProposalFile(filePart, getServletContext())) {
 
 			String cleanedHtml = ProposalChecker.processFile(filePart);
 
-			String nomeFile = ProposalChecker.getFileName(filePart);
+			String filename = ProposalChecker.getFileName(filePart);
 			// Aggiungi il contenuto filtrato all'oggetto request
-			request.setAttribute("contenutoFiltrato", cleanedHtml);
+			request.setAttribute("cleanedHtml", cleanedHtml);
 			byte[] htmlBytes = cleanedHtml.getBytes(StandardCharsets.UTF_8);
 
 			try {
-				if (ProposalDAO.uploadFile(nomeUtente,nomeFile,htmlBytes)) {
+				if (ProposalDAO.uploadFile(email,filename,htmlBytes)) {
 					DisplayMessage.showPanel("La proposta è stata correttamente caricata!");
 
 					// Invia il contenuto filtrato come risposta AJAX

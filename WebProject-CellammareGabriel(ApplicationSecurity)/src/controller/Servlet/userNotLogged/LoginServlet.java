@@ -71,7 +71,7 @@ public class LoginServlet extends HttpServlet {
 
 
 					HttpSession session = request.getSession(true);
-					session.setAttribute("userEmail", base64EncodedEmail);
+					session.setAttribute("email", email);
 					request.setAttribute("login", true); //Se questa variabile non viene inizializzata su true, l'utente non riesce ad accedere a benvenuto.jsp
 					byte[] token = PasswordManager.generateRandomBytes(base64EncodedEmail.length());
 					if(LoginDAO.storeCookie(base64EncodedEmail, token)) {
@@ -105,7 +105,8 @@ public class LoginServlet extends HttpServlet {
 
 			try {
 				if (LoginDAO.isUserValid(email, password)) {
-
+					
+					request.setAttribute("email", email);
 					request.setAttribute("login", true); //Se questa variabile non viene inizializzata su true, l'utente non riesce ad accedere a benvenuto.jsp
 
 					PasswordManager.clearBytes(password);
