@@ -9,6 +9,7 @@
 <head>
 <style><%@include file="/WEB-INF/css/styleIndexLogged.css"%>
 </style>
+
 <script>
     
 var isUserLoggedIn = <%=request.getAttribute("login")%>;
@@ -25,8 +26,8 @@ if (!isUserLoggedIn || isUserLoggedIn == null) {
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<script>
-	
+
+<script>	
 var scrittaAggiunta = false;
 var isLogoutExecuted = false;
 var isRefreshing = false;
@@ -36,11 +37,8 @@ var isProposteLoading = false;
 // Chiamata AJAX separata per caricare la lista delle proposte quando la pagina si carica
 $(document).ready(function() {
 	loadProposalList();
-});
-
-//Funzione per gestire la comparsa del bottone
-$(document).ready(function () {
-    // Gestire il cambiamento nell'input di file
+	$('#closeBannerButton').hide()
+	    // Gestire il cambiamento nell'input di file
     $('#uploadProposalFile').on('change', function () {
         if ($(this).val()) {
             $('#uploadButton').show(); // Mostra il bottone quando un file è selezionato
@@ -54,41 +52,61 @@ $(document).ready(function () {
     
 	$('#bannerContent').hide();
 		
-		var content = "<%=request.getAttribute("cleanedHtml")%>"
-		console.log("CONTENUTO",content)
+	var content = "<%=request.getAttribute("cleanedHtml")%>"
+	console.log("CONTENUTO",content)
 		
-		if (content != "null") {
+	if (content != "null") {
 			$('#bannerContent').show();
-		}
+			$('#closeBannerButton').show(); // Mostra il bottone di chiusura
+	}
+		
+	var inattivitaTimer; // Variabile per memorizzare l'ID del timer
 
+	// Funzione chiamata quando l'utente compie un'azione
+	function resetInattivitaTimer() {
+	        clearTimeout(inattivitaTimer); // Resetta il timer
+	        inattivitaTimer = setTimeout(function() {
+	            // Esegui la funzione di logout dopo il periodo di inattività
+	            logout();
+	        }, 600000); // 10minuti
+	    }
+
+	    // Chiamata quando la pagina si carica
+	$(document).on('click keypress mousemove', function() {
+	        resetInattivitaTimer();
+	    });
 });
 
-
-
 function uploadFile() {
-		var formData = new FormData(document.getElementById('uploadForm'));
-		$
-				.ajax({
-					url : 'UploadProposalServlet',
-					type : 'POST',
-					data : formData,
-					processData : false,
-					contentType : false,
-					success : function(data) {
-						// Aggiorna il contenuto del banner con il risultato della risposta AJAX
-						$('#bannerContent').html(data);
-						$('#uploadButton').hide();
-					},
-					error : function(xhr, status, error) {
-						console.error(
-								'Errore durante il caricamento del file:',
-								status, error);
-					}
+	var formData = new FormData(document.getElementById('uploadForm'));
+	$
+			.ajax({
+				url : 'UploadProposalServlet',
+				type : 'POST',
+				data : formData,
+				processData : false,
+				contentType : false,
+				success : function(data) {
+					// Aggiorna il contenuto del banner con il risultato della risposta AJAX
 					
-				});
-		
-		
-	}
+					$('#bannerContent').html(data);
+					$('#bannerContent').show();
+					$('#uploadButton').hide();
+					$('uploadProposalFile').val('');
+					$('#closeBannerButton').show()
+					
+				},
+				error : function(xhr, status, error) {
+					console.error(
+							'Errore durante il caricamento del file:',
+							status, error);
+				}
+				
+			});
+	
+	
+}
+
 
 
 
@@ -160,9 +178,10 @@ function loadProposalList() {
                 }
 
                 // Crea il messaggio da mostrare nell'elemento #bannerContent
-                var messaggio = "Stai visualizzando la proposta progettuale <strong>" + fileName + "</strong> di <strong>" + email + "</strong>";
+                var messaggio = "Stai visualizzando la proposta progettuale <strong>" + fileName + "</strong> di <strong>" + email + "</strong><br><br>";
                 $('#bannerContent').show()
                 $('#bannerContent').html('<p>' + messaggio + '</p>' + html);
+                $('#closeBannerButton').show()
             });
 
             isProposteLoading = false; // Reimposta la variabile a false per consentire ulteriori richieste
@@ -230,21 +249,7 @@ window.addEventListener('popstate', function () {
 
 
 $(document).ready(function() {
-      var inattivitaTimer; // Variabile per memorizzare l'ID del timer
 
-    // Funzione chiamata quando l'utente compie un'azione
-    function resetInattivitaTimer() {
-        clearTimeout(inattivitaTimer); // Resetta il timer
-        inattivitaTimer = setTimeout(function() {
-            // Esegui la funzione di logout dopo il periodo di inattività
-            logout();
-        }, 600000); // 10minuti
-    }
-
-    // Chiamata quando la pagina si carica
-    $(document).on('click keypress mousemove', function() {
-        resetInattivitaTimer();
-    });
 
 });
 
@@ -276,6 +281,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+function closeBanner() {
+    $('#bannerContent').hide();  // Nascondi il contenuto del banner
+    $('#closeBannerButton').hide();  // Nascondi il bottone di chiusura
+}
 
 </script>
 
@@ -284,41 +293,47 @@ document.addEventListener("DOMContentLoaded", function() {
 	<div class="navbar">
 		<h1>Proposte progettuali</h1>
 		<div class="navbar-buttons">
+			<button id="closeBannerButton" class="button" onclick="closeBanner()">Chiudi proposta</button>		
 			<button id="refreshProposals" type="button" class="button"
 				onclick="loadProposalList()">Aggiorna Lista Proposte</button>
 
 			<button type="button" class="button" value="Logout"
 				onclick="logout()">Logout</button>
+			
 		</div>
 	</div>
 	<h1 class="welcome-message">Benvenuto, ${email}!</h1>
+	
+	
 	<!-- Form di caricamento proposta -->
-	<form id="uploadForm" method="post" class="container"
-		action="javascript:void(0);" enctype="multipart/form-data"
-		onsubmit="uploadFile()">
-		<input type="hidden" name="userEmail" value="${email}" />
-		<div id="bannerContent"><%=request.getAttribute("cleanedHtml")%></div>
-		<div id="proposalBannerList"></div>
-		<div class="form-container">
-			<table>
-				<tr>
-					<td>Carica proposta progettuale</td>
-					<td><input id="uploadProposalFile" type="file" name="proposal"
-						autocomplete="off"></td>
-
-				</tr>
-				<tr>
-					<td></td>
-					<td><small>Il file deve essere di formato .txt e
-							pesare massimo 20 MB.</small></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td><input id="uploadButton" type="submit" class="button"
-						value="Carica Proposta"></td>
-				</tr>
-			</table>
-		</div>
-	</form>
+		<form id="uploadForm" method="post" class="container"
+			action="javascript:void(0);" enctype="multipart/form-data"
+			onsubmit="uploadFile()">
+			<input type="hidden" name="userEmail" value="${email}" />
+			<div id="bannerContent">
+				<%=request.getAttribute("cleanedHtml")%>
+			</div>
+			<div id="proposalBannerList"></div>	
+			<div id="form-container">
+				<table>
+					<tr>
+						<td><b>Carica proposta progettuale<b></td>
+						<td><input id="uploadProposalFile" type="file" name="proposal"
+							autocomplete="off"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>Il file deve essere di formato .txt e
+								pesare massimo 20 MB.</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input id="uploadButton" type="submit" class="button"
+							value="Carica Proposta"></td>
+					</tr>
+				</table>
+			</div>
+		</form>
+	
 </body>
 </html>

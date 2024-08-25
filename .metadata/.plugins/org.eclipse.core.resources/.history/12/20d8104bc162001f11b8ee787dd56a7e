@@ -1,0 +1,110 @@
+        /* Reset base per margini e padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Include padding e border nella larghezza e altezza */
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: #ececff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0; /* Rimuove i margini del body */
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #8ac1ff;
+            border: 1px solid #001328;
+            width: 100%; /* Navbar prende tutta la larghezza */
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .navbar-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: 1px solid black;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .container {
+            width: 100vw; /* Larghezza responsiva */
+            max-width: 1000px; /* Larghezza massima */
+            padding: 20px;
+            background-color: #8ac1ff;
+            opacity: 0.9;
+            border-radius: 30px;
+            border: 1px solid #001328;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        .form-container{
+        margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            margin-bottom: 40px;
+            overflow:auto;
+        }
+        table {
+            width: 100%;
+            margin-top: 10px;
+            border-collapse: collapse; /* Elimina gli spazi tra i bordi */
+        }
+
+        table td {
+            padding: 10px;
+            border: none; /* Assicura che non ci siano bordi sulle celle */
+        }
+
+        input[type="file"] {
+            font-size: 16px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        #bannerContent, #proposalBannerList {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            margin-bottom: 40px;
+            overflow:auto;
+        }
+
