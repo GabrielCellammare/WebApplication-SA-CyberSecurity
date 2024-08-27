@@ -15,9 +15,8 @@ import javax.crypto.spec.SecretKeySpec;
 public class Encryption {
 
 	private static final String AES_KEY = aesKey();
-	private static final String AES_IV = "1234567890123456"; // Cambia l'IV a tuo piacimento
-
-	private static SecretKey secretKey;
+	private static final String AES_IV = "5983602714946835";
+	private static SecretKey secretKey = null;
 
 	
 	public static byte[] encrypt(byte[] data) throws Exception {

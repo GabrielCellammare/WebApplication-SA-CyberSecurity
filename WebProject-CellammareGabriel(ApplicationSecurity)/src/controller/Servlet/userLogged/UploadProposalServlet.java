@@ -61,14 +61,11 @@ public class UploadProposalServlet extends HttpServlet {
 		Part filePart = request.getPart("proposal");
 		String email = request.getParameter("userEmail");
 		DisplayMessage.showPanel(email);
-
 		if (ProposalChecker.checkProposalFile(filePart, getServletContext())) {
-
+			
 			String cleanedHtml = ProposalChecker.processFile(filePart);
 
 			String filename = ProposalChecker.getFileName(filePart);
-			// Aggiungi il contenuto filtrato all'oggetto request
-			request.setAttribute("cleanedHtml", cleanedHtml);
 			byte[] htmlBytes = cleanedHtml.getBytes(StandardCharsets.UTF_8);
 
 			try {

@@ -38,7 +38,6 @@ public class Proposal {
 				proposals.add(proposal);
 			}
 
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

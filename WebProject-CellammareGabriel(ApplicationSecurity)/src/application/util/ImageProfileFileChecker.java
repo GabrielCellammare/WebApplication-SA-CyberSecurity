@@ -58,12 +58,12 @@ public class ImageProfileFileChecker {
 						contentTypeBool=false;
 					}
 				}catch (IOException e) {
-		            e.printStackTrace();
-		        }
-	
-			return contentTypeBool;
-			
-			
+					e.printStackTrace();
+				}
+
+				return contentTypeBool;
+
+
 			} else {
 
 				DisplayMessage.showPanel("Estensione del file non supportata.");
@@ -84,31 +84,27 @@ public class ImageProfileFileChecker {
 
 	private static void printMetadata(Part filePart, Tika tika) throws Exception {
 
-		String fileType = tika.detect(filePart.getInputStream());
-		System.out.println("Content Type: " + fileType);
+		try(InputStream inputstream = filePart.getInputStream()){
 
-		// Estrae i metadati
-		BodyContentHandler handler = new BodyContentHandler();
-		Metadata metadata = new Metadata();
-		Parser parser = new AutoDetectParser();
-		ParseContext parseContext = new ParseContext();
+			String fileType = tika.detect(inputstream);
+			System.out.println("Content Type: " + fileType);
 
-		try {
-			parser.parse(filePart.getInputStream(), handler, metadata, parseContext);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// Estrae i metadati
+			BodyContentHandler handler = new BodyContentHandler();
+			Metadata metadata = new Metadata();
+			Parser parser = new AutoDetectParser();
+			ParseContext parseContext = new ParseContext();
 
-		} catch (TikaException e) {
-			// TODO Auto-generated catch block
+			parser.parse(inputstream, handler, metadata, parseContext);
+
+			// Stampa i metadati
+			String[] metadataNames = metadata.names();
+			for (String name : metadataNames) {
+				System.out.println(name + ": " + metadata.get(name));
+			}
+
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		// Stampa i metadati
-		String[] metadataNames = metadata.names();
-		for (String name : metadataNames) {
-			System.out.println(name + ": " + metadata.get(name));
-		}
-
 	}
 }

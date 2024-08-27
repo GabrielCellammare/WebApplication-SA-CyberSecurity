@@ -51,15 +51,7 @@ $(document).ready(function() {
     $('#uploadButton').hide();
     
 	$('#bannerContent').hide();
-		
-	var content = "<%=request.getAttribute("cleanedHtml")%>"
-	console.log("CONTENUTO",content)
-		
-	if (content != "null") {
-			$('#bannerContent').show();
-			$('#closeBannerButton').show(); // Mostra il bottone di chiusura
-	}
-		
+	
 	var inattivitaTimer; // Variabile per memorizzare l'ID del timer
 
 	// Funzione chiamata quando l'utente compie un'azione
@@ -310,9 +302,7 @@ function closeBanner() {
 			action="javascript:void(0);" enctype="multipart/form-data"
 			onsubmit="uploadFile()">
 			<input type="hidden" name="userEmail" value="${email}" />
-			<div id="bannerContent">
-				<%=request.getAttribute("cleanedHtml")%>
-			</div>
+			<div id="bannerContent"></div>
 			<div id="proposalBannerList"></div>	
 			<div id="form-container">
 				<table>

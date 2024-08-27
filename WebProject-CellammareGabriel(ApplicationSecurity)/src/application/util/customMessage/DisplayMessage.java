@@ -8,7 +8,7 @@ public class DisplayMessage{
 
     public static void showPanel(String message) {
         // Crea una finestra e aggiungi il pannello
-        JFrame frame = new JFrame("MESSAGGIO DAL SITO WEB: ");
+        JFrame frame = new JFrame("MESSAGGIO DALLA WEB APPLICATION: ");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         Label panel = new Label(message);

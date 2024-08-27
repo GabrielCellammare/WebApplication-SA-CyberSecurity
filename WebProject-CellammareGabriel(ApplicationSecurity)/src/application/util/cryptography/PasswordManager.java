@@ -117,7 +117,7 @@ public class PasswordManager {
 			e.printStackTrace();
 		}
 
-        // Calcola l'hash e convertilo in formato esadecimale
+        // Calcola l'hash
         hashBytes = digest.digest();
         return hashBytes;
        
