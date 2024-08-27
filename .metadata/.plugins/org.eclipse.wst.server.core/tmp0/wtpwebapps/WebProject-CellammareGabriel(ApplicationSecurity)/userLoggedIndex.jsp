@@ -92,8 +92,8 @@ function uploadFile() {
 					$('#bannerContent').html(data);
 					$('#bannerContent').show();
 					$('#uploadButton').hide();
-					$('uploadProposalFile').val('');
 					$('#closeBannerButton').show()
+					$('#uploadProposalFile').val('');
 					
 				},
 				error : function(xhr, status, error) {
@@ -317,7 +317,7 @@ function closeBanner() {
 			<div id="form-container">
 				<table>
 					<tr>
-						<td><b>Carica proposta progettuale<b></td>
+						<td class="loading-proposal"><b>Carica proposta progettuale<b></td>
 						<td><input id="uploadProposalFile" type="file" name="proposal"
 							autocomplete="off"></td>
 					</tr>

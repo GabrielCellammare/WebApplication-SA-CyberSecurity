@@ -49,7 +49,7 @@ public class LoginDAO {
 
 			if (rsSalt.next()) {
 
-				Blob userSaltBlob = rsSalt.getBlob("salt");
+				Blob userSaltBlob = rsSalt.getBlob("salt_value");
 
 				if (userSaltBlob != null) {
 					byte[] sale = userSaltBlob.getBytes(1, (int) userSaltBlob.length());

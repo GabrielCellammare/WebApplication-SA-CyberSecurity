@@ -45,9 +45,12 @@ public class RegistrationServlet extends HttpServlet {
 		byte[] retypePassword = request.getParameter("retype-password").getBytes();
 		Part filePart = request.getPart("profileImage");
 
-		if (EmailChecker.isValidEmail(email)) {
+		if (EmailChecker.isValidEmail(email) && email.length()<=45) {
 			if (PasswordManager.isStrongPassword(password)) {
 				if (Arrays.equals(password, retypePassword)) {
+					
+					//Inizio del TOC (Time of check)
+					byte[] checksum = PasswordManager.calculateChecksum(filePart);
 					if (ImageProfileFileChecker.checkImageFile(filePart)) {
 
 						byte[] salt = PasswordManager.generateRandomBytes(16);
@@ -57,7 +60,7 @@ public class RegistrationServlet extends HttpServlet {
 						PasswordManager.clearBytes(retypePassword);
 
 						try {
-							if (RegistrationDAO.userRegistration(email, SaltedPassword, salt, filePart)) {
+							if (RegistrationDAO.userRegistration(email, SaltedPassword, salt, filePart,checksum)) {
 
 								email = null;
 								filePart = null;
@@ -119,8 +122,9 @@ public class RegistrationServlet extends HttpServlet {
 			filePart = null;
 			PasswordManager.clearBytes(password);
 			PasswordManager.clearBytes(retypePassword);
+			DisplayMessage.showPanel("L'email contiene caratteri non validi o eccede la lunghezza massima!");
 			request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
-			DisplayMessage.showPanel("L'email contiene caratteri non validi!");
+
 
 		}
 	}

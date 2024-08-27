@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="cleaned"/>
+		<item key="selection" value="uploadProposalFile"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="uploadProposalFile"/>
+			<item value="closeBan"/>
+			<item value="."/>
+			<item value="reset"/>
+			<item value="refreshPro"/>
+			<item value="refre"/>
+			<item value="banner"/>
 			<item value="cleaned"/>
 			<item value="succ"/>
 			<item value="email"/>
@@ -16,13 +23,6 @@
 			<item value="proposalBannerList"/>
 			<item value="contenuto"/>
 			<item value="bannerContent"/>
-			<item value="listaProposteBanner"/>
-			<item value="listaProposte"/>
-			<item value="caricaListaProposte"/>
-			<item value="contenutoBanner"/>
-			<item value="Login"/>
-			<item value="proposal"/>
-			<item value="propostePrima"/>
 		</list>
 		<list key="replacehistory">
 			<item value="proposalBannerList"/>

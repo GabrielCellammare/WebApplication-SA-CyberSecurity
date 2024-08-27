@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Progettuale</title>
+</head>
+<body>
+    <header>
+        <h1>Proposta Progettuale</h1>
+        <p>Progetto: <strong>Nome del Progetto</strong></p>
+        <p>Data: <time datetime="2024-08-23">23 Agosto 2024</time></p>
+        <p>Autore: <em>Nome dell'Autore</em></p>
+    </header>
+
+    <section>
+        <h2>1. Introduzione</h2>
+        <p>Questa proposta progettuale delinea le specifiche per il progetto <strong>Nome del Progetto</strong>. L'obiettivo del progetto è di fornire una soluzione innovativa per...</p>
+    </section>
+
+    <section>
+        <h2>2. Obiettivi del Progetto</h2>
+        <ul>
+            <li>Obiettivo 1: Descrizione dell'obiettivo 1.</li>
+            <li>Obiettivo 2: Descrizione dell'obiettivo 2.</li>
+            <li>Obiettivo 3: Descrizione dell'obiettivo 3.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Descrizione del Progetto</h2>
+        <p>Il progetto si articola in diverse fasi, ognuna delle quali ha un insieme specifico di attività e deliverable. Le fasi del progetto includono:</p>
+        <ol>
+            <li>Fase 1: Analisi dei requisiti e pianificazione.</li>
+            <li>Fase 2: Progettazione e sviluppo.</li>
+            <li>Fase 3: Testing e valutazione.</li>
+            <li>Fase 4: Implementazione e rilascio.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>4. Risorse Necessarie</h2>
+        <p>Per il completamento del progetto, sono necessarie le seguenti risorse:</p>
+        <ul>
+            <li>Personale: Ruoli e competenze necessarie (es. sviluppatori, designer, project manager).</li>
+            <li>Software: Strumenti e piattaforme richieste (es. IDE, sistemi di versionamento).</li>
+            <li>Hardware: Requisiti hardware (es. server, dispositivi di test).</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>5. Tempistiche e Milestone</h2>
+        <p>Il progetto sarà completato in un periodo di 6 mesi, con le seguenti milestone chiave:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Milestone</th>
+                    <th>Descrizione</th>
+                    <th>Data di Completamento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Milestone 1</td>
+                    <td>Analisi dei requisiti completata.</td>
+                    <td><time datetime="2024-09-15">15 Settembre 2024</time></td>
+                </tr>
+                <tr>
+                    <td>Milestone 2</td>
+                    <td>Progettazione del sistema completata.</td>
+                    <td><time datetime="2024-10-30">30 Ottobre 2024</time></td>
+                </tr>
+                <tr>
+                    <td>Milestone 3</td>
+                    <td>Fase di sviluppo completata.</td>
+                    <td><time datetime="2024-12-15">15 Dicembre 2024</time></td>
+                </tr>
+                <tr>
+                    <td>Milestone 4</td>
+                    <td>Testing completato e preparazione per il rilascio.</td>
+                    <td><time datetime="2025-01-31">31 Gennaio 2025</time></td>
+                </tr>
+                <tr>
+                    <td>Milestone 5</td>
+                    <td>Implementazione e rilascio finale.</td>
+                    <td><time datetime="2025-02-28">28 Febbraio 2025</time></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>6. Budget</h2>
+        <p>Il budget stimato per il progetto è di €50.000, suddiviso come segue:</p>
+        <ul>
+            <li>Personale: €30.000</li>
+            <li>Software e Strumenti: €10.000</li>
+            <li>Hardware: €5.000</li>
+            <li>Contingenze: €5.000</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>7. Conclusione</h2>
+        <p>Questa proposta presenta un quadro dettagliato delle attività necessarie per il successo del progetto. Con le risorse adeguate e una gestione efficace, ci aspettiamo di raggiungere tutti gli obiettivi prefissati entro le tempistiche stabilite.</p>
+    </section>
+
+    <footer>
+	<img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com">
+        <p>Per ulteriori informazioni, contattare: <a href="mailto:info@example.com">info@example.com</a></p>
+    </footer>
+
+</body>
+</html>

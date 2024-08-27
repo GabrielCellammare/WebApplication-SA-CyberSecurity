@@ -1,5 +1,6 @@
 package application.util;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Paths;
 import javax.servlet.http.Part;
 import org.apache.tika.Tika;
@@ -9,7 +10,6 @@ import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.BodyContentHandler;
-
 import application.util.customMessage.DisplayMessage;
 
 
@@ -20,19 +20,19 @@ public class ImageProfileFileChecker {
 	private final static long maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
 
 	public static boolean checkImageFile(Part filePart) throws IOException{
-		
-		Tika tika = new Tika();
 
-		
-		try {
-			printMetadata(filePart, tika);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		Tika tika = new Tika();
+		boolean contentTypeBool=false;
 
 		if (filePart != null && filePart.getSize() > 0) {
+
+			try {
+				printMetadata(filePart, tika);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
 			String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
@@ -44,19 +44,26 @@ public class ImageProfileFileChecker {
 					return false;
 
 				}
-				
-				String contentType = tika.detect(filePart.getInputStream());
-				
-				if (contentType != null && contentType.startsWith("image/")) {
-					return true;
-
-				} else {
-
-					DisplayMessage.showPanel("Il file non è un'immagine valida.");
-					return false;
-				}
 
 
+				try(InputStream inputstream = filePart.getInputStream()){
+					String contentType = tika.detect(inputstream);
+
+					if (contentType != null && contentType.startsWith("image/")) {
+						contentTypeBool=true;
+
+					} else {
+
+						DisplayMessage.showPanel("Il file non è un'immagine valida.");
+						contentTypeBool=false;
+					}
+				}catch (IOException e) {
+		            e.printStackTrace();
+		        }
+	
+			return contentTypeBool;
+			
+			
 			} else {
 
 				DisplayMessage.showPanel("Estensione del file non supportata.");
@@ -91,7 +98,7 @@ public class ImageProfileFileChecker {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-	
+
 		} catch (TikaException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

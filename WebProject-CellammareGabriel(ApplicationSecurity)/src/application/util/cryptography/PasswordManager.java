@@ -1,8 +1,12 @@
 package application.util.cryptography;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+
+import javax.servlet.http.Part;
 
 public class PasswordManager {
 
@@ -80,12 +84,42 @@ public class PasswordManager {
 				}
 			}
 
-
+			c=' ';
 
 		}
-
+		
 		return ((valueLenght) && (hasUpperCase) && (hasLowerCase) && (hasDigit) && (hasSpecialChar));
 
 	}
+	
+	public static byte[] calculateChecksum(Part filePart){
+		byte[] hashBytes=null;
+        // Crea l'istanza MessageDigest per SHA-256
+        MessageDigest digest = null;
+		try {
+			digest = MessageDigest.getInstance("SHA-256");
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+        // Ottieni il flusso di input dal Part
+        try (InputStream inputStream = filePart.getInputStream()) {
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+
+            // Leggi il flusso di input e aggiorna il digest
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                digest.update(buffer, 0, bytesRead);
+            }
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        // Calcola l'hash e convertilo in formato esadecimale
+        hashBytes = digest.digest();
+        return hashBytes;
+       
+    }
 }

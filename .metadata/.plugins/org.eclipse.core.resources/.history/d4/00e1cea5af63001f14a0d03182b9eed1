@@ -1,0 +1,39 @@
+package application.util;
+
+import java.io.IOException;
+
+import javax.servlet.http.Part;
+
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.xml.sax.SAXException;
+
+public class ModifyChecker {
+
+	public static String getLastModify(Part filePart) {
+
+		Parser parser = new AutoDetectParser();
+		BodyContentHandler handler = new BodyContentHandler();
+		Metadata metadata = new Metadata();
+
+		try {
+			parser.parse(filePart.getInputStream(), handler, metadata, new ParseContext());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TikaException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Creation Date" + metadata.get(Metadata.CREATION_DATE));
+		System.out.println("Last Modified Date" + metadata.get(Metadata.LAST_MODIFIED));
+
+	}
+}
