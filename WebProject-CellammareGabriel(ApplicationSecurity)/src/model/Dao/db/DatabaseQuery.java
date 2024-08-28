@@ -60,7 +60,7 @@ public class DatabaseQuery {
 
 	}
 	
-	public static String registrationUserId() {
+	public static String takeUserId() {
 		
 		Properties appProperties = new Properties();
 
@@ -75,7 +75,7 @@ public class DatabaseQuery {
 			return null;
 		}
 
-		return appProperties.getProperty("db.query_registrationUserId");
+		return appProperties.getProperty("db.query_takeUserId");
 
 	}
 

@@ -1,0 +1,26 @@
+package model.Dao;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import application.util.customMessage.DisplayMessage;
+
+import java.sql.Connection;
+import model.Dao.db.DatabaseQuery;
+
+class TakeUserIdDAO {
+	
+	int takeUserId(Connection con_read) {
+		
+		try(Class.forName("com.mysql.cj.jdbc.Driver");PreparedStatement psIdSelect = con_read.prepareStatement(DatabaseQuery.takeUserId())){
+			
+		}catch(ClassNotFoundException|SQLException e) {
+			DisplayMessage.showPanel("Si è verificato un problema di connessione!");
+			e.printStackTrace();
+		}
+		
+		return 0;
+		
+	}
+
+}

@@ -1,0 +1,12 @@
+package model.Dao;
+
+class TakeUserIdDAO {
+	
+	int takeUserId(Connection con_read,) {
+		
+		
+		return 0;
+		
+	}
+
+}

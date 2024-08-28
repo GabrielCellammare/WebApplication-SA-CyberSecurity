@@ -21,67 +21,51 @@ public class LoginDAO {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
-			try(Connection con_read = DatabaseConnection.getConnectionRead();PreparedStatement psIdSelect = con_read.prepareStatement(DatabaseQuery.registrationUserId())){
-				int id_user=0;		
-				psIdSelect.setString(1, email);
-				try(ResultSet rsId= psIdSelect.executeQuery()){ 
+			try(Connection con_read = DatabaseConnection.getConnectionRead()){
+				int id_user=TakeUserIdDAO.takeUserId(con_read, email);		
 
-					if (rsId.next()) {
-						id_user=rsId.getInt("id"); 
-						System.out.println("\nID = " + id_user);
+				if(id_user>0) {
 
+					Blob userSaltBlob = TakeUserSaltDAO.takeUserSalt(con_read, id_user);
 
-						try(PreparedStatement ps_salt = con_read.prepareStatement(DatabaseQuery.takeUserSalt())){
-							ps_salt.setInt(1, id_user);
-							try(ResultSet rsSalt = ps_salt.executeQuery()){
+					if (userSaltBlob != null) {
+						byte[] sale = userSaltBlob.getBytes(1, (int) userSaltBlob.length());
+						byte[] newPassword = PasswordManager.concatenateAndHash(password, sale);
 
-								if (rsSalt.next()) {
+						try(PreparedStatement psUser = con_read.prepareStatement(DatabaseQuery.getSelectUserQuery())){
+							psUser.setString(1, email);
+							psUser.setBytes(2, newPassword);
 
-									Blob userSaltBlob = rsSalt.getBlob("salt_value");
+							try(ResultSet rsUser = psUser.executeQuery()){
+								status = rsUser.next();
 
-									if (userSaltBlob != null) {
-										byte[] sale = userSaltBlob.getBytes(1, (int) userSaltBlob.length());
-										byte[] newPassword = PasswordManager.concatenateAndHash(password, sale);
+								email = null;
+								PasswordManager.clearBytes(password);
+								PasswordManager.clearBytes(sale);
+								PasswordManager.clearBytes(newPassword);
 
-										try(PreparedStatement psUser = con_read.prepareStatement(DatabaseQuery.getSelectUserQuery())){
-											psUser.setString(1, email);
-											psUser.setBytes(2, newPassword);
-
-											try(ResultSet rsUser = psUser.executeQuery()){
-												status = rsUser.next();
-
-												email = null;
-												PasswordManager.clearBytes(password);
-												PasswordManager.clearBytes(sale);
-												PasswordManager.clearBytes(newPassword);
-
-												if (status) {
-													System.out.println("Utente trovato");
-												} else {
-													DisplayMessage.showPanel("Errore nell'inserimento dei dati dell'utente. Riprova"); //VALUTARE DI ELIMINARE?
-												}
-											} 
-										} 
-
-									} else {
-										email = null;
-										PasswordManager.clearBytes(password);
-										System.out.println("Salt è nullo");
-									}
+								if (status) {
+									System.out.println("Utente trovato");
 								} else {
-									email = null;
-									PasswordManager.clearBytes(password);
-									System.out.println("Nessun risultato trovato per l'utente: " + email);
+									DisplayMessage.showPanel("Errore nell'inserimento dei dati dell'utente. Riprova"); //VALUTARE DI ELIMINARE?
 								}
 							} 
-
 						}
-					}else {
-						DisplayMessage.showPanel("Errore nell'individuazione dell'ID nel DB. Riprova"); //VALUTARE DI ELIMINARE?
-					}
 
-				} 
+					} else {
+						email = null;
+						PasswordManager.clearBytes(password);
+						System.out.println("Salt è nullo");
+					}
+				} else {
+					email = null;
+					PasswordManager.clearBytes(password);
+					DisplayMessage.showPanel("ID Non valido. Riprovare con un mail corretta!"); //VALUTARE DI ELIMINARE?
+					System.out.println("Nessun risultato trovato per l'utente: " + email);
+				}
 			} 
+
+
 		}catch(ClassNotFoundException|SQLException e) {
 			DisplayMessage.showPanel("Si è verificato un problema di connessione!");
 			e.printStackTrace();
@@ -117,7 +101,7 @@ public class LoginDAO {
 			decryptedEmailBytes=Encryption.removePadding(decryptedEmailBytes);
 			email=Encryption.byteArrayToString(decryptedEmailBytes);
 
-			psIdSelect = con_read.prepareStatement(DatabaseQuery.registrationUserId());
+			psIdSelect = con_read.prepareStatement(DatabaseQuery.takeUserId());
 			int id_user=0;	
 			psIdSelect.setString(1, email);
 			rsId= psIdSelect.executeQuery(); 

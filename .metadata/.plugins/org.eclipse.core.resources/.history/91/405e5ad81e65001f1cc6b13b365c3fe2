@@ -1,0 +1,26 @@
+package model.Dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import model.Dao.db.DatabaseQuery;
+
+class RegistrationUserSaltDAO {
+	static int registrationUserSalt(String username, Connection connection) throws SQLException {
+		try (PreparedStatement psSalt = con_write.prepareStatement(DatabaseQuery.registrationUserSaltQuery())) {
+			ps.setString(1, username);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt("count"); 
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace(); 
+		}
+
+		return 0; 
+	}
+
+}

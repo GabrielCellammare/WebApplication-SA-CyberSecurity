@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import javax.servlet.http.Part;
@@ -25,9 +24,8 @@ public class RegistrationDAO {
 			try(Connection con_write = DatabaseConnection.getConnectionWrite();
 					Connection con_read = DatabaseConnection.getConnectionRead()){
 
-
 				// Verifica se l'utente esiste già
-				if (userAlreadyExists(email, con_read) > 0) {
+				if (UserAlreadyExistDAO.userAlreadyExists(con_read, email ) > 0) {
 					DisplayMessage.showPanel("Utente già registrato! Email già presente");
 					return false; 
 				}
@@ -49,45 +47,38 @@ public class RegistrationDAO {
 							return false; 
 						}
 
+
 						ps.setBlob(3, fileContent);
 
-						int rowsAffected = ps.executeUpdate();
 
+						int rowsAffected = ps.executeUpdate();
+						
 						// Imposta lo stato a true se almeno una riga è stata aggiornata
 						boolean status = (rowsAffected > 0);
 
 						//se effettuata correttamente, effettuo la query per ricavare l'id dell'utente registrato
 						if (status) {
-							int id_user=0;
-							try (PreparedStatement psIdSelect = con_read.prepareStatement(DatabaseQuery.registrationUserId())) {
-								psIdSelect.setString(1, email);
-
-								try (ResultSet rs = psIdSelect.executeQuery()) {
-									if (rs.next()) {
-										id_user=rs.getInt("id"); 
-										System.out.println("\nID = " + id_user);
-									}
-								}
-
-							}
+							int id_user=TakeUserIdDAO.takeUserId(con_read, email);
 
 							//una volta individuato l'id, registro tramite l'id il salt nella tabella apposita
-							try (PreparedStatement psSalt = con_write.prepareStatement(DatabaseQuery.registrationUserSaltQuery())) {
-								if(id_user>0) {
-									psSalt.setInt(1, id_user);
 
-									psSalt.setBytes(2, salt);
-
-									int rowsAffectedSale = psSalt.executeUpdate();
-
-									return (rowsAffectedSale > 0); // Restituisci true se anche la seconda query ha avuto successo
-								}
+							if(id_user>0) {
+								return (RegistrationUserSaltDAO.registrationUserSalt(con_write, id_user, salt) > 0); // Restituisci true se anche la seconda query ha avuto successo
 							}
+							else {
+								DisplayMessage.showPanel("ID Non valido. Riprovare con un mail corretta. Sale non registrato!"); //VALUTARE DI ELIMINARE?
+
+							}
+
+						}else {
+							DisplayMessage.showPanel("Non è stato possibile terminare la registrazione. Riprovare!"); //VALUTARE DI ELIMINARE?
 
 						}
 					}
+
 				}
 			}
+
 		}catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace(); 
 
@@ -95,22 +86,6 @@ public class RegistrationDAO {
 		}
 		return false; 
 	}
-
-	private static int userAlreadyExists(String username, Connection connection) throws SQLException {
-		try (PreparedStatement ps = connection.prepareStatement(DatabaseQuery.userAlreadyExist())) {
-			ps.setString(1, username);
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					return rs.getInt("count"); 
-				}
-			}
-		}catch(SQLException e) {
-			e.printStackTrace(); 
-		}
-
-		return 0; 
-	}
-
 
 
 }

@@ -1,0 +1,9 @@
+package model.Dao;
+
+class TakeUserIdDAO {
+	
+	int takeUserId() {
+		
+	}
+
+}

@@ -1,0 +1,12 @@
+package model.Dao;
+
+class TakeUserIdDAO {
+	
+	int takeUserId() {
+		
+		
+		return 0;
+		
+	}
+
+}
