@@ -105,10 +105,10 @@ public class ProposalChecker {
 	
 	public static String processFile(Part filePart) {
 
-	    long maxSizeInBytes = 10 * 1024 * 1024;
+	    long maxSizeInBytes = 20 * 1024 * 1024;
 	    if (filePart.getSize() > maxSizeInBytes) {
 	        DisplayMessage.showPanel(
-	                "Il file supera la dimensione massima consentita. Il file puo' essere massimo di 10 MB");
+	                "Il file supera la dimensione massima consentita. Il file puo' essere massimo di 20 MB");
 	        return null;
 	    }
 

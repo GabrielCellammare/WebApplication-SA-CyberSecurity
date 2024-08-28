@@ -314,7 +314,7 @@ function closeBanner() {
 					<tr>
 						<td></td>
 						<td>Il file deve essere di formato .txt e
-								pesare massimo 10 MB.</td>
+								pesare massimo 20 MB.</td>
 					</tr>
 					<tr>
 						<td></td>
