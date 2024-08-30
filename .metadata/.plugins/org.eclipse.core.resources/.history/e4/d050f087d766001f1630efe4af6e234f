@@ -1,0 +1,103 @@
+package controller.Servlet.userLogged;
+
+import java.io.IOException;
+import java.util.Base64;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import application.util.customMessage.DisplayMessage;
+import model.Dao.CookieDAO;
+
+public class AuthenticationFilter implements Filter {
+
+    public void init(FilterConfig config) throws ServletException {
+        // Inizializzazione se necessaria
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+        // Imposta le intestazioni di cache
+        httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        httpResponse.setHeader("Pragma", "no-cache");
+        httpResponse.setDateHeader("Expires", 0);
+
+        HttpSession session = httpRequest.getSession(false);
+        boolean isLoggedIn = (session != null && session.getAttribute("email") != null);
+
+        // Se l'utente è già autenticato
+        if (isLoggedIn) {
+            // Se sta cercando di accedere alla pagina di login, reindirizza alla pagina protetta
+            String requestURI = httpRequest.getRequestURI();
+            if (requestURI.endsWith("userNotLoggedLogin.jsp")) {
+                httpResponse.sendRedirect("userLoggedIndex.jsp");
+                return;
+            }
+            // Continua con la richiesta
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // Se non è autenticato, controlla il cookie "rememberMe"
+        Cookie[] cookies = httpRequest.getCookies();
+        boolean rememberMeCookieFound = false;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("rememberMe".equals(cookie.getName())) {
+                    rememberMeCookieFound = true;
+                    String token = cookie.getValue();
+                    byte[] tokenDecode = Base64.getDecoder().decode(token);
+                    if (CookieDAO.isTokenValidDAO(tokenDecode)) {
+                        // Autenticazione tramite cookie riuscita
+                        String email = CookieDAO.getEmailFromTokenDAO(tokenDecode);
+                        session = httpRequest.getSession(true);
+                        session.setAttribute("email", email);
+                        session.setAttribute("login", true);
+                        session.setMaxInactiveInterval(15 * 60);
+                        // Continua con la richiesta
+                        chain.doFilter(request, response);
+                        return;
+                    } else {
+                        // Se il token non è valido, rimuovi il cookie
+                        if (CookieDAO.deleteToken(tokenDecode)) {
+                            Cookie expiredCookie = new Cookie("rememberMe", null);
+                            expiredCookie.setMaxAge(0);
+                            expiredCookie.setHttpOnly(true);
+                            expiredCookie.setSecure(true);
+                            httpResponse.addCookie(expiredCookie);
+                        } else {
+                            DisplayMessage.showPanel("Errore nella cancellazione del cookie!");
+                        }
+                        // Redirigi alla pagina di login
+                        httpResponse.sendRedirect("userNotLoggedLogin.jsp");
+                        return;
+                    }
+                }
+            }
+        }
+
+        // Se non è stato trovato il cookie, o se non è stato autenticato tramite cookie
+        if (!rememberMeCookieFound) {
+            // Redirigi alla pagina di login
+            httpResponse.sendRedirect("userNotLoggedLogin.jsp");
+        }
+    }
+
+    @Override
+    public void destroy() {
+        // Pulizia se necessaria
+    }
+}

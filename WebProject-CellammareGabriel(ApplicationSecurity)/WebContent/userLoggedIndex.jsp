@@ -10,15 +10,6 @@
 <style><%@include file="/WEB-INF/css/styleIndexLogged.css"%>
 </style>
 
-<script>
-    
-var isUserLoggedIn = <%=request.getAttribute("login")%>;
-
-if (!isUserLoggedIn || isUserLoggedIn == null) {
-    // L'utente non è autenticato, reindirizzalo alla pagina di login
-    window.location.href = "userNotLoggedLogin.jsp";
-} 
-</script>
 
 <meta charset="UTF-8">
 <title>Homepage Web Application - Proposte progettuali</title>
@@ -73,12 +64,12 @@ function uploadFile() {
 	var formData = new FormData(document.getElementById('uploadForm'));
 	$
 			.ajax({
-				url : 'UploadProposalServlet',
-				type : 'POST',
-				data : formData,
-				processData : false,
-				contentType : false,
-				success : function(data) {
+				url : 'UploadProposalServlet', // L'URL della servlet sul server a cui inviare la richiesta
+				type : 'POST', // Il tipo di richiesta HTTP, in questo caso POST per inviare dati
+				data : formData, //dati da inviare al server
+				processData : false, // Impedisce a jQuery di elaborare automaticamente i dati (utile per l'invio di dati binari come i file)
+				contentType : false, // Impedisce a jQuery di impostare automaticamente il tipo di contenuto, necessario quando si inviano dati binari
+				success : function(data) {  // Callback che viene eseguito quando la richiesta ha successo
 					// Aggiorna il contenuto del banner con il risultato della risposta AJAX
 					
 					$('#bannerContent').html(data);
@@ -240,10 +231,6 @@ window.addEventListener('popstate', function () {
 });
 
 
-$(document).ready(function() {
-
-
-});
 
 /*$(document).ready(function () {
     // Gestore del clic per il bottone di aggiornamento
@@ -252,18 +239,10 @@ $(document).ready(function() {
     });
 });
 */
-function checkAuthentication() {
-	var userEmail = "<%=request.getAttribute("email") != null ? request.getAttribute("email") : ""%>"; // Ottieni il valore dalla JSP
-	console.log("Email:", userEmail); // Usa il nome corretto della variabile
 
-    if (!userEmail || userEmail.trim() === "") {
-        window.location.href = "userNotLoggedLogin.jsp";
-    }
-}
 
 // Chiamata alla funzione durante il caricamento della pagina
 document.addEventListener("DOMContentLoaded", function() {
-    checkAuthentication();
     loadProposalList(); // Aggiunta la chiamata alla funzione loadProposalList
     
     // Quando la pagina è completamente caricata

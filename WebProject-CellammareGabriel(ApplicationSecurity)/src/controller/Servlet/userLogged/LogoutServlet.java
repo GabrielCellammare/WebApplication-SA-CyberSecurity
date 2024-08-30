@@ -1,6 +1,8 @@
 package controller.Servlet.userLogged;
 
 import java.io.IOException;
+import java.util.Base64;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import application.util.customMessage.DisplayMessage;
+import model.Dao.CookieDAO;
 
 /**
  * Servlet implementation class LogoutServlet
@@ -31,7 +34,7 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		/*sresponse.getWriter().append("Served at: ").append(request.getContextPath());
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
@@ -54,6 +57,29 @@ public class LogoutServlet extends HttpServlet {
 
 		DisplayMessage.showPanel("Log-Out effettuato correttamente!");
 		request.getRequestDispatcher("/userNotLoggedLogin.jsp").forward(request, response);
+		 */
+
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.invalidate();
+		}
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("rememberMe".equals(cookie.getName())) {
+					String cookie_TokenString = cookie.getValue();
+					CookieDAO.deleteToken(cookie_TokenString);
+
+					// Rimuove il cookie dal browser
+					cookie.setMaxAge(0);
+					cookie.setHttpOnly(true);
+					cookie.setSecure(true);
+					response.addCookie(cookie);
+				}
+			}
+		}
+
+		response.sendRedirect("userNotLoggedLogin.jsp");
 	}
 }
 

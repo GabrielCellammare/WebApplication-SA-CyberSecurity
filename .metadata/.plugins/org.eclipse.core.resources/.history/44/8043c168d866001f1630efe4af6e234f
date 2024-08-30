@@ -1,0 +1,125 @@
+package controller.Servlet.userLogged;
+
+import java.io.IOException;
+import java.util.Base64;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import application.util.customMessage.DisplayMessage;
+import model.Dao.CookieDAO;
+
+public class AuthenticationFilter implements Filter {
+
+    private static final String LOGIN_PAGE = "userNotLoggedLogin.jsp";
+    private static final String INDEX_PAGE = "userLoggedIndex.jsp";
+
+    public void init(FilterConfig config) throws ServletException {
+        // Inizializzazione se necessaria
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+        HttpSession session = httpRequest.getSession(false);
+        boolean isLoggedIn = (session != null && session.getAttribute("email") != null);
+
+        // Imposta le intestazioni di cache
+        httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        httpResponse.setHeader("Pragma", "no-cache");
+        httpResponse.setDateHeader("Expires", 0);
+
+        String requestURI = httpRequest.getRequestURI();
+
+        // Stampa il percorso della richiesta
+        System.out.println("Request URI: " + requestURI);
+
+        // Se l'utente è già autenticato
+        if (isLoggedIn) {
+            System.out.println("User is logged in.");
+
+            if (requestURI.endsWith(LOGIN_PAGE)) {
+                System.out.println("Redirecting authenticated user from login page to index page.");
+                httpResponse.sendRedirect(INDEX_PAGE);
+                return;
+            }
+            System.out.println("Continuing to requested resource.");
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // Se non è autenticato, controlla il cookie "rememberMe"
+        Cookie[] cookies = httpRequest.getCookies();
+        boolean rememberMeCookieFound = false;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("rememberMe".equals(cookie.getName())) {
+                    rememberMeCookieFound = true;
+                    String token = cookie.getValue();
+                    byte[] tokenDecode = Base64.getDecoder().decode(token);
+                    System.out.println("Found rememberMe cookie with token: " + token);
+                    
+                    if (CookieDAO.isTokenValidDAO(tokenDecode)) {
+                        System.out.println("Token is valid.");
+                        String email = CookieDAO.getEmailFromTokenDAO(tokenDecode);
+                        session = httpRequest.getSession(true);
+                        session.setAttribute("email", email);
+                        session.setAttribute("login", true);
+                        session.setMaxInactiveInterval(15 * 60);
+                        System.out.println("User authenticated with cookie. Redirecting to requested resource.");
+                        chain.doFilter(request, response);
+                        return;
+                    } else {
+                        System.out.println("Token is invalid. Removing cookie.");
+                        if (CookieDAO.deleteToken(tokenDecode)) {
+                            Cookie expiredCookie = new Cookie("rememberMe", null);
+                            expiredCookie.setMaxAge(0);
+                            expiredCookie.setHttpOnly(true);
+                            expiredCookie.setSecure(true);
+                            httpResponse.addCookie(expiredCookie);
+                        } else {
+                            DisplayMessage.showPanel("Errore nella cancellazione del cookie!");
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Se il cookie "rememberMe" non è stato trovato o il token non è valido
+        if (!rememberMeCookieFound) {
+            System.out.println("No valid rememberMe cookie found.");
+            if (!requestURI.endsWith(LOGIN_PAGE)) {
+                System.out.println("Redirecting to login page.");
+                httpResponse.sendRedirect(LOGIN_PAGE);
+                return;
+            }
+        }
+
+        // Se l'utente non è autenticato e sta cercando di accedere alla pagina di login
+        if (LOGIN_PAGE.equals(requestURI)) {
+            System.out.println("User trying to access login page.");
+            chain.doFilter(request, response);
+        } else {
+            System.out.println("Redirecting to login page.");
+            httpResponse.sendRedirect(LOGIN_PAGE);
+        }
+    }
+
+    @Override
+    public void destroy() {
+        // Pulizia se necessaria
+    }
+}

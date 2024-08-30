@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="uploadProposalFile"/>
+		<item key="selection" value="reset"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="uploadProposalFile"/>
-			<item value="closeBan"/>
-			<item value="."/>
 			<item value="reset"/>
-			<item value="refreshPro"/>
-			<item value="refre"/>
-			<item value="banner"/>
-			<item value="cleaned"/>
-			<item value="succ"/>
-			<item value="email"/>
-			<item value="nome"/>
-			<item value="&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot;%&gt;"/>
-			<item value="proposalBannerList"/>
-			<item value="contenuto"/>
-			<item value="bannerContent"/>
+			<item value="timeout"/>
+			<item value="/u"/>
+			<item value="/"/>
+			<item value="check"/>
+			<item value="console"/>
+			<item value="chec"/>
+			<item value="package model.Dao;"/>
+			<item value="session"/>
+			<item value="getSe"/>
+			<item value="base64"/>
+			<item value="csrf"/>
+			<item value="csfr"/>
+			<item value="JSES"/>
+			<item value="ID"/>
 		</list>
 		<list key="replacehistory">
 			<item value="proposalBannerList"/>
@@ -38,8 +38,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="87"/>
-		<item key="DIALOG_Y_ORIGIN" value="282"/>
+		<item key="DIALOG_X_ORIGIN" value="293"/>
+		<item key="DIALOG_Y_ORIGIN" value="153"/>
 		<item key="DIALOG_WIDTH" value="336"/>
 		<item key="DIALOG_HEIGHT" value="454"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

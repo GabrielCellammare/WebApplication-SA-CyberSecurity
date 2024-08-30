@@ -22,9 +22,7 @@
     <fullyQualifiedTypeName name="java.sql.ResultSetMetaData"/>
     <fullyQualifiedTypeName name="application.util.Encryption"/>
     <fullyQualifiedTypeName name="application.util.PasswordManager"/>
-    <fullyQualifiedTypeName name="model.Dao.LoginDAO"/>
     <fullyQualifiedTypeName name="model.Dao.db.DatabaseConnection"/>
-    <fullyQualifiedTypeName name="model.Dao.db.DatabaseQuery"/>
     <fullyQualifiedTypeName name="application.util.entity.Proposal"/>
     <fullyQualifiedTypeName name="javax.servlet.ServletContext"/>
     <fullyQualifiedTypeName name="javax.servlet.http.Part"/>
@@ -33,5 +31,20 @@
     <fullyQualifiedTypeName name="java.nio.file.Path"/>
     <fullyQualifiedTypeName name="application.util.ProposalChecker"/>
     <fullyQualifiedTypeName name="model.Dao.ProposalDAO"/>
+    <fullyQualifiedTypeName name="model.Dao.UserAlreadyExistDAO"/>
+    <fullyQualifiedTypeName name="java.security.SecureRandom"/>
+    <fullyQualifiedTypeName name="com.adobe.internal.xmp.impl.Base64"/>
+    <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
+    <fullyQualifiedTypeName name="java.time.format.DateTimeFormatter"/>
+    <fullyQualifiedTypeName name="application.util.entity.UserLogged"/>
+    <fullyQualifiedTypeName name="application.util.cryptography.Encryption"/>
+    <fullyQualifiedTypeName name="application.util.cryptography.PasswordManager"/>
+    <fullyQualifiedTypeName name="model.Dao.LoginDAO"/>
+    <fullyQualifiedTypeName name="model.Dao.TakeUserIdDAO"/>
+    <fullyQualifiedTypeName name="model.Dao.CookieDAO"/>
+    <fullyQualifiedTypeName name="java.util.Base64"/>
+    <fullyQualifiedTypeName name="java.sql.ResultSet"/>
+    <fullyQualifiedTypeName name="model.Dao.db.DatabaseQuery"/>
     <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
+    <fullyQualifiedTypeName name="controller.Servlet.userLogged.AuthUtils"/>
 </qualifiedTypeNameHistroy>

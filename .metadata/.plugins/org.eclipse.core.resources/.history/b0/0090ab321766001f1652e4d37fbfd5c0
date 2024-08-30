@@ -1,0 +1,77 @@
+package application.util.entity;
+
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Base64;
+
+import application.util.cryptography.Encryption;
+import application.util.cryptography.PasswordManager;
+
+public class UserLogged {
+
+	private static final int CSRF_TOKEN_LENGTH = 32; // 32 bytes * 8 = 256 bits
+	private static final SecureRandom secureRandom = new SecureRandom();
+	private byte[] base64EncodedEmail;
+	private byte[] timestamp;
+	private byte[] csrfToken;
+	private byte[] cookieToken;
+
+	public UserLogged(byte[] base64EncodedEmail){
+		this.base64EncodedEmail=base64EncodedEmail;
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		this.timestamp = currentDateTime.format(formatter).getBytes(java.nio.charset.StandardCharsets.UTF_8);	
+		this.csrfToken=this.generateCsrfToken();
+		this.cookieToken=this.generateSecureCookieToken();
+
+	}
+
+	private byte[] generateCsrfToken() {
+		byte[] tokenBytes = new byte[CSRF_TOKEN_LENGTH];
+		secureRandom.nextBytes(tokenBytes);
+		byte[] tokenBytesPadding = Encryption.addPadding(tokenBytes);
+		byte[] tokenBytesPadding_encrypted=null;
+		try{
+			tokenBytesPadding_encrypted = Encryption.encrypt(tokenBytesPadding);
+			return tokenBytesPadding_encrypted;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+	private String generateSecureCookieToken() {
+		byte[] concatenatedData = new byte[this.base64EncodedEmail.length + this.timestamp.length];
+
+		System.arraycopy(this.base64EncodedEmail, 0, concatenatedData, 0, this.base64EncodedEmail.length);
+
+		System.arraycopy(salt, 0, concatenatedData, this.base64EncodedEmail.length, salt.length);
+		return PasswordManager.concatenateAndHash(concatenatedData,this.csrfToken);
+
+	}
+
+	public byte[] getBase64EncodedEmail() {
+		return base64EncodedEmail;
+	}
+
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public String getCsrfToken() {
+		return csrfToken;
+	}
+
+	public String getCookieToken() {
+		return cookieToken;
+	}
+
+
+
+
+
+}

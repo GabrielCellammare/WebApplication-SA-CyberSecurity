@@ -78,6 +78,26 @@ public class DatabaseQuery {
 		return appProperties.getProperty("db.query_takeUserId");
 
 	}
+	
+	public static String takeUserEmail(){
+
+		Properties appProperties = new Properties();
+
+		try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.ini")) {
+			if (input == null) {
+				System.out.println("File di configurazione config.ini non trovato.");
+				return null;
+			}
+			appProperties.load(input);
+		} catch (IOException e) {
+			System.out.println("Query DatabaseQuery - Query DatabaseQuery - takeUserEmail");
+			e.printStackTrace();
+			return null;
+		}
+
+		return appProperties.getProperty("db.query_takeUserEmail");
+	}
+
 
 	public static String userAlreadyExist() {
 
@@ -171,6 +191,64 @@ public class DatabaseQuery {
 		}
 
 		return appProperties.getProperty("db.query_takeEmailAndProposal");
+	}
+	
+	
+	public static String isTokenValid() {
+
+		Properties appProperties = new Properties();
+
+		try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.ini")) {
+			if (input == null) {
+				System.out.println("File di configurazione config.ini non trovato.");
+				return null;
+			}
+			appProperties.load(input);
+		} catch (IOException e) {
+			System.out.println("Query DatabaseQuery - Query DatabaseQuery - isTokenValid");
+			e.printStackTrace();
+			return null;
+		}
+
+		return appProperties.getProperty("db.query_isTokenValid");
+	}
+	
+	public static String deleteCookie(){
+
+		Properties appProperties = new Properties();
+
+		try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.ini")) {
+			if (input == null) {
+				System.out.println("File di configurazione config.ini non trovato.");
+				return null;
+			}
+			appProperties.load(input);
+		} catch (IOException e) {
+			System.out.println("Query DatabaseQuery - Query DatabaseQuery - deleteCookie");
+			e.printStackTrace();
+			return null;
+		}
+
+		return appProperties.getProperty("db.query_deleteCookie");
+	}
+	
+	public static String getEmailFromToken(){
+
+		Properties appProperties = new Properties();
+
+		try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.ini")) {
+			if (input == null) {
+				System.out.println("File di configurazione config.ini non trovato.");
+				return null;
+			}
+			appProperties.load(input);
+		} catch (IOException e) {
+			System.out.println("Query DatabaseQuery - Query DatabaseQuery - getEmailFromToken");
+			e.printStackTrace();
+			return null;
+		}
+
+		return appProperties.getProperty("db.query_getEmailFromToken");
 	}
 
 }
