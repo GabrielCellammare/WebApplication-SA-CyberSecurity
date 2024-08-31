@@ -249,6 +249,48 @@ public class DatabaseQuery {
 		}
 
 		return appProperties.getProperty("db.query_getEmailFromToken");
+		
 	}
+	
+	public static String deleteCookieRoutine(){
+
+		Properties appProperties = new Properties();
+
+		try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.ini")) {
+			if (input == null) {
+				System.out.println("File di configurazione config.ini non trovato.");
+				return null;
+			}
+			appProperties.load(input);
+		} catch (IOException e) {
+			System.out.println("Query DatabaseQuery - Query DatabaseQuery - deleteCookieRoutine");
+			e.printStackTrace();
+			return null;
+		}
+
+		return appProperties.getProperty("db.query_deleteCookieRoutine");
+		
+	}
+	
+	public static String tokenExists(){
+
+		Properties appProperties = new Properties();
+
+		try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.ini")) {
+			if (input == null) {
+				System.out.println("File di configurazione config.ini non trovato.");
+				return null;
+			}
+			appProperties.load(input);
+		} catch (IOException e) {
+			System.out.println("Query DatabaseQuery - Query DatabaseQuery - tokenExists");
+			e.printStackTrace();
+			return null;
+		}
+
+		return appProperties.getProperty("db.query_tokenExists");
+		
+	}
+
 
 }

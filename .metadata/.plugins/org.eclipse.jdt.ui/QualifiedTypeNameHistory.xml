@@ -36,7 +36,6 @@
     <fullyQualifiedTypeName name="com.adobe.internal.xmp.impl.Base64"/>
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
     <fullyQualifiedTypeName name="java.time.format.DateTimeFormatter"/>
-    <fullyQualifiedTypeName name="application.util.entity.UserLogged"/>
     <fullyQualifiedTypeName name="application.util.cryptography.Encryption"/>
     <fullyQualifiedTypeName name="application.util.cryptography.PasswordManager"/>
     <fullyQualifiedTypeName name="model.Dao.LoginDAO"/>
@@ -47,4 +46,6 @@
     <fullyQualifiedTypeName name="model.Dao.db.DatabaseQuery"/>
     <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
     <fullyQualifiedTypeName name="controller.Servlet.userLogged.AuthUtils"/>
+    <fullyQualifiedTypeName name="application.util.entity.UserLogged"/>
+    <fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
 </qualifiedTypeNameHistroy>

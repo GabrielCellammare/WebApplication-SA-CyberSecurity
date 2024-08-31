@@ -34,31 +34,7 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		/*sresponse.getWriter().append("Served at: ").append(request.getContextPath());
-		HttpSession session = request.getSession(false);
-
-		if (session != null) {
-			session.invalidate();
-			System.out.println("Sessione invalidata");
-		}
-
-		// Elimina i cookie dopo aver invalidato la sessione
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				String cookieName = cookie.getName();
-				System.out.println("Nome del cookie: " + cookieName);
-				cookie.setPath("/");
-				cookie.setMaxAge(0);
-				response.addCookie(cookie);
-			}
-			System.out.println("Invalido cookie");
-		}
-
-		DisplayMessage.showPanel("Log-Out effettuato correttamente!");
-		request.getRequestDispatcher("/userNotLoggedLogin.jsp").forward(request, response);
-		 */
-
+		
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			session.invalidate();
