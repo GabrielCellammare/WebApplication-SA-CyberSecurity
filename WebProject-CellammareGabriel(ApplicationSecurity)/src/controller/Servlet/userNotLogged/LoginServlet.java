@@ -67,7 +67,8 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("email", email);
 			session.setAttribute("login", true);
-			session.setAttribute("csrfToken", userlogged.getCsrfToken());
+			session.setAttribute("csrfToken", userlogged.getCsrfTokenString());
+			session.setAttribute("userLogged", userlogged);
 			session.setMaxInactiveInterval(15 * 60); // 15 minuti di timeout della sessione
 
 			if (ricordami) {

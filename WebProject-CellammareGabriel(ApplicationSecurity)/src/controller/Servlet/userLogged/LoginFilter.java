@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import application.util.cryptography.Encryption;
+import application.util.customMessage.DisplayMessage;
+import application.util.entity.UserLogged;
 import model.Dao.CookieDAO;
 
 public class LoginFilter implements Filter {
@@ -66,9 +69,26 @@ public class LoginFilter implements Filter {
                         if (CookieDAO.isTokenValidDAO(cookie_TokenString)) {
                             // Autenticazione tramite cookie riuscita
                             String email = CookieDAO.getEmailFromTokenDAO(cookie_TokenString);
+                            
+                            byte[] byte_email = email.getBytes(java.nio.charset.StandardCharsets.UTF_8); 
+                    		byte[] pad_email = Encryption.addPadding(byte_email);
+                    		byte[] byte_encryptedEmail = null;
+
+                    		try {
+                    			byte_encryptedEmail = Encryption.encrypt(pad_email);
+                    		} catch (Exception e) {
+                    			e.printStackTrace();
+                    			DisplayMessage.showPanel("Errore interno, riprovare!");
+                    			return;
+                    		}
+                    		
+                            UserLogged userlogged = new UserLogged(byte_encryptedEmail,cookie_TokenString);
+                            
                             session = httpRequest.getSession(true);  // Crea una nuova sessione
                             session.setAttribute("email", email);
                             session.setAttribute("login", true);
+                            session.setAttribute("csrfToken", userlogged.getCsrfTokenString());
+                            session.setAttribute("userLogged", userlogged);
                             session.setMaxInactiveInterval(15 * 60);
                             isLoggedIn = true;  // Utente autenticato
                             break;

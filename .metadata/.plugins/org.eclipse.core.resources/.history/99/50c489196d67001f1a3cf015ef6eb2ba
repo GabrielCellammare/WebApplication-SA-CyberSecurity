@@ -1,0 +1,50 @@
+package controller.Servlet.userLogged;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+
+public class CsrfFilter implements Filter {
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        // Inizializzazione del filtro, se necessaria
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        HttpSession session = httpRequest.getSession(false);
+
+        String method = httpRequest.getMethod();
+        
+        // Controllo solo le richieste POST, PUT e DELETE per CSRF
+        if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method) || "DELETE".equalsIgnoreCase(method)) {
+            String csrfToken = httpRequest.getParameter("csrfToken");
+            String sessionToken = (session != null) ? (String) session.getAttribute("csrfToken") : null;
+            
+            if (csrfToken == null || sessionToken == null || !csrfToken.equals(sessionToken)) {
+                httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "Richiesta non valida: token CSRF mancante o non valido.");
+                return; // Blocca la richiesta
+            }
+        } 
+
+        // Procedi con la catena di filtri
+        chain.doFilter(request, response);
+    }
+
+    @Override
+    public void destroy() {
+        // Pulizia del filtro, se necessaria
+    }
+
+    private String generateCsrfToken() {
+        // Implementa la generazione del token CSRF (puoi usare UUID.randomUUID().toString())
+        return java.util.UUID.randomUUID().toString();
+    }
+}

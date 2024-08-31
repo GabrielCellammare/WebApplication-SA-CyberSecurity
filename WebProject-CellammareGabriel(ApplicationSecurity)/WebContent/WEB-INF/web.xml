@@ -16,6 +16,7 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
+	
 	<filter>
 		<filter-name>LoginFilter</filter-name>
 		<filter-class>controller.Servlet.userLogged.LoginFilter</filter-class>
@@ -23,6 +24,19 @@
 
 	<filter-mapping>
 		<filter-name>LoginFilter</filter-name>
-		<url-pattern>/userNotLoggedLogin.jsp</url-pattern> <!-- Applica il filtro a tutte le risorse sotto /protected -->
+		<url-pattern>/userNotLoggedLogin.jsp</url-pattern>
 	</filter-mapping>
+	
+		
+	<filter>
+		<filter-name>UserLoggedFilter</filter-name>
+		<filter-class>controller.Servlet.userLogged.UserLoggedFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>UserLoggedFilter</filter-name>
+		<url-pattern>/userLoggedIndex.jsp</url-pattern>
+	</filter-mapping>
+
+		
 </web-app>

@@ -7,7 +7,8 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<style><%@include file="/WEB-INF/css/styleIndexLogged.css"%>
+<style>
+<%@include file="/WEB-INF/css/styleIndexLogged.css"%>
 </style>
 
 
@@ -69,9 +70,12 @@ function uploadFile() {
 				data : formData, //dati da inviare al server
 				processData : false, // Impedisce a jQuery di elaborare automaticamente i dati (utile per l'invio di dati binari come i file)
 				contentType : false, // Impedisce a jQuery di impostare automaticamente il tipo di contenuto, necessario quando si inviano dati binari
-				success : function(data) {  // Callback che viene eseguito quando la richiesta ha successo
+				success : function(data,textStatus,xhr) {  // Callback che viene eseguito quando la richiesta ha successo
 					// Aggiorna il contenuto del banner con il risultato della risposta AJAX
-					
+					  var newCsrfToken = xhr.getResponseHeader('X-CSRF-Token');
+			          if (newCsrfToken) {
+			                $('#uploadForm [name="csrfToken"]').val(newCsrfToken);
+			            }
 					$('#bannerContent').html(data);
 					$('#bannerContent').show();
 					$('#uploadButton').hide();
@@ -264,45 +268,49 @@ function closeBanner() {
 	<div class="navbar">
 		<h1>Proposte progettuali</h1>
 		<div class="navbar-buttons">
-			<button id="closeBannerButton" class="button" onclick="closeBanner()">Chiudi proposta</button>		
+			<button id="closeBannerButton" class="button" onclick="closeBanner()">Chiudi
+				proposta</button>
 			<button id="refreshProposals" type="button" class="button"
 				onclick="loadProposalList()">Aggiorna Lista Proposte</button>
 
 			<button type="button" class="button" value="Logout"
 				onclick="logout()">Logout</button>
-			
+
 		</div>
 	</div>
 	<h1 class="welcome-message">Benvenuto, ${email}!</h1>
-	
-	
+
+
 	<!-- Form di caricamento proposta -->
-		<form id="uploadForm" method="post" class="container"
-			action="javascript:void(0);" enctype="multipart/form-data"
-			onsubmit="uploadFile()">
-			<input type="hidden" name="userEmail" value="${email}" />
-			<div id="bannerContent"></div>
-			<div id="proposalBannerList"></div>	
-			<div id="form-container">
-				<table>
-					<tr>
-						<td class="loading-proposal"><b>Carica proposta progettuale<b></td>
-						<td><input id="uploadProposalFile" type="file" name="proposal"
-							autocomplete="off"></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>Il file deve essere di formato .txt e
-								pesare massimo 10 MB.</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input id="uploadButton" type="submit" class="button"
-							value="Carica Proposta"></td>
-					</tr>
-				</table>
-			</div>
-		</form>
-	
+	<form id="uploadForm" method="post" class="container"
+		action="javascript:void(0);" enctype="multipart/form-data"
+		onsubmit="uploadFile()">
+		<input type="hidden" name="userEmail" value="${email}" />
+		<div id="bannerContent"></div>
+		<input type="hidden" name="csrfToken"
+			value="${sessionScope.csrfToken}" />
+		<div id="proposalBannerList"></div>
+		<div id="form-container">
+			<table>
+				<tr>
+					<td class="loading-proposal"><b>Carica proposta
+							progettuale<b></td>
+					<td><input id="uploadProposalFile" type="file" name="proposal"
+						autocomplete="off"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>Il file deve essere di formato .txt e pesare massimo 10
+						MB.</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input id="uploadButton" type="submit" class="button"
+						value="Carica Proposta"></td>
+				</tr>
+			</table>
+		</div>
+	</form>
+
 </body>
 </html>
