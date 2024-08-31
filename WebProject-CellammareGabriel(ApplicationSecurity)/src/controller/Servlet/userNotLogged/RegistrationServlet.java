@@ -16,7 +16,7 @@ import application.util.EmailChecker;
 import application.util.ImageProfileFileChecker;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
-import model.Dao.RegistrationDAO;
+import model.Dao.registration.RegistrationDAO;
 
 
 
@@ -66,7 +66,7 @@ public class RegistrationServlet extends HttpServlet {
 								filePart = null;
 								PasswordManager.clearBytes(SaltedPassword);
 								PasswordManager.clearBytes(salt);
-								response.sendRedirect("userNotLoggedLogin.jsp");
+								response.sendRedirect("userNotLoggedIndex.jsp");
 								DisplayMessage.showPanel("Registrazione effettuata correttamente!");
 
 							} else {

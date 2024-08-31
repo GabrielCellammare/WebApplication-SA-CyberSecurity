@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.nio.file.Paths;
 import javax.servlet.http.Part;
 import org.apache.tika.Tika;
-import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;

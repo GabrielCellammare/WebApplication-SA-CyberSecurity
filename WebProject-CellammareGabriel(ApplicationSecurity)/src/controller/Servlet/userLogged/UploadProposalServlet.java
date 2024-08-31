@@ -21,7 +21,7 @@ import application.util.cryptography.Encryption;
 import application.util.customMessage.DisplayMessage;
 import application.util.entity.Proposal;
 import application.util.entity.UserLogged;
-import model.Dao.ProposalDAO;
+import model.Dao.proposal.ProposalDAO;
 
 /**
  * Servlet implementation class UploadProposalServlet

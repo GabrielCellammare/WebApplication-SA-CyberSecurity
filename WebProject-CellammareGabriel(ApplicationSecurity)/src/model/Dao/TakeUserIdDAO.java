@@ -9,9 +9,9 @@ import application.util.customMessage.DisplayMessage;
 import java.sql.Connection;
 import model.Dao.db.DatabaseQuery;
 
-class TakeUserIdDAO {
+public class TakeUserIdDAO {
 
-	static int takeUserId(Connection con_read, String email) {
+	public static int takeUserId(Connection con_read, String email) {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");

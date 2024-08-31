@@ -22,7 +22,6 @@
     <fullyQualifiedTypeName name="java.sql.ResultSetMetaData"/>
     <fullyQualifiedTypeName name="application.util.Encryption"/>
     <fullyQualifiedTypeName name="application.util.PasswordManager"/>
-    <fullyQualifiedTypeName name="model.Dao.db.DatabaseConnection"/>
     <fullyQualifiedTypeName name="application.util.entity.Proposal"/>
     <fullyQualifiedTypeName name="javax.servlet.ServletContext"/>
     <fullyQualifiedTypeName name="javax.servlet.http.Part"/>
@@ -39,13 +38,20 @@
     <fullyQualifiedTypeName name="application.util.cryptography.Encryption"/>
     <fullyQualifiedTypeName name="application.util.cryptography.PasswordManager"/>
     <fullyQualifiedTypeName name="model.Dao.LoginDAO"/>
-    <fullyQualifiedTypeName name="model.Dao.TakeUserIdDAO"/>
-    <fullyQualifiedTypeName name="model.Dao.CookieDAO"/>
     <fullyQualifiedTypeName name="java.util.Base64"/>
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="model.Dao.db.DatabaseQuery"/>
-    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
     <fullyQualifiedTypeName name="controller.Servlet.userLogged.AuthUtils"/>
     <fullyQualifiedTypeName name="application.util.entity.UserLogged"/>
     <fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
+    <fullyQualifiedTypeName name="model.Dao.db.DatabaseConnection"/>
+    <fullyQualifiedTypeName name="model.Dao.CookieDAO"/>
+    <fullyQualifiedTypeName name="model.Dao.StoreCookieDAO"/>
+    <fullyQualifiedTypeName name="model.Dao.TakeUserIdDAO"/>
+    <fullyQualifiedTypeName name="model.Dao.cookie.TokenExistsDAO"/>
+    <fullyQualifiedTypeName name="model.Dao.cookie.IsTokenValidDAO"/>
+    <fullyQualifiedTypeName name="model.Dao.cookie.GetEmailFromTokenDAO"/>
+    <fullyQualifiedTypeName name="model.Dao.cookie.CleanExpiredTokenDAO"/>
+    <fullyQualifiedTypeName name="model.Dao.cookie.DeleteTokenDAO"/>
+    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
 </qualifiedTypeNameHistroy>

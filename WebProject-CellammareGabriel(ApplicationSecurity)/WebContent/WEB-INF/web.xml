@@ -19,7 +19,7 @@
 	
 	<filter>
 		<filter-name>LoginFilter</filter-name>
-		<filter-class>controller.Servlet.userLogged.LoginFilter</filter-class>
+		<filter-class>application.util.filter.LoginFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
@@ -30,7 +30,7 @@
 		
 	<filter>
 		<filter-name>UserLoggedFilter</filter-name>
-		<filter-class>controller.Servlet.userLogged.UserLoggedFilter</filter-class>
+		<filter-class>application.util.filter.UserLoggedFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
@@ -38,5 +38,7 @@
 		<url-pattern>/userLoggedIndex.jsp</url-pattern>
 	</filter-mapping>
 
-		
+	  <session-config>
+        <session-timeout>1</session-timeout>
+    </session-config>
 </web-app>

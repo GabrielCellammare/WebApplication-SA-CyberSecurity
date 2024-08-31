@@ -23,9 +23,10 @@ public class UserLogged {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		this.timestamp = currentDateTime.format(formatter).getBytes(java.nio.charset.StandardCharsets.UTF_8);	
 		this.csrfToken=this.generateCsrfToken();
+		this.csrfTokenString=this.generateTTokenString(this.csrfToken);
 		this.cookieToken=this.generateSecureCookieToken();
 		this.cookieTokenString=this.generateTTokenString(this.cookieToken);
-		this.csrfTokenString=this.generateTTokenString(this.csrfToken);
+
 	}
 	
 	public UserLogged(byte[] byte_encryptedEmail,String cookieTokenString){

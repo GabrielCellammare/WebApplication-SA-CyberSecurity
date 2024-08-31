@@ -1,8 +1,6 @@
 package controller.Servlet.userLogged;
 
 import java.io.IOException;
-import java.util.Base64;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -12,7 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import application.util.customMessage.DisplayMessage;
-import model.Dao.CookieDAO;
+import model.Dao.cookie.DeleteTokenDAO;
+
 
 /**
  * Servlet implementation class LogoutServlet
@@ -44,8 +43,7 @@ public class LogoutServlet extends HttpServlet {
 			for (Cookie cookie : cookies) {
 				if ("rememberMe".equals(cookie.getName())) {
 					String cookie_TokenString = cookie.getValue();
-					CookieDAO.deleteToken(cookie_TokenString);
-
+					DeleteTokenDAO.deleteToken(cookie_TokenString);
 					// Rimuove il cookie dal browser
 					cookie.setMaxAge(0);
 					cookie.setHttpOnly(true);
@@ -54,7 +52,8 @@ public class LogoutServlet extends HttpServlet {
 				}
 			}
 		}
-
+		
+		DisplayMessage.showPanel("Logout effettuato correttamente!");
 		response.sendRedirect("userNotLoggedLogin.jsp");
 	}
 }
