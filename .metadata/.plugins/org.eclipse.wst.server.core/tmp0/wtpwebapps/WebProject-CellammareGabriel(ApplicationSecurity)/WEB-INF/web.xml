@@ -37,8 +37,4 @@
 		<filter-name>UserLoggedFilter</filter-name>
 		<url-pattern>/userLoggedIndex.jsp</url-pattern>
 	</filter-mapping>
-
-	  <session-config>
-        <session-timeout>1</session-timeout>
-    </session-config>
 </web-app>

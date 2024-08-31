@@ -46,20 +46,22 @@ $(document).ready(function() {
 	
 	var inattivitaTimer; // Variabile per memorizzare l'ID del timer
 
-	// Funzione chiamata quando l'utente compie un'azione
-	function resetInattivitaTimer() {
-	        clearTimeout(inattivitaTimer); // Resetta il timer
-	        inattivitaTimer = setTimeout(function() {
-	            // Esegui la funzione di logout dopo il periodo di inattività
-	            logout();
-	        }, 600000); // 10minuti
-	    }
+    // Funzione chiamata per resettare il timer di inattività
+    function resetInattivitaTimer() {
+        clearTimeout(inattivitaTimer); // Resetta il timer esistente
+        inattivitaTimer = setTimeout(function(){logout();}, 60000); // Imposta un nuovo timer per il logout dopo 10 minuti
+    }
 
-	    // Chiamata quando la pagina si carica
-	$(document).on('click keypress mousemove', function() {
-	        resetInattivitaTimer();
-	    });
+    // Eventi che indicano attività dell'utente
+    $(document).on('mousemove keypress click', function() {
+        resetInattivitaTimer();
+    });
+
+    // Imposta inizialmente il timer di inattività quando la pagina si carica
+    resetInattivitaTimer();
+
 });
+
 
 function uploadFile() {
 	var formData = new FormData(document.getElementById('uploadForm'));
