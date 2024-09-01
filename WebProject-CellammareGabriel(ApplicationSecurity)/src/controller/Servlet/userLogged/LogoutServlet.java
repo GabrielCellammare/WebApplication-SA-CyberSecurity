@@ -54,7 +54,7 @@ public class LogoutServlet extends HttpServlet {
 		}
 		
 		DisplayMessage.showPanel("Logout manuale effettuato correttamente!");
-		response.sendRedirect("userNotLoggedLogin.jsp");
+		response.sendRedirect("userNotLoggedIndex.jsp");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,6 +66,7 @@ public class LogoutServlet extends HttpServlet {
 		}
 		
 		DisplayMessage.showPanel("Logout automatico effettuato correttamente!");
+		response.sendRedirect("userNotLoggedIndex.jsp");
 	}
 }
 

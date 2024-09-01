@@ -21,7 +21,7 @@ public class UserLogged {
 		this.byte_encryptedEmail=byte_encryptedEmail;
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		this.timestamp = currentDateTime.format(formatter).getBytes(java.nio.charset.StandardCharsets.UTF_8);	
+		this.timestamp = this.calculateTimeStamp(currentDateTime.format(formatter).getBytes(java.nio.charset.StandardCharsets.UTF_8));	
 		this.csrfToken=this.generateCsrfToken();
 		this.csrfTokenString=this.generateTTokenString(this.csrfToken);
 		this.cookieToken=this.generateSecureCookieToken();
@@ -33,7 +33,7 @@ public class UserLogged {
 		this.byte_encryptedEmail=byte_encryptedEmail;
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		this.timestamp = currentDateTime.format(formatter).getBytes(java.nio.charset.StandardCharsets.UTF_8);	
+		this.timestamp = this.calculateTimeStamp(currentDateTime.format(formatter).getBytes(java.nio.charset.StandardCharsets.UTF_8));	
 		this.csrfToken=this.generateCsrfToken();
 		this.cookieToken=null;
 		this.cookieTokenString=cookieTokenString;
@@ -76,6 +76,12 @@ public class UserLogged {
 		
 		return Base64.getEncoder().encodeToString(PasswordManager.concatenateAndHash(this.byte_encryptedEmail, token));
 
+	}
+	
+	private byte[] calculateTimeStamp(byte[] timestamp) {
+		
+		return PasswordManager.concatenateAndHash(timestamp, PasswordManager.generateRandomBytes(timestamp.length));
+		
 	}
 
 	public byte[] getByte_encryptedEmail() {

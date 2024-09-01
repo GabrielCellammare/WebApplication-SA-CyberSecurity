@@ -11,11 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-
-import application.util.EmailChecker;
-import application.util.ImageProfileFileChecker;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
+import application.util.fileChecker.EmailChecker;
+import application.util.fileChecker.ImageProfileFileChecker;
 import model.Dao.registration.RegistrationDAO;
 
 

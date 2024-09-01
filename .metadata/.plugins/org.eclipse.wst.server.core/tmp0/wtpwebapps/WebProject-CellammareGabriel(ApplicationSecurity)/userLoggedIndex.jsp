@@ -59,7 +59,7 @@ $(document).ready(function() {
                 	window.location.href = "userNotLoggedIndex.jsp";
                 }
             });
-        	}, 60000); // Imposta un nuovo timer per il logout dopo 10 minuti
+        	}, 900000); // Imposta un nuovo timer per il logout dopo 15 minuti di inattività
     }
 
     // Eventi che indicano attività dell'utente
@@ -209,7 +209,7 @@ function logout() {
                 localStorage.removeItem('email');
 
                 // Reindirizza alla pagina di login dopo il logout
-                window.location.href = "userNotLoggedLogin.jsp";
+                window.location.href = "userNotLoggedIndex.jsp";
             },
             error: function (xhr, status, error) {
                 console.error('Errore durante il logout:', status, error);

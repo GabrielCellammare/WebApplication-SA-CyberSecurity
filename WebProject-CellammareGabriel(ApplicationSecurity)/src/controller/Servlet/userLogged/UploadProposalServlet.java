@@ -16,11 +16,11 @@ import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 
-import application.util.ProposalChecker;
 import application.util.cryptography.Encryption;
 import application.util.customMessage.DisplayMessage;
 import application.util.entity.Proposal;
 import application.util.entity.UserLogged;
+import application.util.fileChecker.ProposalChecker;
 import model.Dao.proposal.ProposalDAO;
 
 /**

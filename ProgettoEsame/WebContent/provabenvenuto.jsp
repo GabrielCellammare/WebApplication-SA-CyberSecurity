@@ -267,7 +267,7 @@ $(document).ready(function() {
         inattivitaTimer = setTimeout(function() {
             // Esegui la funzione di logout dopo il periodo di inattività
             logout();
-        }, 600000); // 10minuti
+        }, 600000); // 10minuti in millisecondi
     }
 
     // Chiamata quando la pagina si carica

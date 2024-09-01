@@ -1,0 +1,30 @@
+package application.util.cryptography;
+
+public class CookieUtil {
+
+	    private static final String SECRET_KEY = "your-secret-key";  // Usa una chiave segreta sicura
+
+	    public static String signCookieValue(String value) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+	        Signature signature = Signature.getInstance("HmacSHA256");
+	        SecretKeySpec secretKey = new SecretKeySpec(SECRET_KEY.getBytes(), "HmacSHA256");
+	        signature.initSign(secretKey);
+	        signature.update(value.getBytes());
+	        return value + ":" + Base64.getEncoder().encodeToString(signature.sign());
+	    }
+
+	    public static boolean verifyCookieValue(String valueWithSignature) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+	        String[] parts = valueWithSignature.split(":");
+	        if (parts.length != 2) {
+	            return false;
+	        }
+	        String value = parts[0];
+	        String signature = parts[1];
+
+	        Signature sig = Signature.getInstance("HmacSHA256");
+	        SecretKeySpec secretKey = new SecretKeySpec(SECRET_KEY.getBytes(), "HmacSHA256");
+	        sig.initVerify(secretKey);
+	        sig.update(value.getBytes());
+	        return sig.verify(Base64.getDecoder().decode(signature));
+	    }
+	}
+}
