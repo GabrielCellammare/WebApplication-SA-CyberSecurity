@@ -45,8 +45,7 @@ public class LoginFilter implements Filter {
 		// Recupera la sessione corrente, se esiste
 		HttpSession session = httpRequest.getSession(false);
 		boolean isLoggedIn = (session != null && session.getAttribute("email") != null);
-		System.out.println("Sessione: "+ httpRequest.getSession(false));
-		
+
 		// Stampa di debug per la sessione e l'email
 		if (session != null) {
 			System.out.println("isLOGGEDIN: " + isLoggedIn);

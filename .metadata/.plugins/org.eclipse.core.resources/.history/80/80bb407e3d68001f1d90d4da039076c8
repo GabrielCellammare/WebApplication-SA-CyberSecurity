@@ -56,17 +56,6 @@ public class LogoutServlet extends HttpServlet {
 		DisplayMessage.showPanel("Logout manuale effettuato correttamente!");
 		response.sendRedirect("userNotLoggedLogin.jsp");
 	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate();
-		}
-		
-		DisplayMessage.showPanel("Logout automatico effettuato correttamente!");
-	}
 }
 
 

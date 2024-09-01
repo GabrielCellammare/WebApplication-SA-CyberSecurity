@@ -57,15 +57,30 @@ public class LogoutServlet extends HttpServlet {
 		response.sendRedirect("userNotLoggedLogin.jsp");
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			session.invalidate();
 		}
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("rememberMe".equals(cookie.getName())) {
+					String cookie_TokenString = cookie.getValue();
+					DeleteTokenDAO.deleteToken(cookie_TokenString);
+					// Rimuove il cookie dal browser
+					cookie.setMaxAge(0);
+					cookie.setHttpOnly(true);
+					cookie.setSecure(true);
+					response.addCookie(cookie);
+				}
+			}
+		}
 		
-		DisplayMessage.showPanel("Logout automatico effettuato correttamente!");
+		DisplayMessage.showPanel("Logout manuale effettuato correttamente!");
+		response.sendRedirect("userNotLoggedLogin.jsp");
 	}
 }
 

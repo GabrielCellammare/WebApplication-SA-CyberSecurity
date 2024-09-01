@@ -65,7 +65,8 @@ public class LogoutServlet extends HttpServlet {
 			session.invalidate();
 		}
 		
-		DisplayMessage.showPanel("Logout automatico effettuato correttamente!");
+		DisplayMessage.showPanel("Logout manuale effettuato correttamente!");
+		response.sendRedirect("userNotLoggedLogin.jsp");
 	}
 }
 

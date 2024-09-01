@@ -56,7 +56,7 @@ $(document).ready(function() {
                 type: 'POST',
                 url: 'LogoutServlet', // Presuppone che tu abbia un servlet per gestire il logout
                 success: function() {
-                	window.location.href = "userNotLoggedIndex.jsp";
+                    
                 }
             });
         	}, 60000); // Imposta un nuovo timer per il logout dopo 10 minuti
