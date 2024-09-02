@@ -2,11 +2,13 @@ package application.util.cryptography;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Properties;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
@@ -14,36 +16,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Encryption {
 
-	private static final String AES_KEY = aesKey();
-	private static final String AES_IV = "5983602714946835";
-	private static SecretKey secretKey = null;
-
-	
-	public static byte[] encrypt(byte[] data) throws Exception {
-		SecretKey key = getSecretKey();
-		if (key != null) {
-			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(AES_IV.getBytes()));
-			return cipher.doFinal(data);
-		} else {
-			System.out.println("Chiave non valida.");
-			return null;
-		}
-	}
-
-	public static byte[] decrypt(byte[] encryptedBytes) throws Exception {
-		SecretKey key = getSecretKey();
-		if (key != null) {
-			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(AES_IV.getBytes()));
-			return cipher.doFinal(encryptedBytes);
-		} else {
-			System.out.println("Chiave non valida.");
-			return null;
-		}
-	}
-
-	private static String aesKey() {
+	private static char[] readAesKey() {
 		Properties appProperties = new Properties();
 
 		try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.ini")) {
@@ -58,16 +31,72 @@ public class Encryption {
 			return null;
 		}
 
-		return appProperties.getProperty("aes.key");
+		return Encryption.parseStringtoCharArray(appProperties.getProperty("aes.key"));
 	}
 	
-	private static SecretKey getSecretKey() {
-		if (secretKey == null) {
-			secretKey = new SecretKeySpec(Base64.getDecoder().decode(AES_KEY), "AES");
+	private static char[] readAES_IV() {
+		Properties appProperties = new Properties();
+
+		try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.ini")) {
+			if (input == null) {
+				System.out.println("File di configurazione config.ini non trovato.");
+				return null;
+			}
+			appProperties.load(input);
+		} catch (IOException e) {
+			System.out.println("Query AESIV - AesIV.key");
+			e.printStackTrace();
+			return null;
 		}
-		return secretKey;
+
+		return Encryption.parseStringtoCharArray(appProperties.getProperty("aes.iv"));
 	}
 	
+	private static SecretKey getSecretKey(char[] AES_KEY) {
+	
+		return new SecretKeySpec(Base64.getDecoder().decode(String.copyValueOf(AES_KEY)), "AES");
+		
+	}
+	
+	public static byte[] encrypt(byte[] data) throws Exception {
+		char[] AES_KEY=Encryption.readAesKey();
+		SecretKey key = Encryption.getSecretKey(AES_KEY);
+		char [] AES_IV = Encryption.readAES_IV();
+		if (key != null) {
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(Encryption.chartoBytes(AES_IV)));
+			java.util.Arrays.fill(AES_KEY, '\0');
+			java.util.Arrays.fill(AES_IV, '\0');
+			return cipher.doFinal(data);
+		} else {
+			java.util.Arrays.fill(AES_KEY, '\0');
+			java.util.Arrays.fill(AES_IV, '\0');
+			System.out.println("Chiave non valida.");
+			return null;
+		}
+		
+	}
+
+	public static byte[] decrypt(byte[] encryptedBytes) throws Exception {
+		char[] AES_KEY=Encryption.readAesKey();
+		SecretKey key = Encryption.getSecretKey(AES_KEY);
+		char[] AES_IV = Encryption.readAES_IV();
+		if (key != null) {
+			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(Encryption.chartoBytes(AES_IV)));
+			java.util.Arrays.fill(AES_KEY, '\0');
+			java.util.Arrays.fill(AES_IV, '\0');
+			return cipher.doFinal(encryptedBytes);
+		} else {
+			System.out.println("Chiave non valida.");
+			java.util.Arrays.fill(AES_KEY, '\0');
+			java.util.Arrays.fill(AES_IV, '\0');
+			return null;
+		}
+		
+		
+	}
+
 	public static byte[] addPadding(byte[] bytes) {
 		int paddingLength = 16 - bytes.length % 16;
 		byte[] paddingBytes = new byte[paddingLength];
@@ -96,4 +125,26 @@ public class Encryption {
 		return new String(byteArray, StandardCharsets.UTF_8);
 	}
 
-}
+	
+	public static char[] parseStringtoCharArray(String str) {
+		char[] arr = new char[str.length()]; 
+		  
+   
+        for (int i = 0; i < str.length(); i++) { 
+
+            arr[i] = str.charAt(i); 
+        } 
+        
+        return arr;
+  
+	}
+	
+	private static byte[] chartoBytes(char[] chars) {
+		  CharBuffer charBuffer = CharBuffer.wrap(chars);
+		  ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
+		  byte[] bytes = Arrays.copyOfRange(byteBuffer.array(),
+		            byteBuffer.position(), byteBuffer.limit());
+		  Arrays.fill(byteBuffer.array(), (byte) 0); // clear sensitive data
+		  return bytes;
+		}
+}	

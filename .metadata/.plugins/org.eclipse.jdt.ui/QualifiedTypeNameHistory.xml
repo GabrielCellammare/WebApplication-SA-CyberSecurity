@@ -35,10 +35,7 @@
     <fullyQualifiedTypeName name="com.adobe.internal.xmp.impl.Base64"/>
     <fullyQualifiedTypeName name="java.time.LocalDateTime"/>
     <fullyQualifiedTypeName name="java.time.format.DateTimeFormatter"/>
-    <fullyQualifiedTypeName name="application.util.cryptography.Encryption"/>
-    <fullyQualifiedTypeName name="application.util.cryptography.PasswordManager"/>
     <fullyQualifiedTypeName name="model.Dao.LoginDAO"/>
-    <fullyQualifiedTypeName name="java.util.Base64"/>
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="model.Dao.db.DatabaseQuery"/>
     <fullyQualifiedTypeName name="controller.Servlet.userLogged.AuthUtils"/>
@@ -54,4 +51,10 @@
     <fullyQualifiedTypeName name="model.Dao.cookie.CleanExpiredTokenDAO"/>
     <fullyQualifiedTypeName name="model.Dao.cookie.DeleteTokenDAO"/>
     <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
+    <fullyQualifiedTypeName name="java.nio.CharBuffer"/>
+    <fullyQualifiedTypeName name="java.nio.ByteBuffer"/>
+    <fullyQualifiedTypeName name="java.nio.charset.Charset"/>
+    <fullyQualifiedTypeName name="java.util.Base64"/>
+    <fullyQualifiedTypeName name="application.util.cryptography.PasswordManager"/>
+    <fullyQualifiedTypeName name="application.util.cryptography.Encryption"/>
 </qualifiedTypeNameHistroy>

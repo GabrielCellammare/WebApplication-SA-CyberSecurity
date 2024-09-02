@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value=""/>
+		<item key="selection" value="getFileNameFromPath"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="true"/>
-		<item key="wholeword" value="false"/>
+		<item key="wholeword" value="true"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="getFileNameFromPath"/>
+			<item value="cleanedHtml"/>
+			<item value="cleaned"/>
+			<item value="email"/>
+			<item value="loadPro"/>
+			<item value="clear"/>
+			<item value="inat"/>
+			<item value="isRefreshing"/>
+			<item value="isLogoutExecuted"/>
+			<item value="scrittaAggiunta"/>
+			<item value="list"/>
 			<item value="Session"/>
 			<item value="sessio"/>
 			<item value="/"/>
-			<item value="clear"/>
 			<item value="maxInactive"/>
-			<item value="userNotLoggedLogin"/>
-			<item value="import java.sql.ResultSet;"/>
-			<item value="getToken"/>
-			<item value="remember"/>
-			<item value="isIndex"/>
-			<item value="userEmail"/>
-			<item value="reset"/>
-			<item value="timeout"/>
-			<item value="/u"/>
-			<item value="check"/>
 		</list>
 		<list key="replacehistory">
 			<item value="userNotLoggedIndex.jsp"/>
@@ -39,8 +39,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="293"/>
-		<item key="DIALOG_Y_ORIGIN" value="153"/>
+		<item key="DIALOG_X_ORIGIN" value="1386"/>
+		<item key="DIALOG_Y_ORIGIN" value="199"/>
 		<item key="DIALOG_WIDTH" value="336"/>
 		<item key="DIALOG_HEIGHT" value="454"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>

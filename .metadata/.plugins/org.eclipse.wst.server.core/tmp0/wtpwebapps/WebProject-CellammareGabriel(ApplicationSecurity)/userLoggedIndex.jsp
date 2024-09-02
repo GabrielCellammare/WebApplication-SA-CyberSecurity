@@ -48,7 +48,6 @@ $(document).ready(function() {
 
     // Funzione chiamata per resettare il timer di inattività
     function resetInattivitaTimer() {
-        clearTimeout(inattivitaTimer); // Resetta il timer esistente
         inattivitaTimer = setTimeout(function(){
         	
         	 // Invalida la sessione dell'utente
@@ -71,7 +70,6 @@ $(document).ready(function() {
     resetInattivitaTimer();
 
 });
-
 
 function uploadFile() {
 	var formData = new FormData(document.getElementById('uploadForm'));
@@ -105,8 +103,6 @@ function uploadFile() {
 	
 	
 }
-
-
 
 
 // Funzione per caricare la lista delle proposte
@@ -200,7 +196,7 @@ var isRefreshing = false;
 
 function logout() {
     if (!isLogoutExecuted) {
-        // Effettua una chiamata al server per invalidare la sessione
+        // Effettua una chiamata al server per invalidare la sessione ed eliminare cookie
         $.ajax({
             url: 'LogoutServlet',
             type: 'GET',
@@ -234,27 +230,7 @@ window.addEventListener('beforeunload', function (event) {
     }
 });
 
-// Gestisci il logout quando l'utente fa clic sul pulsante di navigazione del browser
-window.addEventListener('popstate', function () {
-    console.log('popstate event');
 
-    if (!isLogoutExecuted && !isRefreshing) {
-        // Esegui la funzione di logout solo se necessario
-                console.log('Performing logout');
-
-        logout();
-    }
-});
-
-
-
-/*$(document).ready(function () {
-    // Gestore del clic per il bottone di aggiornamento
-    $('#refreshProposals').on('click', function () {
-        loadProposalList(); // Chiama la funzione per aggiornare la lista delle proposte
-    });
-});
-*/
 
 
 // Chiamata alla funzione durante il caricamento della pagina
@@ -282,6 +258,7 @@ function closeBanner() {
 		<div class="navbar-buttons">
 			<button id="closeBannerButton" class="button" onclick="closeBanner()">Chiudi
 				proposta</button>
+			<a href="userNotLoggedIndex.jsp" class="button">Homepage</a>	
 			<button id="refreshProposals" type="button" class="button"
 				onclick="loadProposalList()">Aggiorna Lista Proposte</button>
 

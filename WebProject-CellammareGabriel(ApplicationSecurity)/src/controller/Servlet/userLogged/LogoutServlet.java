@@ -1,6 +1,8 @@
 package controller.Servlet.userLogged;
 
 import java.io.IOException;
+import java.util.Base64;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -42,24 +44,28 @@ public class LogoutServlet extends HttpServlet {
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				if ("rememberMe".equals(cookie.getName())) {
-					String cookie_TokenString = cookie.getValue();
-					DeleteTokenDAO.deleteToken(cookie_TokenString);
-					// Rimuove il cookie dal browser
-					cookie.setMaxAge(0);
-					cookie.setHttpOnly(true);
-					cookie.setSecure(true);
-					response.addCookie(cookie);
+					byte[] cookieByte = Base64.getDecoder().decode(cookie.getValue()); 
+					if(DeleteTokenDAO.deleteToken(Base64.getEncoder().encodeToString(cookieByte))) {
+						// Rimuove il cookie dal browser
+						cookie.setMaxAge(0);
+						cookie.setHttpOnly(true);
+						cookie.setSecure(true);
+						response.addCookie(cookie);
+						DisplayMessage.showPanel("Logout manuale effettuato correttamente!");
+						response.sendRedirect("userNotLoggedIndex.jsp");
+					}
+					
 				}
 			}
 		}
 		
-		DisplayMessage.showPanel("Logout manuale effettuato correttamente!");
-		response.sendRedirect("userNotLoggedIndex.jsp");
+		
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
+		//Invalido solo la sessione, non distruggo i cookie
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			session.invalidate();

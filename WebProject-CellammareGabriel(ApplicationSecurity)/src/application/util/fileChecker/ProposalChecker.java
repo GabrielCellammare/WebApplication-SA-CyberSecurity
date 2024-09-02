@@ -44,68 +44,10 @@ public class ProposalChecker {
 		// Se si arriva qui, qualcosa è andato storto, restituisci false
 		return false;
 	}
-
-	/**
-	public static String processFile(Part filePart) {
-
-		try(InputStream inputstream = filePart.getInputStream()) {
-			long maxSizeInBytes = 20 * 1024 * 1024;
-			if (filePart.getSize() > maxSizeInBytes) {
-				DisplayMessage.showPanel(
-						"Il file supera la dimensione massima consentita. Il file puo' essere massimo di 20 MB");
-				return null;
-			}
-
-			// Controlla content-type con Tika
-			Tika tika = new Tika();
-			String contentType = tika.detect(inputstream);
-		} catch (IOException e) {
-			e.printStackTrace();
-			DisplayMessage.showPanel("C'è stato un problema con il caricamento del file!");
-
-			// Restituisci null in caso di eccezione
-			return null;
-		}
-		if ("text/plain".equals(contentType) || "text/html".equals(contentType)) {
-
-			try(InputStream fileContent = filePart.getInputStream()){
-				// Leggi il contenuto del filePart
-				byte[] contentBytes = new byte[fileContent.available()];
-				inputstream.read(contentBytes);
-				String content = new String(contentBytes, StandardCharsets.UTF_8);
-				// Rimuovi gli script JavaScript, compreso il testo all'interno
-
-				Document document = Jsoup.parse(content);
-				document.select("script, [type=application/javascript], [type=text/javascript]").remove();
-				document.select("[text]").unwrap(); // Rimuovi anche il testo all'interno dei tag script
-
-				document.select("[onclick]").removeAttr("onclick");
-				document.select("[onload]").removeAttr("onload");
-
-				String cleanedHtml = document.toString();
-
-				return cleanedHtml;
-			}catch (IOException e) {
-				e.printStackTrace();
-				DisplayMessage.showPanel("C'è stato un problema con il caricamento del file!");
-
-				// Restituisci null in caso di eccezione
-				return null;
-			}
-		}
-		else {
-			DisplayMessage.showPanel("Il file contiene del testo non valido!");
-
-			// Restituisci null quando il file non è valido
-			return null;
-		}
-
-	}
-	*/
 	
 	public static String processFile(Part filePart) {
 
-	    long maxSizeInBytes = 10 * 1024 * 1024;
+	    long maxSizeInBytes = 10 * 1024 * 1024; //Max 10MB
 	    if (filePart.getSize() > maxSizeInBytes) {
 	        DisplayMessage.showPanel(
 	                "Il file supera la dimensione massima consentita. Il file puo' essere massimo di 10 MB");

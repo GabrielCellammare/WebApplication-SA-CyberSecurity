@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Web Application Gabriel Cellammare</title>
-    <!-- Il mio file css -->
     <style><%@include file="/WEB-INF/css/styleIndex.css"%></style>
 </head>
 <body>

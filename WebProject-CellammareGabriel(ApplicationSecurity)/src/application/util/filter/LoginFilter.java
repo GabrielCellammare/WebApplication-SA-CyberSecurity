@@ -1,6 +1,8 @@
 package application.util.filter;
 
 import java.io.IOException;
+import java.util.Base64;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import application.util.cryptography.Encryption;
+import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
 import application.util.entity.UserLogged;
 import model.Dao.cookie.DeleteTokenDAO;
@@ -27,7 +30,6 @@ public class LoginFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		// Inizializzazione se necessaria
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class LoginFilter implements Filter {
 		boolean isLoginRequest = requestURI.endsWith(LOGIN_PAGE);
 
 
-		// Gestione autenticazione tramite cookie
+		// Gestione autenticazione tramite cookie se presenti
 		if (!isLoggedIn) {
 			Cookie[] cookies = httpRequest.getCookies();
 			if (cookies != null) {
@@ -66,18 +68,17 @@ public class LoginFilter implements Filter {
 				for (Cookie cookie : cookies) {
 					if ("rememberMe".equals(cookie.getName())) {
 						cookieRemembermeFound=true;
-						String cookie_TokenString = cookie.getValue();
-						System.out.println("Token cookie individuato: " + cookie_TokenString);
-
+						byte[] cookieByte = Base64.getDecoder().decode(cookie.getValue());
+						System.out.println("Token cookie individuato: " + cookie.getValue());
 
 						//Verifico prima che il cookie esista e che non sia stato eliminato dalla routine
-						if(TokenExistsDAO.tokenExists(cookie_TokenString)) {
+						if(TokenExistsDAO.tokenExists(Base64.getEncoder().encodeToString(cookieByte))) {
 
 
 							//Verifico che sia valido (data di scadenza)
-							if (IsTokenValidDAO.isTokenValid(cookie_TokenString)) {
+							if (IsTokenValidDAO.isTokenValid(Base64.getEncoder().encodeToString(cookieByte))) {
 								// Autenticazione tramite cookie riuscita
-								String email = GetEmailFromTokenDAO.getEmailFromToken(cookie_TokenString);
+								String email = GetEmailFromTokenDAO.getEmailFromToken(Base64.getEncoder().encodeToString(cookieByte));
 
 								byte[] byte_email = email.getBytes(java.nio.charset.StandardCharsets.UTF_8); 
 								byte[] pad_email = Encryption.addPadding(byte_email);
@@ -92,27 +93,30 @@ public class LoginFilter implements Filter {
 								}
 
 								//Utente senza cookie token poichè già presente e registrato
-								UserLogged userlogged = new UserLogged(byte_encryptedEmail,cookie_TokenString);
+								UserLogged userlogged = new UserLogged(byte_encryptedEmail,cookieByte);
 
 								session = httpRequest.getSession(true);  // Crea una nuova sessione
 								session.setAttribute("email", email);
 								session.setAttribute("login", true);
-								session.setAttribute("csrfToken", userlogged.getCsrfTokenString());
+								session.setAttribute("csrfToken", Base64.getEncoder().encodeToString(userlogged.getCsrfToken()));
 
-								System.out.println("Token individuato la seconda volta: " + userlogged.getCsrfTokenString());
+								System.out.println("Token individuato la seconda volta: " + Base64.getEncoder().encodeToString(userlogged.getCsrfToken()));
 								session.setAttribute("userLogged", userlogged);
 								session.setMaxInactiveInterval(15 * 60);
+								PasswordManager.clearBytes(cookieByte);
 								isLoggedIn = true;  // Utente autenticato
 								break;
 							} else {
 								// Token non valido, rimuovi il cookie
-								if (DeleteTokenDAO.deleteToken(cookie_TokenString)) {
+								if (DeleteTokenDAO.deleteToken(Base64.getEncoder().encodeToString(cookieByte))) {
 									Cookie expiredCookie = new Cookie("rememberMe", null);
 									expiredCookie.setMaxAge(0);
 									expiredCookie.setHttpOnly(true);
 									expiredCookie.setSecure(true);
 									httpResponse.addCookie(expiredCookie);
 								}
+								
+								PasswordManager.clearBytes(cookieByte);
 								isLoggedIn = false;  // Imposta come non autenticato
 								break;
 							}
@@ -123,16 +127,19 @@ public class LoginFilter implements Filter {
 							expiredCookie.setSecure(true);
 							httpResponse.addCookie(expiredCookie);
 
+							PasswordManager.clearBytes(cookieByte);
 							isLoggedIn = false;  // Imposta come non autenticato
 							break;
 
 						}
+						
 					}
-
+					
 				}
 				
 				if(!cookieRemembermeFound) {
 					DisplayMessage.showPanel("Nessun cookie di tipo 'rememberme' individuato!");
+					
 				}
 			}
 			else {

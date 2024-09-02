@@ -14,30 +14,24 @@ public class UserLogged {
 	private byte[] timestamp;
 	private byte[] csrfToken;
 	private byte[] cookieToken;
-	private String cookieTokenString;
-	private String csrfTokenString;
+
 
 	public UserLogged(byte[] byte_encryptedEmail){
 		this.byte_encryptedEmail=byte_encryptedEmail;
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		this.timestamp = this.calculateTimeStamp(currentDateTime.format(formatter).getBytes(java.nio.charset.StandardCharsets.UTF_8));	
-		this.csrfToken=this.generateCsrfToken();
-		this.csrfTokenString=this.generateTTokenString(this.csrfToken);
-		this.cookieToken=this.generateSecureCookieToken();
-		this.cookieTokenString=this.generateTTokenString(this.cookieToken);
-
+		this.csrfToken=this.generateFinalToken(this.generateCsrfToken());
+		this.cookieToken=this.generateFinalToken(this.generateSecureCookieToken());
 	}
 	
-	public UserLogged(byte[] byte_encryptedEmail,String cookieTokenString){
+	public UserLogged(byte[] byte_encryptedEmail,byte[] cookieToken){
 		this.byte_encryptedEmail=byte_encryptedEmail;
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		this.timestamp = this.calculateTimeStamp(currentDateTime.format(formatter).getBytes(java.nio.charset.StandardCharsets.UTF_8));	
-		this.csrfToken=this.generateCsrfToken();
-		this.cookieToken=null;
-		this.cookieTokenString=cookieTokenString;
-		this.csrfTokenString=this.generateTTokenString(csrfToken);
+		this.csrfToken=this.generateFinalToken(this.generateCsrfToken());
+		this.cookieToken=cookieToken;
 	}
 
 	private byte[] generateCsrfToken() {
@@ -72,9 +66,9 @@ public class UserLogged {
 	}
 	
 	
-	private String generateTTokenString(byte[] token) {
+	private byte[] generateFinalToken(byte[] token) {
 		
-		return Base64.getEncoder().encodeToString(PasswordManager.concatenateAndHash(this.byte_encryptedEmail, token));
+		return Base64.getEncoder().encode(PasswordManager.concatenateAndHash(this.byte_encryptedEmail, token));
 
 	}
 	
@@ -100,17 +94,8 @@ public class UserLogged {
 		return cookieToken;
 	}
 
-	public String getCookieTokenString() {
-		return cookieTokenString;
-	}
-	
-	public String getCsrfTokenString() {
-		return csrfTokenString;
-	}
-
-	public void setCsrfTokenString() {
-		this.csrfToken=this.generateCsrfToken();
-		this.csrfTokenString=this.generateTTokenString(this.csrfToken);
+	public void setCsrfToken() {
+		this.csrfToken=this.generateFinalToken(this.generateCsrfToken());
 	}
  
 	

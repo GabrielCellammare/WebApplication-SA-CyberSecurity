@@ -10,7 +10,6 @@ import javax.servlet.http.Part;
 
 public class PasswordManager {
 
-	private final static SecureRandom secureRandom = new SecureRandom();
 	private final static char[] specialCharacters = {'!','@','#','$','%','^','&','.','*','(',')','-','_','+','=','<','>','?','.'};
 
 	public static void clearBytes(byte[] password) {
@@ -46,7 +45,7 @@ public class PasswordManager {
 
 	public static byte[] generateRandomBytes(int saltLenghts) {
 
-
+		SecureRandom secureRandom = new SecureRandom();
 		byte[] salt = new byte[saltLenghts];
 		secureRandom.nextBytes(salt);
 

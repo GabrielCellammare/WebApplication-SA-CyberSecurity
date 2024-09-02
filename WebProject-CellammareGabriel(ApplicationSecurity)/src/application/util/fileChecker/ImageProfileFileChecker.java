@@ -12,8 +12,6 @@ import org.apache.tika.sax.BodyContentHandler;
 import application.util.customMessage.DisplayMessage;
 
 
-
-
 public class ImageProfileFileChecker {
 
 	private final static long maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
@@ -26,7 +24,7 @@ public class ImageProfileFileChecker {
 		if (filePart != null && filePart.getSize() > 0) {
 
 			try {
-				printMetadata(filePart, tika);
+				ImageProfileFileChecker.printMetadata(filePart, tika);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
