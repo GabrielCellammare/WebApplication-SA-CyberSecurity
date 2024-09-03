@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
 import application.util.fileChecker.EmailChecker;
 import application.util.fileChecker.ImageProfileFileChecker;
+import application.util.fileChecker.ProposalChecker;
 import model.Dao.registration.RegistrationDAO;
 
 
@@ -49,7 +51,9 @@ public class RegistrationServlet extends HttpServlet {
 				if (Arrays.equals(password, retypePassword)) {
 					
 					//Inizio del TOC (Time of check)
-					byte[] checksum = PasswordManager.calculateChecksum(filePart);
+					
+					
+					byte[] checksum = Encryption.calculateChecksumFromPart(filePart);
 					if (ImageProfileFileChecker.checkImageFile(filePart)) {
 
 						byte[] salt = PasswordManager.generateRandomBytes(16);

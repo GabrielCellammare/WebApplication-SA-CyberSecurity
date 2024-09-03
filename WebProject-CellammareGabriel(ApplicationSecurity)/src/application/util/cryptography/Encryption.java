@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Properties;
@@ -13,6 +15,7 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.Part;
 
 public class Encryption {
 
@@ -33,7 +36,7 @@ public class Encryption {
 
 		return Encryption.parseStringtoCharArray(appProperties.getProperty("aes.key"));
 	}
-	
+
 	private static char[] readAES_IV() {
 		Properties appProperties = new Properties();
 
@@ -51,13 +54,13 @@ public class Encryption {
 
 		return Encryption.parseStringtoCharArray(appProperties.getProperty("aes.iv"));
 	}
-	
+
 	private static SecretKey getSecretKey(char[] AES_KEY) {
-	
+
 		return new SecretKeySpec(Base64.getDecoder().decode(String.copyValueOf(AES_KEY)), "AES");
-		
+
 	}
-	
+
 	public static byte[] encrypt(byte[] data) throws Exception {
 		char[] AES_KEY=Encryption.readAesKey();
 		SecretKey key = Encryption.getSecretKey(AES_KEY);
@@ -74,7 +77,7 @@ public class Encryption {
 			System.out.println("Chiave non valida.");
 			return null;
 		}
-		
+
 	}
 
 	public static byte[] decrypt(byte[] encryptedBytes) throws Exception {
@@ -93,8 +96,8 @@ public class Encryption {
 			java.util.Arrays.fill(AES_IV, '\0');
 			return null;
 		}
-		
-		
+
+
 	}
 
 	public static byte[] addPadding(byte[] bytes) {
@@ -104,7 +107,7 @@ public class Encryption {
 
 		return Arrays.copyOf(bytes, bytes.length + paddingLength);
 	}
-	
+
 	public static byte[] removePadding(byte[] bytes) {
 		int paddingValue = bytes[bytes.length - 1]; // Ottieni l'ultimo byte, che rappresenta il valore di padding
 		int unpaddedLength = bytes.length - paddingValue;
@@ -120,31 +123,63 @@ public class Encryption {
 		// Ritorna il nuovo array senza i byte di padding
 		return Arrays.copyOf(bytes, unpaddedLength);
 	}
-	
+
 	public static String byteArrayToString(byte[] byteArray) {
 		return new String(byteArray, StandardCharsets.UTF_8);
 	}
 
-	
+
 	public static char[] parseStringtoCharArray(String str) {
 		char[] arr = new char[str.length()]; 
-		  
-   
-        for (int i = 0; i < str.length(); i++) { 
 
-            arr[i] = str.charAt(i); 
-        } 
-        
-        return arr;
-  
+
+		for (int i = 0; i < str.length(); i++) { 
+
+			arr[i] = str.charAt(i); 
+		} 
+
+		return arr;
+
+	}
+
+	public static byte[] calculateChecksumFromPart(Part filePart) {
+	    try (InputStream inputStream = filePart.getInputStream()) {
+	        byte[] fileContent = inputStream.readAllBytes();
+	        return calculateChecksumFile(fileContent); // Usa la funzione di checksum che accetta byte[]
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 	
-	private static byte[] chartoBytes(char[] chars) {
-		  CharBuffer charBuffer = CharBuffer.wrap(chars);
-		  ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
-		  byte[] bytes = Arrays.copyOfRange(byteBuffer.array(),
-		            byteBuffer.position(), byteBuffer.limit());
-		  Arrays.fill(byteBuffer.array(), (byte) 0); // clear sensitive data
-		  return bytes;
+	public static byte[] calculateChecksumFile(byte[] fileContent){
+		// Crea l'istanza MessageDigest per SHA-256
+		MessageDigest digest = null;
+		try {
+			digest = MessageDigest.getInstance("SHA-256");
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		digest.update(fileContent);
+
+		// Calcola l'hash
+		String string = new String(digest.digest(), StandardCharsets.UTF_8);
+
+		System.out.println(string); // Output: Hello
+		return digest.digest();
+
+
+	}
+
+
+	private static byte[] chartoBytes(char[] chars) {
+		CharBuffer charBuffer = CharBuffer.wrap(chars);
+		ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
+		byte[] bytes = Arrays.copyOfRange(byteBuffer.array(),
+				byteBuffer.position(), byteBuffer.limit());
+		Arrays.fill(byteBuffer.array(), (byte) 0); // clear sensitive data
+		return bytes;
+	}
 }	

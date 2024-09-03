@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
@@ -13,11 +14,24 @@ import org.apache.tika.Tika;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import application.util.cryptography.Encryption;
 import application.util.customMessage.DisplayMessage;
 
 public class ProposalChecker {
 
-	public static boolean checkProposalFile(Part filePart, ServletContext context) throws IOException {
+	public static boolean checkProposalFile(Part filePart, ServletContext context, byte[] checksumOriginal) throws IOException {
+		
+		boolean check = false;
+		byte[] lastChecksum = Encryption.calculateChecksumFromPart(filePart);
+
+		check=Arrays.equals(checksumOriginal, lastChecksum);
+		System.out.println("Checksum 2: " + lastChecksum.toString());
+		
+
+		if(!check) {
+			DisplayMessage.showPanel("Non è stato possibile terminare il processo di verifica, i file non risultano uguali!");
+			return false; 
+		}
 		// Controlla se il file è stato effettivamente caricato
 		if (filePart != null && filePart.getSize() > 0) {
 			// Ottieni il nome del file
@@ -45,8 +59,9 @@ public class ProposalChecker {
 		return false;
 	}
 	
-	public static String processFile(Part filePart) {
-
+	public static String processFile(Part filePart,byte[] checksumOriginal) {
+		
+		
 	    long maxSizeInBytes = 10 * 1024 * 1024; //Max 10MB
 	    if (filePart.getSize() > maxSizeInBytes) {
 	        DisplayMessage.showPanel(
@@ -56,6 +71,18 @@ public class ProposalChecker {
 
 	    // Usa try-with-resources per gestire la chiusura dell'input stream
 	    try (InputStream inputStream = filePart.getInputStream()) {
+			boolean check = false;
+			
+			byte[] lastChecksum = Encryption.calculateChecksumFromPart(filePart);
+
+			check=Arrays.equals(checksumOriginal, lastChecksum);
+			System.out.println("Checksum 3: " + lastChecksum.toString());
+
+			if(!check) {
+				DisplayMessage.showPanel("Non è stato possibile terminare il processo di verifica, i file non risultano uguali!");
+				return null; 
+			}
+			
 	        // Controlla il content-type con Tika
 	        Tika tika = new Tika();
 	        String contentType = tika.detect(inputStream);
@@ -77,7 +104,9 @@ public class ProposalChecker {
 	                document.select("[onload]").removeAttr("onload");
 
 	                String cleanedHtml = document.toString();
-
+	                
+	                checksumOriginal = Encryption.calculateChecksumFile(cleanedHtml.getBytes(StandardCharsets.UTF_8));
+	                System.out.println("Checksum 4: " + checksumOriginal.toString());
 	                return cleanedHtml;
 	            }
 	        } else {
@@ -109,5 +138,6 @@ public class ProposalChecker {
 		}
 		return "";
 	}	
+	
 }
 

@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 import javax.servlet.http.Part;
-import application.util.cryptography.PasswordManager;
+
+import application.util.cryptography.Encryption;
 import application.util.customMessage.DisplayMessage;
 import model.Dao.TakeUserIdDAO;
 import model.Dao.db.DatabaseConnection;
@@ -38,8 +39,8 @@ public class RegistrationDAO {
 					ps.setBytes(2, password);
 
 					try(InputStream fileContent = filePart.getInputStream()){
-
-						byte[] lastChecksum = PasswordManager.calculateChecksum(filePart);
+						
+						byte[] lastChecksum = Encryption.calculateChecksumFromPart(filePart);
 
 						check=Arrays.equals(checksumOriginal, lastChecksum);
 

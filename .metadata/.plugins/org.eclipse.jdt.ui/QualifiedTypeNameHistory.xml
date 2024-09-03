@@ -56,5 +56,7 @@
     <fullyQualifiedTypeName name="java.nio.charset.Charset"/>
     <fullyQualifiedTypeName name="java.util.Base64"/>
     <fullyQualifiedTypeName name="application.util.cryptography.PasswordManager"/>
+    <fullyQualifiedTypeName name="application.util.fileChecker.ProposalChecker"/>
     <fullyQualifiedTypeName name="application.util.cryptography.Encryption"/>
+    <fullyQualifiedTypeName name="java.io.InputStream"/>
 </qualifiedTypeNameHistroy>

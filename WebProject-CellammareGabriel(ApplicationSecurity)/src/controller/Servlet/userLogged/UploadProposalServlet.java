@@ -1,13 +1,16 @@
 package controller.Servlet.userLogged;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +25,7 @@ import application.util.customMessage.DisplayMessage;
 import application.util.entity.Proposal;
 import application.util.entity.UserLogged;
 import application.util.fileChecker.ProposalChecker;
+import model.Dao.cookie.DeleteTokenDAO;
 import model.Dao.proposal.ProposalDAO;
 
 /**
@@ -63,8 +67,10 @@ public class UploadProposalServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Part filePart = request.getPart("proposal");
+		byte[] fileContent=null;
 		String email = request.getParameter("userEmail");
 		boolean boolSecureCsfr=false;
+		boolean check = false;
 
 		System.out.println(email);
 		System.out.println("Dentro il filtro POST 1");
@@ -89,36 +95,78 @@ public class UploadProposalServlet extends HttpServlet {
 			}else {
 				boolSecureCsfr=true;
 			}
-			
-			
+
+
 			System.out.println(csrfToken.length);
 			System.out.println(sessionCsrfToken.length);
+			System.out.println(areCharArraysEqual(sessionCsrfToken,csrfToken));
 			java.util.Arrays.fill(csrfToken, '\0');
 			java.util.Arrays.fill(sessionCsrfToken, '\0');
-			System.out.println(areCharArraysEqual(sessionCsrfToken,csrfToken));
+
 		} 
+		
+		byte[] checksumOriginalFile = Encryption.calculateChecksumFromPart(filePart);
+		
+		try (InputStream inputStream = filePart.getInputStream()) {
+		    fileContent = inputStream.readAllBytes();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		byte[] checksumOriginal = Encryption.calculateChecksumFile(fileContent);
+		
 
-		if (ProposalChecker.checkProposalFile(filePart, getServletContext()) && boolSecureCsfr) {
+		check=Arrays.equals(checksumOriginalFile, checksumOriginal);
 
-			userlogged.setCsrfToken();
-			byte[] newCsrfToken=userlogged.getCsrfToken();
-			session.setAttribute("csrfToken", Base64.getEncoder().encodeToString(newCsrfToken));
+		if(!check){
+			if (session != null) {
+				session.invalidate();
+			}
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if ("rememberMe".equals(cookie.getName())) {
+						byte[] cookieByte = Base64.getDecoder().decode(cookie.getValue()); 
+						if(DeleteTokenDAO.deleteToken(Base64.getEncoder().encodeToString(cookieByte))) {
+							// Rimuove il cookie dal browser
+							cookie.setMaxAge(0);
+							cookie.setHttpOnly(true);
+							cookie.setSecure(true);
+							response.addCookie(cookie);
+							DisplayMessage.showPanel("Logout fozato effettuato correttamente!");
+							response.sendRedirect("userNotLoggedIndex.jsp");
+						}
+						
+					}
+				}
+			}
+			DisplayMessage.showPanel("Non è stato possibile caricare il file della proposta, i file sembrano diversi!");
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+		
+		if (ProposalChecker.checkProposalFile(filePart, getServletContext(), checksumOriginal) && boolSecureCsfr) {
 
-			System.out.println("New CSFRF TOKEN " + Base64.getEncoder().encodeToString(newCsrfToken));
-
-			String cleanedHtml = ProposalChecker.processFile(filePart);
+			String cleanedHtml = ProposalChecker.processFile(filePart,checksumOriginal);
 
 			String filename = ProposalChecker.getFileName(filePart);
 			byte[] htmlBytes = cleanedHtml.getBytes(StandardCharsets.UTF_8);
 
 			try {
-				if (ProposalDAO.uploadFile(email,filename,htmlBytes)) {
-					DisplayMessage.showPanel("La proposta è stata correttamente caricata!");
+				if (ProposalDAO.uploadFile(email,filename,htmlBytes,checksumOriginal)) {
+
+					userlogged.setCsrfToken();
+					byte[] newCsrfToken=userlogged.getCsrfToken();
+					session.setAttribute("csrfToken", Base64.getEncoder().encodeToString(newCsrfToken));
+
+					System.out.println("New CSFRF TOKEN " + Base64.getEncoder().encodeToString(newCsrfToken));
+
 					response.setHeader("X-CSRF-Token", Base64.getEncoder().encodeToString(newCsrfToken));
 					// Invia il contenuto filtrato come risposta AJAX
 					response.setContentType("text/plain");
 
 					response.getWriter().write(cleanedHtml);
+					PasswordManager.clearBytes(newCsrfToken);
+					DisplayMessage.showPanel("La proposta è stata correttamente caricata!");
 				} else {
 					DisplayMessage.showPanel("Non è stato possibile caricare il file della proposta!");
 					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -127,7 +175,7 @@ public class UploadProposalServlet extends HttpServlet {
 				e.printStackTrace();
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			}
-			PasswordManager.clearBytes(newCsrfToken);
+
 		} else {
 			DisplayMessage.showPanel("File non valido o sessione non autentica!");
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
