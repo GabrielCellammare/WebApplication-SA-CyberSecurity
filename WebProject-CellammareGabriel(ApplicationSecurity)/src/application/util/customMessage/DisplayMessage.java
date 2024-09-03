@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 
 
-public class DisplayMessage{
+public final class DisplayMessage{
 
     public static void showPanel(String message) {
         // Crea una finestra e aggiungi il pannello

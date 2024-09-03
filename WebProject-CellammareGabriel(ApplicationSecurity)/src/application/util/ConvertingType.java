@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-public class ConvertingType {
+public final class ConvertingType {
 	
 	public static byte[] chartoBytes(char[] chars) {
 		CharBuffer charBuffer = CharBuffer.wrap(chars);
@@ -17,7 +17,7 @@ public class ConvertingType {
 		return bytes;
 	}
 
-	public static char[] parseStringtoCharArray(String str) {
+	public  static char[] parseStringtoCharArray(String str) {
 		char[] arr = new char[str.length()]; 
 
 
@@ -30,15 +30,15 @@ public class ConvertingType {
 
 	}
 	
-	public static String byteArrayToString(byte[] byteArray) {
+	public  static String byteArrayToString(byte[] byteArray) {
 		return new String(byteArray, StandardCharsets.UTF_8);
 	}
 	
-	public static byte[] stringToByteArray(String str) {
+	public  static byte[] stringToByteArray(String str) {
 		return str.getBytes(java.nio.charset.StandardCharsets.UTF_8);
 	}
 
-	public static boolean areCharArraysEqual(char[] array1, char[] array2) {
+	public final static boolean areCharArraysEqual(char[] array1, char[] array2) {
 		if (array1 == null || array2 == null) {
 			return array1 == array2;
 		}

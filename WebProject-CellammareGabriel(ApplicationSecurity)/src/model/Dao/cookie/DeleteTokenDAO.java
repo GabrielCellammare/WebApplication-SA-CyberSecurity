@@ -9,7 +9,7 @@ import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
-public class DeleteTokenDAO {
+public final class DeleteTokenDAO {
 
 	public static boolean deleteToken(byte[] cookieByte){
 		boolean status = false;

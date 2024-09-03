@@ -22,7 +22,7 @@ import model.Dao.registration.RegistrationDAO;
 
 @MultipartConfig
 @WebServlet("/RegistrationServlet")
-public class RegistrationServlet extends HttpServlet {
+public final class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**

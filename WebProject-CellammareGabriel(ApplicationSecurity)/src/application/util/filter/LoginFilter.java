@@ -23,7 +23,7 @@ import model.Dao.cookie.GetEmailFromTokenDAO;
 import model.Dao.cookie.IsTokenValidDAO;
 import model.Dao.cookie.TokenExistsDAO;
 
-public class LoginFilter implements Filter {
+public final class LoginFilter implements Filter {
 
 	private static final String LOGIN_PAGE = "userNotLoggedLogin.jsp";
 	private static final String INDEX_PAGE = "userLoggedIndex.jsp";

@@ -10,7 +10,7 @@ import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
-public class GetEmailFromTokenDAO {
+public final class GetEmailFromTokenDAO {
 	
 	public static String getEmailFromToken(byte[] cookieByte){
 		int id_user=0;

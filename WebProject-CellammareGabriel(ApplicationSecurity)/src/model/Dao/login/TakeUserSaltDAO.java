@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseQuery;
 
-class TakeUserSaltDAO {
+final class TakeUserSaltDAO {
 
 	static Blob takeUserSalt(Connection con_read, int id_user) {
 

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class DatabaseQuery {
+public final class DatabaseQuery {
 
 	public static String getSelectUserQuery() {
 		Properties appProperties = new Properties();

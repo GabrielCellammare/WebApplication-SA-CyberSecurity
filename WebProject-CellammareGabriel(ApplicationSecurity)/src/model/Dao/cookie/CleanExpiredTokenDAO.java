@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
-public class CleanExpiredTokenDAO {
+public final class CleanExpiredTokenDAO {
 	
 	//Cookie orfani
 	public static void cleanupExpiredToken(){

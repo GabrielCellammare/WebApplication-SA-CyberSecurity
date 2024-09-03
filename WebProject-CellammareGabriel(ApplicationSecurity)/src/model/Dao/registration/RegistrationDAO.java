@@ -13,7 +13,7 @@ import model.Dao.TakeUserIdDAO;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
-public class RegistrationDAO {
+public final class RegistrationDAO {
 
 
 	public static boolean userRegistration(String email, byte[] password, byte[] salt, Part filePart, byte[] checksumOriginal)

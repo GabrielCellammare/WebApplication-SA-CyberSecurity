@@ -11,7 +11,7 @@ import model.Dao.TakeUserIdDAO;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
-public class LoginDAO {
+public final class LoginDAO {
 	public static boolean isUserValid(String email, byte[] password) {
 
 		boolean status = false;

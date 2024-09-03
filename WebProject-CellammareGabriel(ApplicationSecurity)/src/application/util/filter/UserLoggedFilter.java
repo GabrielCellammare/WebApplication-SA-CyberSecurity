@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class UserLoggedFilter implements Filter {
+public final class UserLoggedFilter implements Filter {
 
 	private static final String LOGIN_PAGE = "userNotLoggedLogin.jsp";
 

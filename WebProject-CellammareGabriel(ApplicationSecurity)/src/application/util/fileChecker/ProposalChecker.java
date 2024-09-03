@@ -19,12 +19,13 @@ import org.apache.tika.Tika;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import application.util.ConvertingType;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
 import model.Dao.cookie.DeleteTokenDAO;
 
-public class ProposalChecker {
+public final class ProposalChecker {
 
 	public static boolean checkProposalFile(HttpServletRequest request, HttpServletResponse response, HttpSession session,Part filePart, ServletContext context, byte[] checksumOriginal) throws IOException {
 		
@@ -96,10 +97,9 @@ public class ProposalChecker {
 	            // Crea un nuovo InputStream per leggere di nuovo i dati
 	            try (InputStream fileContentStream = filePart.getInputStream()) {
 	                byte[] contentBytes = fileContentStream.readAllBytes();
-	                String content = new String(contentBytes, StandardCharsets.UTF_8);
 
 	                // Usa Jsoup per rimuovere gli script JavaScript
-	                Document document = Jsoup.parse(content);
+	                Document document = Jsoup.parse(ConvertingType.byteArrayToString(contentBytes)); //aggiunge i tag
 	                document.select("script, [type=application/javascript], [type=text/javascript]").remove();
 	                document.select("[text]").unwrap(); // Rimuove anche il testo all'interno dei tag script
 

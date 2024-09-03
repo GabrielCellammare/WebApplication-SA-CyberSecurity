@@ -9,12 +9,12 @@ import application.util.ConvertingType;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 
-public class UserLogged {
+public final class UserLogged {
 
 	private byte[] byte_encryptedEmail;
 	private byte[] timestamp;
 	private byte[] csrfToken; //Base64 byte encoding
-	private byte[] cookieToken;
+	private byte[] cookieToken; //Base64 byte encoding
 
 
 	public UserLogged(byte[] byte_encryptedEmail){

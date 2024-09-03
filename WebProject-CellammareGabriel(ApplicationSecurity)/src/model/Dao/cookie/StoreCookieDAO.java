@@ -13,7 +13,7 @@ import model.Dao.TakeUserIdDAO;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
-public class StoreCookieDAO {
+public final class StoreCookieDAO {
 
 	public static boolean storeCookie(byte[] byte_encryptedEmail, byte[] token){
 

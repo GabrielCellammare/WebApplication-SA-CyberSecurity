@@ -16,7 +16,7 @@ import javax.servlet.http.Part;
 
 import application.util.ConvertingType;
 
-public class Encryption {
+public final class Encryption {
 
 	public static byte[] encrypt(byte[] data) throws Exception {
 		char[] AES_KEY=Encryption.readAesKey();

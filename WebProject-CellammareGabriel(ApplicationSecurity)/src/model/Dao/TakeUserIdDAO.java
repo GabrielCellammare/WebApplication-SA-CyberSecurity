@@ -9,7 +9,7 @@ import application.util.customMessage.DisplayMessage;
 import java.sql.Connection;
 import model.Dao.db.DatabaseQuery;
 
-public class TakeUserIdDAO {
+public final class TakeUserIdDAO {
 
 	public static int takeUserId(Connection con_read, String email) {
 

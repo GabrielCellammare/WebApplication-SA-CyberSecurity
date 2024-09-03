@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import model.Dao.db.DatabaseQuery;
 
-class RegistrationUserSaltDAO {
+final class RegistrationUserSaltDAO {
 	static int registrationUserSalt(Connection con_write, int id_user, byte[] salt) throws SQLException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");

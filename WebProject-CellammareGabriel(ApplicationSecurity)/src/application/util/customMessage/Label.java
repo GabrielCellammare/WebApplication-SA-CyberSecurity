@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-class Label extends JPanel{
+final class Label extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 	private JLabel label;

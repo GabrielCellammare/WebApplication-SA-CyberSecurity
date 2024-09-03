@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseQuery;
 
-class UserAlreadyExistDAO {
+final class UserAlreadyExistDAO {
 	static int userAlreadyExists(Connection con_read, String email) throws SQLException {
 
 		try {

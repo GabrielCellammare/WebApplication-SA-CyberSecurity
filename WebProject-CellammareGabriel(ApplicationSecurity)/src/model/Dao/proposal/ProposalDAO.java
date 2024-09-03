@@ -17,7 +17,7 @@ import model.Dao.TakeUserIdDAO;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
-public class ProposalDAO {
+public final class ProposalDAO {
 	public static boolean uploadFile(HttpServletRequest request, HttpServletResponse response, HttpSession session,String email, String filename,byte[] fileContent,byte[] checksumOriginal)
 			throws IOException {
 		try {

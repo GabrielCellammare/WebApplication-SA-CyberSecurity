@@ -10,7 +10,7 @@ import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
-public class IsTokenValidDAO {
+public final class IsTokenValidDAO {
 	
 	public static boolean isTokenValid(byte[] cookieByte){
 		boolean status = false;

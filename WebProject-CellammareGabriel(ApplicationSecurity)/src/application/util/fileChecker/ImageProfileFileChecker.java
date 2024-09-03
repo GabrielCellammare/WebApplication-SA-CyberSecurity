@@ -16,7 +16,7 @@ import application.util.cryptography.Encryption;
 import application.util.customMessage.DisplayMessage;
 
 
-public class ImageProfileFileChecker {
+public final class ImageProfileFileChecker {
 
 	private final static long maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
 

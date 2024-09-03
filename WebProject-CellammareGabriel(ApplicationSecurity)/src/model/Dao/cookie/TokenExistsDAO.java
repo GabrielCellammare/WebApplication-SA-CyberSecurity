@@ -10,7 +10,7 @@ import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
-public class TokenExistsDAO {
+public final class TokenExistsDAO {
 
 	public static boolean tokenExists(byte[] cookieByte){
 		boolean status = false;

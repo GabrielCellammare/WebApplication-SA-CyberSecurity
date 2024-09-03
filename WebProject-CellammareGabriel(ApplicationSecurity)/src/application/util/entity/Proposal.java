@@ -11,7 +11,7 @@ import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
 
-public class Proposal {
+public final class Proposal {
 	private String email;
 	private String fileName;
 	private String htmlContent;

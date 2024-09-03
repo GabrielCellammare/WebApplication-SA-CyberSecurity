@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import application.util.customMessage.DisplayMessage;
 
-public class DatabaseConnection {
+public final class DatabaseConnection {
 
 	private final static String URL;
 	private final static String USERNAME_READ;

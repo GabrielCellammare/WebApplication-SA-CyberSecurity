@@ -31,7 +31,7 @@ import model.Dao.proposal.ProposalDAO;
  */
 @MultipartConfig
 @WebServlet("/UploadProposalServlet")
-public class UploadProposalServlet extends HttpServlet {
+public final class UploadProposalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**

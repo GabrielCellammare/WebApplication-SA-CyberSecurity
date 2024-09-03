@@ -20,7 +20,7 @@ import model.Dao.cookie.DeleteTokenDAO;
  * Servlet implementation class LogoutServlet
  */
 @WebServlet("/LogoutServlet")
-public class LogoutServlet extends HttpServlet {
+public final class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**

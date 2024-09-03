@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import model.Dao.cookie.CleanExpiredTokenDAO;
 
 @WebListener // Annotazione che registra il listener
-public class ApplicationStartupListener implements ServletContextListener {
+public final class ApplicationStartupListener implements ServletContextListener {
 
     // Esecutore per il task di pulizia
     private ScheduledExecutorService scheduler;
