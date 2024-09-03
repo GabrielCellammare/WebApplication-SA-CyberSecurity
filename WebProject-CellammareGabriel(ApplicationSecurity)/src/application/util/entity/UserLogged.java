@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
+import application.util.ConvertingType;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 
@@ -12,7 +13,7 @@ public class UserLogged {
 
 	private byte[] byte_encryptedEmail;
 	private byte[] timestamp;
-	private byte[] csrfToken;
+	private byte[] csrfToken; //Base64 byte encoding
 	private byte[] cookieToken;
 
 
@@ -20,12 +21,12 @@ public class UserLogged {
 		this.byte_encryptedEmail=byte_encryptedEmail;
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		this.timestamp = this.calculateTimeStamp(currentDateTime.format(formatter).getBytes(java.nio.charset.StandardCharsets.UTF_8));	
+		this.timestamp = this.calculateTimeStamp(ConvertingType.stringToByteArray(currentDateTime.format(formatter)));	
 		this.csrfToken=this.generateFinalToken(this.generateCsrfToken());
 		this.cookieToken=this.generateFinalToken(this.generateSecureCookieToken());
 	}
 	
-	public UserLogged(byte[] byte_encryptedEmail,byte[] cookieToken){
+	public UserLogged(byte[] byte_encryptedEmail, byte[] cookieToken){
 		this.byte_encryptedEmail=byte_encryptedEmail;
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -41,10 +42,9 @@ public class UserLogged {
 		byte[] tokenBytes = new byte[CSRF_TOKEN_LENGTH];
 		secureRandom.nextBytes(tokenBytes);
 		byte[] tokenBytesPadding = Encryption.addPadding(tokenBytes);
-		byte[] tokenBytesPadding_encrypted=null;
 		try{
-			tokenBytesPadding_encrypted = Encryption.encrypt(tokenBytesPadding);
-			return tokenBytesPadding_encrypted;
+			PasswordManager.clearBytes(tokenBytes);
+			return Encryption.encrypt(tokenBytesPadding);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

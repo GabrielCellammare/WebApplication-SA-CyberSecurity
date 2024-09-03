@@ -2,6 +2,8 @@ package application.util.fileChecker;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.Arrays;
+
 import javax.servlet.http.Part;
 import org.apache.tika.Tika;
 import org.apache.tika.metadata.Metadata;
@@ -9,6 +11,8 @@ import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.BodyContentHandler;
+
+import application.util.cryptography.Encryption;
 import application.util.customMessage.DisplayMessage;
 
 
@@ -16,10 +20,20 @@ public class ImageProfileFileChecker {
 
 	private final static long maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
 
-	public static boolean checkImageFile(Part filePart) throws IOException{
+	public static boolean checkImageFile(Part filePart, byte[] checksumOriginal) throws IOException{
 
 		Tika tika = new Tika();
 		boolean contentTypeBool=false;
+		boolean check=false;
+		
+		byte[] lastChecksum = Encryption.calculateChecksumFromPart(filePart);
+
+		check=Arrays.equals(checksumOriginal, lastChecksum);
+
+		if(!check) {
+			DisplayMessage.showPanel("Non è stato possibile terminare la registrazione, le immagini profilo non risultano uguali!");
+			return false; 
+		}
 
 		if (filePart != null && filePart.getSize() > 0) {
 

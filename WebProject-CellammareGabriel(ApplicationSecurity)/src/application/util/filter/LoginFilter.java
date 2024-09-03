@@ -72,13 +72,13 @@ public class LoginFilter implements Filter {
 						System.out.println("Token cookie individuato: " + cookie.getValue());
 
 						//Verifico prima che il cookie esista e che non sia stato eliminato dalla routine
-						if(TokenExistsDAO.tokenExists(Base64.getEncoder().encodeToString(cookieByte))) {
+						if(TokenExistsDAO.tokenExists(cookieByte)) {
 
 
 							//Verifico che sia valido (data di scadenza)
-							if (IsTokenValidDAO.isTokenValid(Base64.getEncoder().encodeToString(cookieByte))) {
+							if (IsTokenValidDAO.isTokenValid(cookieByte)) {
 								// Autenticazione tramite cookie riuscita
-								String email = GetEmailFromTokenDAO.getEmailFromToken(Base64.getEncoder().encodeToString(cookieByte));
+								String email = GetEmailFromTokenDAO.getEmailFromToken(cookieByte);
 
 								byte[] byte_email = email.getBytes(java.nio.charset.StandardCharsets.UTF_8); 
 								byte[] pad_email = Encryption.addPadding(byte_email);
@@ -108,7 +108,7 @@ public class LoginFilter implements Filter {
 								break;
 							} else {
 								// Token non valido, rimuovi il cookie
-								if (DeleteTokenDAO.deleteToken(Base64.getEncoder().encodeToString(cookieByte))) {
+								if (DeleteTokenDAO.deleteToken(cookieByte)) {
 									Cookie expiredCookie = new Cookie("rememberMe", null);
 									expiredCookie.setMaxAge(0);
 									expiredCookie.setHttpOnly(true);

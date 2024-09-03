@@ -3,14 +3,12 @@ package controller.Servlet.userLogged;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,13 +17,13 @@ import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 
+import application.util.ConvertingType;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
 import application.util.entity.Proposal;
 import application.util.entity.UserLogged;
 import application.util.fileChecker.ProposalChecker;
-import model.Dao.cookie.DeleteTokenDAO;
 import model.Dao.proposal.ProposalDAO;
 
 /**
@@ -68,9 +66,10 @@ public class UploadProposalServlet extends HttpServlet {
 
 		Part filePart = request.getPart("proposal");
 		byte[] fileContent=null;
+		
 		String email = request.getParameter("userEmail");
+		
 		boolean boolSecureCsfr=false;
-		boolean check = false;
 
 		System.out.println(email);
 		System.out.println("Dentro il filtro POST 1");
@@ -87,10 +86,10 @@ public class UploadProposalServlet extends HttpServlet {
 		// Controllo solo le richieste POST, PUT e DELETE per CSRF
 		if ("POST".equalsIgnoreCase(method) || "PUT".equalsIgnoreCase(method) || "DELETE".equalsIgnoreCase(method)) {
 			System.out.println("Dentro il filtro POST 2");
-			char[] csrfToken = Encryption.parseStringtoCharArray(request.getParameter("csrfToken")); //Prende il token dal file di richiesta jsp userLoggedIndex
-			char[] sessionCsrfToken = (session != null) ? Encryption.parseStringtoCharArray((String)session.getAttribute("csrfToken")) : null;
+			char[] csrfToken = ConvertingType.parseStringtoCharArray(request.getParameter("csrfToken")); //Prende il token dal file di richiesta jsp userLoggedIndex
+			char[] sessionCsrfToken = (session != null) ? ConvertingType.parseStringtoCharArray((String)session.getAttribute("csrfToken")) : null;
 
-			if (csrfToken == null || sessionCsrfToken == null || !areCharArraysEqual(sessionCsrfToken,csrfToken)) {
+			if (csrfToken == null || sessionCsrfToken == null || !ConvertingType.areCharArraysEqual(sessionCsrfToken,csrfToken)) {
 				boolSecureCsfr=false;
 			}else {
 				boolSecureCsfr=true;
@@ -99,7 +98,7 @@ public class UploadProposalServlet extends HttpServlet {
 
 			System.out.println(csrfToken.length);
 			System.out.println(sessionCsrfToken.length);
-			System.out.println(areCharArraysEqual(sessionCsrfToken,csrfToken));
+			System.out.println(ConvertingType.areCharArraysEqual(sessionCsrfToken,csrfToken));
 			java.util.Arrays.fill(csrfToken, '\0');
 			java.util.Arrays.fill(sessionCsrfToken, '\0');
 
@@ -113,46 +112,24 @@ public class UploadProposalServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		byte[] checksumOriginal = Encryption.calculateChecksumFile(fileContent);
+		byte[] checksumOriginalContent = Encryption.calculateChecksumFile(fileContent);
 		
 
-		check=Arrays.equals(checksumOriginalFile, checksumOriginal);
-
-		if(!check){
-			if (session != null) {
-				session.invalidate();
-			}
-			Cookie[] cookies = request.getCookies();
-			if (cookies != null) {
-				for (Cookie cookie : cookies) {
-					if ("rememberMe".equals(cookie.getName())) {
-						byte[] cookieByte = Base64.getDecoder().decode(cookie.getValue()); 
-						if(DeleteTokenDAO.deleteToken(Base64.getEncoder().encodeToString(cookieByte))) {
-							// Rimuove il cookie dal browser
-							cookie.setMaxAge(0);
-							cookie.setHttpOnly(true);
-							cookie.setSecure(true);
-							response.addCookie(cookie);
-							DisplayMessage.showPanel("Logout fozato effettuato correttamente!");
-							response.sendRedirect("userNotLoggedIndex.jsp");
-						}
-						
-					}
-				}
-			}
-			DisplayMessage.showPanel("Non è stato possibile caricare il file della proposta, i file sembrano diversi!");
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		}
+		ProposalChecker.checksumControl(request, response, session, checksumOriginalFile, checksumOriginalContent);
+		//Se il checksum è diverso, invalida la sessione e i cookie
 		
-		if (ProposalChecker.checkProposalFile(filePart, getServletContext(), checksumOriginal) && boolSecureCsfr) {
+		PasswordManager.clearBytes(checksumOriginalFile);
+		
+		
+		if (ProposalChecker.checkProposalFile(request, response, session, filePart, getServletContext(), checksumOriginalContent) && boolSecureCsfr) {
 
-			String cleanedHtml = ProposalChecker.processFile(filePart,checksumOriginal);
+			String cleanedHtml = ProposalChecker.processFile(request, response, session, filePart,checksumOriginalContent);
 
 			String filename = ProposalChecker.getFileName(filePart);
 			byte[] htmlBytes = cleanedHtml.getBytes(StandardCharsets.UTF_8);
 
 			try {
-				if (ProposalDAO.uploadFile(email,filename,htmlBytes,checksumOriginal)) {
+				if (ProposalDAO.uploadFile(request, response, session, email,filename,htmlBytes,checksumOriginalContent)) {
 
 					userlogged.setCsrfToken();
 					byte[] newCsrfToken=userlogged.getCsrfToken();
@@ -181,18 +158,7 @@ public class UploadProposalServlet extends HttpServlet {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}
-	public static boolean areCharArraysEqual(char[] array1, char[] array2) {
-		if (array1 == null || array2 == null) {
-			return array1 == array2;
-		}
-		if (array1.length != array2.length) {
-			return false;
-		}
-		for (int i = 0; i < array1.length; i++) {
-			if (array1[i] != array2[i]) {
-				return false;
-			}
-		}
-		return true;
-	}
+
+	
+	
 }

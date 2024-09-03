@@ -32,11 +32,14 @@ public class PasswordManager {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
 			return digest.digest(concatenatedData);
+			
 
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
 		}
+		
+		
 	}
 
 	public static byte[] generateRandomBytes(int saltLenghts) {

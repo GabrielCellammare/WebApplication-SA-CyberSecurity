@@ -4,19 +4,22 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Arrays;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import application.util.cryptography.Encryption;
+import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
+import application.util.fileChecker.ProposalChecker;
 import model.Dao.TakeUserIdDAO;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
 public class ProposalDAO {
-	public static boolean uploadFile(String email, String filename,byte[] fileContent,byte[] checksumOriginal)
+	public static boolean uploadFile(HttpServletRequest request, HttpServletResponse response, HttpSession session,String email, String filename,byte[] fileContent,byte[] checksumOriginal)
 			throws IOException {
-
-		boolean check = false;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -26,12 +29,9 @@ public class ProposalDAO {
 					
 					byte[] lastChecksum = Encryption.calculateChecksumFile(fileContent);
 
-					check=Arrays.equals(checksumOriginal, lastChecksum);
-
-					if(!check) {
-						DisplayMessage.showPanel("Non è stato possibile terminare la registrazione, i file non risultano uguali!");
-						return false; 
-					}
+					ProposalChecker.checksumControl(request, response, session, checksumOriginal, lastChecksum);
+					
+					PasswordManager.clearBytes(lastChecksum);
 					
 					int id_user=TakeUserIdDAO.takeUserId(con_read, email);
 					ps_proposal.setInt(1, id_user);

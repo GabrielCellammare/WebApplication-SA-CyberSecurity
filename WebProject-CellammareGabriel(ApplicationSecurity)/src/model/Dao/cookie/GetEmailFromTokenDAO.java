@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Base64;
 
 import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseConnection;
@@ -11,7 +12,7 @@ import model.Dao.db.DatabaseQuery;
 
 public class GetEmailFromTokenDAO {
 	
-	public static String getEmailFromToken(String token){
+	public static String getEmailFromToken(byte[] cookieByte){
 		int id_user=0;
 
 		try {
@@ -19,7 +20,7 @@ public class GetEmailFromTokenDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			try(Connection con_read = DatabaseConnection.getConnectionRead();PreparedStatement ps_cookieID = con_read.prepareStatement(DatabaseQuery.getEmailFromToken())){
 
-				ps_cookieID.setString(1, token);
+				ps_cookieID.setString(1, Base64.getEncoder().encodeToString(cookieByte));
 
 				try(ResultSet rsId = ps_cookieID.executeQuery()){ 
 					if (rsId.next()) {

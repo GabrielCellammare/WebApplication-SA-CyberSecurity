@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Base64;
 
 import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseConnection;
@@ -11,7 +12,7 @@ import model.Dao.db.DatabaseQuery;
 
 public class IsTokenValidDAO {
 	
-	public static boolean isTokenValid(String token){
+	public static boolean isTokenValid(byte[] cookieByte){
 		boolean status = false;
 
 		try {
@@ -19,7 +20,7 @@ public class IsTokenValidDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			try(Connection con_read = DatabaseConnection.getConnectionRead();PreparedStatement ps_cookieToken = con_read.prepareStatement(DatabaseQuery.isTokenValid())){
 
-				ps_cookieToken.setString(1, token);
+				ps_cookieToken.setString(1, Base64.getEncoder().encodeToString(cookieByte));
 
 				try (ResultSet rs = ps_cookieToken.executeQuery()) {
 					// Controlla se esiste una riga nel ResultSet

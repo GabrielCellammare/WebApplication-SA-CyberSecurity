@@ -3,6 +3,7 @@ package model.Dao.cookie;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Base64;
 
 import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseConnection;
@@ -10,7 +11,7 @@ import model.Dao.db.DatabaseQuery;
 
 public class DeleteTokenDAO {
 
-	public static boolean deleteToken(String token){
+	public static boolean deleteToken(byte[] cookieByte){
 		boolean status = false;
 
 		try {
@@ -18,7 +19,7 @@ public class DeleteTokenDAO {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			try(Connection con_delete = DatabaseConnection.getConnectionDelete();PreparedStatement ps_deleteCookie = con_delete.prepareStatement(DatabaseQuery.deleteCookie())){
 
-				ps_deleteCookie.setString(1, token);
+				ps_deleteCookie.setString(1, Base64.getEncoder().encodeToString(cookieByte));
 
 				int rowsAffected = ps_deleteCookie.executeUpdate();
 

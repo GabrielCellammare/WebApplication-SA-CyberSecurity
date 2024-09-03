@@ -16,7 +16,6 @@ import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
 import application.util.fileChecker.EmailChecker;
 import application.util.fileChecker.ImageProfileFileChecker;
-import application.util.fileChecker.ProposalChecker;
 import model.Dao.registration.RegistrationDAO;
 
 
@@ -54,7 +53,8 @@ public class RegistrationServlet extends HttpServlet {
 					
 					
 					byte[] checksum = Encryption.calculateChecksumFromPart(filePart);
-					if (ImageProfileFileChecker.checkImageFile(filePart)) {
+					
+					if (ImageProfileFileChecker.checkImageFile(filePart, checksum)) {
 
 						byte[] salt = PasswordManager.generateRandomBytes(16);
 						byte[] SaltedPassword = PasswordManager.concatenateAndHash(password, salt);

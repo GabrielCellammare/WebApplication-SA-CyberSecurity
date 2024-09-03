@@ -45,7 +45,7 @@ public class RegistrationDAO {
 						check=Arrays.equals(checksumOriginal, lastChecksum);
 
 						if(!check) {
-							DisplayMessage.showPanel("Non è stato possibile terminare la registrazione, i file non risultano uguali!");
+							DisplayMessage.showPanel("Non è stato possibile terminare la registrazione, le immagini profilo non risultano uguali!");
 							return false; 
 						}
 

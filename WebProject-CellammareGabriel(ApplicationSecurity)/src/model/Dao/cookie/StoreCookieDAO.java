@@ -3,6 +3,9 @@ package model.Dao.cookie;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Base64;
+
+import application.util.ConvertingType;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
@@ -12,7 +15,7 @@ import model.Dao.db.DatabaseQuery;
 
 public class StoreCookieDAO {
 
-	public static boolean storeCookie(byte[] byte_encryptedEmail, String token){
+	public static boolean storeCookie(byte[] byte_encryptedEmail, byte[] token){
 
 		boolean status = false;
 		String email=null;
@@ -34,7 +37,7 @@ public class StoreCookieDAO {
 				}
 
 				decryptedEmailBytes=Encryption.removePadding(decryptedEmailBytes);
-				email=Encryption.byteArrayToString(decryptedEmailBytes);
+				email=ConvertingType.byteArrayToString(decryptedEmailBytes);
 
 				int id_user=TakeUserIdDAO.takeUserId(con_read, email);
 
@@ -43,7 +46,7 @@ public class StoreCookieDAO {
 
 
 					ps_cookie.setInt(1, id_user);
-					ps_cookie.setString(2,token);
+					ps_cookie.setString(2,Base64.getEncoder().encodeToString(token));
 
 					int rowsAffected = ps_cookie.executeUpdate();
 

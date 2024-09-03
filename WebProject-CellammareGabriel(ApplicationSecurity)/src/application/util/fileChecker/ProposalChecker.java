@@ -6,8 +6,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Base64;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.tika.Tika;
@@ -15,23 +20,24 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import application.util.cryptography.Encryption;
+import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
+import model.Dao.cookie.DeleteTokenDAO;
 
 public class ProposalChecker {
 
-	public static boolean checkProposalFile(Part filePart, ServletContext context, byte[] checksumOriginal) throws IOException {
+	public static boolean checkProposalFile(HttpServletRequest request, HttpServletResponse response, HttpSession session,Part filePart, ServletContext context, byte[] checksumOriginal) throws IOException {
 		
-		boolean check = false;
+		
 		byte[] lastChecksum = Encryption.calculateChecksumFromPart(filePart);
-
-		check=Arrays.equals(checksumOriginal, lastChecksum);
+		
+		ProposalChecker.checksumControl(request, response, session, checksumOriginal, lastChecksum);
+		
 		System.out.println("Checksum 2: " + lastChecksum.toString());
 		
 
-		if(!check) {
-			DisplayMessage.showPanel("Non è stato possibile terminare il processo di verifica, i file non risultano uguali!");
-			return false; 
-		}
+		PasswordManager.clearBytes(lastChecksum);
+		
 		// Controlla se il file è stato effettivamente caricato
 		if (filePart != null && filePart.getSize() > 0) {
 			// Ottieni il nome del file
@@ -59,7 +65,7 @@ public class ProposalChecker {
 		return false;
 	}
 	
-	public static String processFile(Part filePart,byte[] checksumOriginal) {
+	public static String processFile(HttpServletRequest request, HttpServletResponse response, HttpSession session,Part filePart,byte[] checksumOriginal) {
 		
 		
 	    long maxSizeInBytes = 10 * 1024 * 1024; //Max 10MB
@@ -71,17 +77,14 @@ public class ProposalChecker {
 
 	    // Usa try-with-resources per gestire la chiusura dell'input stream
 	    try (InputStream inputStream = filePart.getInputStream()) {
-			boolean check = false;
 			
 			byte[] lastChecksum = Encryption.calculateChecksumFromPart(filePart);
+			
+			ProposalChecker.checksumControl(request, response, session, checksumOriginal, lastChecksum);
 
-			check=Arrays.equals(checksumOriginal, lastChecksum);
 			System.out.println("Checksum 3: " + lastChecksum.toString());
-
-			if(!check) {
-				DisplayMessage.showPanel("Non è stato possibile terminare il processo di verifica, i file non risultano uguali!");
-				return null; 
-			}
+			PasswordManager.clearBytes(lastChecksum);
+			
 			
 	        // Controlla il content-type con Tika
 	        Tika tika = new Tika();
@@ -138,6 +141,44 @@ public class ProposalChecker {
 		}
 		return "";
 	}	
+	
+	
+	public static void checksumControl(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+			byte[] checksumOriginalFile, byte[] lastChecksum) throws IOException {
+		
+		boolean check=Arrays.equals(checksumOriginalFile, lastChecksum);
+
+		if(!check){
+			if (session != null) {
+				session.invalidate();
+			}
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					if ("rememberMe".equals(cookie.getName())) {
+						byte[] cookieByte = Base64.getDecoder().decode(cookie.getValue()); 
+						if(DeleteTokenDAO.deleteToken(cookieByte)) {
+							// Rimuove il cookie dal browser
+							cookie.setMaxAge(0);
+							cookie.setHttpOnly(true);
+							cookie.setSecure(true);
+							response.addCookie(cookie);
+							DisplayMessage.showPanel("Logout fozato effettuato correttamente!");
+							response.sendRedirect("userNotLoggedIndex.jsp");
+						}
+						
+					}
+				}
+			}
+			
+			PasswordManager.clearBytes(lastChecksum);
+			PasswordManager.clearBytes(checksumOriginalFile);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			DisplayMessage.showPanel("Non è stato possibile caricare il file della proposta, i file sembrano diversi!");
+		}else {
+			DisplayMessage.showPanel("Nessun cambiamento rilevato durante il controllo del checksum della proposta");
+		}
+	}
 	
 }
 

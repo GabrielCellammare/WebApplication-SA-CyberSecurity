@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=UTF-8");
 
@@ -57,13 +57,13 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("userNotLoggedLogin.jsp");  // Reindirizzamento in caso di errore critico
 			return;
 		}
-		
+
 		byte[] password = request.getParameter("password").getBytes();
-		
+
 		boolean ricordami = request.getParameter("remember") != null;
 
 		if (LoginDAO.isUserValid(email, password)) {
-			
+
 			UserLogged userlogged = new UserLogged(byte_encryptedEmail);
 
 			HttpSession session = request.getSession(); //Crea una nuova sessione
@@ -74,17 +74,17 @@ public class LoginServlet extends HttpServlet {
 			session.setMaxInactiveInterval(15 * 60); // 15 minuti di timeout della sessione
 
 			if (ricordami) {
-				
+
 				byte[] cookie = userlogged.getCookieToken();
-				
-				if (StoreCookieDAO.storeCookie(byte_encryptedEmail, Base64.getEncoder().encodeToString(cookie))) {
+
+				if (StoreCookieDAO.storeCookie(byte_encryptedEmail, cookie)) {
 					Cookie rememberMeCookie = new Cookie("rememberMe", Base64.getEncoder().encodeToString(cookie));
 					rememberMeCookie.setMaxAge(COOKIE_MAX_AGE);
 					rememberMeCookie.setHttpOnly(true);
 					rememberMeCookie.setSecure(true);
 					response.addCookie(rememberMeCookie);
-					
-					
+
+
 					// Redirect to logged-in user page
 					response.sendRedirect("userLoggedIndex.jsp");
 					PasswordManager.clearBytes(cookie);
@@ -94,24 +94,28 @@ public class LoginServlet extends HttpServlet {
 					PasswordManager.clearBytes(cookie);
 				}
 			} else {
+
+				PasswordManager.clearBytes(password);
+				PasswordManager.clearBytes(byte_email);
+				PasswordManager.clearBytes(pad_email);
+				PasswordManager.clearBytes(byte_encryptedEmail);
+				email = null;
 				// Se "ricordami" non è selezionato, continua senza impostare il cookie
 				DisplayMessage.showPanel("Login senza meccanismo dei cookie effettuato correttamente!");
 				response.sendRedirect("userLoggedIndex.jsp");
 			}
 		} else {
+
+			PasswordManager.clearBytes(password);
+			PasswordManager.clearBytes(byte_email);
+			PasswordManager.clearBytes(pad_email);
+			PasswordManager.clearBytes(byte_encryptedEmail);
+			email = null;
 			DisplayMessage.showPanel("Password errata! Riprovare");
 			response.sendRedirect("userNotLoggedLogin.jsp");  // Reindirizzamento in caso di autenticazione fallita
 		}
 
-		// Pulizia dei dati sensibili dalla memoria
-		
-		//eseguire altra pulizia
 
-		PasswordManager.clearBytes(password);
-		PasswordManager.clearBytes(byte_email);
-		PasswordManager.clearBytes(pad_email);
-		PasswordManager.clearBytes(byte_encryptedEmail);
-		email = null;
 	}
 
 

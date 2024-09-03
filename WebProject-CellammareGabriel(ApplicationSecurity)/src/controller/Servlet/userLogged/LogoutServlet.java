@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
 import model.Dao.cookie.DeleteTokenDAO;
 
@@ -45,7 +46,7 @@ public class LogoutServlet extends HttpServlet {
 			for (Cookie cookie : cookies) {
 				if ("rememberMe".equals(cookie.getName())) {
 					byte[] cookieByte = Base64.getDecoder().decode(cookie.getValue()); 
-					if(DeleteTokenDAO.deleteToken(Base64.getEncoder().encodeToString(cookieByte))) {
+					if(DeleteTokenDAO.deleteToken(cookieByte)) {
 						// Rimuove il cookie dal browser
 						cookie.setMaxAge(0);
 						cookie.setHttpOnly(true);
@@ -54,6 +55,8 @@ public class LogoutServlet extends HttpServlet {
 						DisplayMessage.showPanel("Logout manuale effettuato correttamente!");
 						response.sendRedirect("userNotLoggedIndex.jsp");
 					}
+					
+					PasswordManager.clearBytes(cookieByte);
 					
 				}
 			}

@@ -37,11 +37,6 @@ public class LoginDAO {
 							try(ResultSet rsUser = psUser.executeQuery()){
 								status = rsUser.next();
 
-								email = null;
-								PasswordManager.clearBytes(password);
-								PasswordManager.clearBytes(sale);
-								PasswordManager.clearBytes(newPassword);
-
 								if (status) {
 									System.out.println("Utente trovato");
 								} else {
@@ -51,13 +46,9 @@ public class LoginDAO {
 						}
 
 					} else {
-						email = null;
-						PasswordManager.clearBytes(password);
 						System.out.println("Salt è nullo");
 					}
 				} else {
-					email = null;
-					PasswordManager.clearBytes(password);
 					DisplayMessage.showPanel("ID Non valido. Riprovare con un mail corretta!"); //VALUTARE DI ELIMINARE?
 					System.out.println("Nessun risultato trovato per l'utente: " + email);
 				}
