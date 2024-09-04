@@ -1,0 +1,30 @@
+package application.util;
+
+import java.awt.Label;
+
+import javax.swing.JFrame;
+
+public final class DisplayMessageFrame {
+    private final JFrame frame;
+
+    public DisplayMessageFrame(String message) {
+        this.frame = new JFrame("MESSAGGIO DALLA WEB APPLICATION: ");
+        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        Label panel = new Label(message);
+        this.frame.getContentPane().add(panel);
+        
+        this.frame.pack(); 
+        this.frame.setLocationRelativeTo(null);
+        this.frame.setAlwaysOnTop(true);
+    }
+
+    public void show() {
+        this.frame.setVisible(true);
+    }
+
+    public void close() {
+        this.frame.setVisible(false);
+        this.frame.dispose();
+    }
+}

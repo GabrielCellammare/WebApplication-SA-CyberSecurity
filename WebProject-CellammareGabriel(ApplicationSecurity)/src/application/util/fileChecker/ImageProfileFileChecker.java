@@ -65,8 +65,8 @@ public final class ImageProfileFileChecker {
 
 					} else {
 
-						DisplayMessage.showPanel("Il file non è un'immagine valida.");
 						contentTypeBool=false;
+						DisplayMessage.showPanel("Il file non è un'immagine valida.");
 					}
 				}catch (IOException e) {
 					e.printStackTrace();

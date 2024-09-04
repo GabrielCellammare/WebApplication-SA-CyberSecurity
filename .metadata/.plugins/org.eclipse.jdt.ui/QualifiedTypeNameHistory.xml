@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
-    <fullyQualifiedTypeName name="application.util.EmailChecker"/>
-    <fullyQualifiedTypeName name="application.util.FileChecker"/>
-    <fullyQualifiedTypeName name="javax.swing.JPanel"/>
-    <fullyQualifiedTypeName name="messageDisplay.DisplayMessage"/>
-    <fullyQualifiedTypeName name="org.apache.tika.Tika"/>
     <fullyQualifiedTypeName name="org.apache.tika.exception.TikaException"/>
     <fullyQualifiedTypeName name="com.drew.metadata.Metadata"/>
     <fullyQualifiedTypeName name="model.Dao.RegistrationDAO"/>
@@ -54,9 +48,16 @@
     <fullyQualifiedTypeName name="java.nio.CharBuffer"/>
     <fullyQualifiedTypeName name="java.nio.ByteBuffer"/>
     <fullyQualifiedTypeName name="java.nio.charset.Charset"/>
-    <fullyQualifiedTypeName name="java.util.Base64"/>
-    <fullyQualifiedTypeName name="application.util.cryptography.PasswordManager"/>
-    <fullyQualifiedTypeName name="application.util.fileChecker.ProposalChecker"/>
     <fullyQualifiedTypeName name="application.util.cryptography.Encryption"/>
+    <fullyQualifiedTypeName name="application.util.fileChecker.ProposalChecker"/>
+    <fullyQualifiedTypeName name="application.util.cryptography.PasswordManager"/>
+    <fullyQualifiedTypeName name="java.util.Base64"/>
+    <fullyQualifiedTypeName name="application.util.ConvertingType"/>
+    <fullyQualifiedTypeName name="javax.crypto.Cipher"/>
+    <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="java.io.InputStream"/>
+    <fullyQualifiedTypeName name="application.util.readByteSecure"/>
+    <fullyQualifiedTypeName name="javax.swing.JLabel"/>
+    <fullyQualifiedTypeName name="java.awt.Dimension"/>
+    <fullyQualifiedTypeName name="javax.swing.JFrame"/>
 </qualifiedTypeNameHistroy>

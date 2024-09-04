@@ -1,0 +1,16 @@
+package application.util;
+
+import javax.swing.JFrame;
+
+public final class SecureJFrame extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+	
+	
+
+}

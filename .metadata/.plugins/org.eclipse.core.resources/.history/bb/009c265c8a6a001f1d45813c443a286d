@@ -1,0 +1,8 @@
+package application.util;
+
+import javax.swing.JFrame;
+
+public final class SecureJFrame extends JFrame {
+	
+
+}

@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public final class ConvertingType {
 	
-	public static byte[] chartoBytes(char[] chars) {
+	public static byte[] charToBytes(char[] chars) {
 		CharBuffer charBuffer = CharBuffer.wrap(chars);
 		ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
 		byte[] bytes = Arrays.copyOfRange(byteBuffer.array(),

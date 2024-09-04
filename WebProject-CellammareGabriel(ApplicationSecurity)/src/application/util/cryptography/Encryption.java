@@ -15,6 +15,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.Part;
 
 import application.util.ConvertingType;
+import application.util.ReadByteSecure;
 
 public final class Encryption {
 
@@ -24,9 +25,9 @@ public final class Encryption {
 		char [] AES_IV = Encryption.readAES_IV();
 		if (key != null) {
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(ConvertingType.chartoBytes(AES_IV)));
-			java.util.Arrays.fill(AES_KEY, '\0');
-			java.util.Arrays.fill(AES_IV, '\0');
+			cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(ConvertingType.charToBytes(AES_IV)));
+			Arrays.fill(AES_KEY, '\0');
+			Arrays.fill(AES_IV, '\0');
 			return cipher.doFinal(data);
 		} else {
 			java.util.Arrays.fill(AES_KEY, '\0');
@@ -43,14 +44,14 @@ public final class Encryption {
 		char[] AES_IV = Encryption.readAES_IV();
 		if (key != null) {
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(ConvertingType.chartoBytes(AES_IV)));
-			java.util.Arrays.fill(AES_KEY, '\0');
-			java.util.Arrays.fill(AES_IV, '\0');
+			cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(ConvertingType.charToBytes(AES_IV)));
+			Arrays.fill(AES_KEY, '\0');
+			Arrays.fill(AES_IV, '\0');
 			return cipher.doFinal(encryptedBytes);
 		} else {
 			System.out.println("Chiave non valida.");
-			java.util.Arrays.fill(AES_KEY, '\0');
-			java.util.Arrays.fill(AES_IV, '\0');
+			Arrays.fill(AES_KEY, '\0');
+			Arrays.fill(AES_IV, '\0');
 			return null;
 		}
 
@@ -84,7 +85,7 @@ public final class Encryption {
 
 	public static byte[] calculateChecksumFromPart(Part filePart) {
 	    try (InputStream inputStream = filePart.getInputStream()) {
-	        return calculateChecksumFile(inputStream.readAllBytes());// Usa la funzione di checksum che accetta byte[]
+	        return calculateChecksumFile(ReadByteSecure.readAllBytesSecurely(inputStream));// Usa la funzione di checksum che accetta byte[]
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	        return null;

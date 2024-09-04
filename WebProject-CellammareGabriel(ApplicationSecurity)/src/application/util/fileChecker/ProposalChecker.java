@@ -20,6 +20,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import application.util.ConvertingType;
+import application.util.ReadByteSecure;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
@@ -96,7 +97,7 @@ public final class ProposalChecker {
 	        if ("text/plain".equals(contentType) || "text/html".equals(contentType)) {
 	            // Crea un nuovo InputStream per leggere di nuovo i dati
 	            try (InputStream fileContentStream = filePart.getInputStream()) {
-	                byte[] contentBytes = fileContentStream.readAllBytes();
+	                byte[] contentBytes = ReadByteSecure.readAllBytesSecurely(fileContentStream);
 
 	                // Usa Jsoup per rimuovere gli script JavaScript
 	                Document document = Jsoup.parse(ConvertingType.byteArrayToString(contentBytes)); //aggiunge i tag
@@ -163,8 +164,8 @@ public final class ProposalChecker {
 							cookie.setHttpOnly(true);
 							cookie.setSecure(true);
 							response.addCookie(cookie);
-							DisplayMessage.showPanel("Logout fozato effettuato correttamente!");
 							response.sendRedirect("userNotLoggedIndex.jsp");
+							DisplayMessage.showPanel("Logout fozato effettuato correttamente!");
 						}
 						
 					}

@@ -1,0 +1,10 @@
+package application.util;
+
+import java.util.Arrays;
+
+public class ArrayExe extends Arrays{
+	
+	public ArrayeExe() {
+		
+	}
+}

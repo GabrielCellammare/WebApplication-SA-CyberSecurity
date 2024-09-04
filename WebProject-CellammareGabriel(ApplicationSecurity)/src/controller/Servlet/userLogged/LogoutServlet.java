@@ -52,12 +52,17 @@ public final class LogoutServlet extends HttpServlet {
 						cookie.setHttpOnly(true);
 						cookie.setSecure(true);
 						response.addCookie(cookie);
-						DisplayMessage.showPanel("Logout manuale effettuato correttamente!");
+						
 						response.sendRedirect("userNotLoggedIndex.jsp");
+						DisplayMessage.showPanel("Logout manuale effettuato correttamente!");
+						
 					}
 					
 					PasswordManager.clearBytes(cookieByte);
 					
+				}else {
+					response.sendRedirect("userNotLoggedIndex.jsp");
+					DisplayMessage.showPanel("Logout manuale senza cookie effettuato correttamente!");
 				}
 			}
 		}
@@ -73,7 +78,7 @@ public final class LogoutServlet extends HttpServlet {
 		if (session != null) {
 			session.invalidate();
 		}
-		
+	
 		DisplayMessage.showPanel("Logout automatico effettuato correttamente!");
 		response.sendRedirect("userNotLoggedIndex.jsp");
 	}

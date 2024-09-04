@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="getFileNameFromPath"/>
-		<item key="wrap" value="true"/>
-		<item key="casesensitive" value="true"/>
+		<item key="selection" value="driver"/>
+		<item key="wrap" value="false"/>
+		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="true"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="Driver"/>
+			<item value="static"/>
+			<item value="public static Arrays"/>
+			<item value="Arrays"/>
+			<item value="Array"/>
+			<item value="final"/>
+			<item value=""/>
+			<item value="fill"/>
+			<item value="String"/>
+			<item value="string"/>
 			<item value="getFileNameFromPath"/>
 			<item value="cleanedHtml"/>
 			<item value="cleaned"/>
 			<item value="email"/>
 			<item value="loadPro"/>
-			<item value="clear"/>
-			<item value="inat"/>
-			<item value="isRefreshing"/>
-			<item value="isLogoutExecuted"/>
-			<item value="scrittaAggiunta"/>
-			<item value="list"/>
-			<item value="Session"/>
-			<item value="sessio"/>
-			<item value="/"/>
-			<item value="maxInactive"/>
 		</list>
 		<list key="replacehistory">
 			<item value="userNotLoggedIndex.jsp"/>

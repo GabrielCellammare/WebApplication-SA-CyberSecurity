@@ -1,5 +1,0 @@
-package model.Dao;
-
-class RegistrationUserSaltDAO {
-
-}

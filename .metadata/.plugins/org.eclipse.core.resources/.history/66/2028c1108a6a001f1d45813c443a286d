@@ -1,0 +1,36 @@
+package application.util.customMessage;
+
+import java.awt.Label;
+
+import javax.swing.JFrame;
+
+import application.util.DisplayMessageFrame;
+
+
+
+public final class DisplayMessage{
+
+    public static void showPanel(String message) {
+        // Crea una finestra e aggiungi il pannello
+        DisplayMessageFrame frame = new DisplayMessageFrame("MESSAGGIO DALLA WEB APPLICATION: ");
+        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        Label panel = new Label(message);
+        this.frame.getContentPane().add(panel);
+        
+        this.frame.pack(); 
+        this.frame.setLocationRelativeTo(null);
+        this.frame.setAlwaysOnTop(true);
+      
+     
+      
+        frame.setVisible(true);
+
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                frame.setVisible(false);
+            }
+        });
+    }
+}

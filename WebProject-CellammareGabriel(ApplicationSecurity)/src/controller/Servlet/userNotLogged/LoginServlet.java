@@ -89,9 +89,9 @@ public final class LoginServlet extends HttpServlet {
 					response.sendRedirect("userLoggedIndex.jsp");
 					PasswordManager.clearBytes(cookie);
 				} else {
-					DisplayMessage.showPanel("C'è stato un problema con i cookie. Riprova!");
 					response.sendRedirect("userNotLoggedLogin.jsp");  // Reindirizzamento in caso di problema con i cookie
 					PasswordManager.clearBytes(cookie);
+					DisplayMessage.showPanel("C'è stato un problema con i cookie. Riprova!");
 				}
 			} else {
 
@@ -101,8 +101,8 @@ public final class LoginServlet extends HttpServlet {
 				PasswordManager.clearBytes(byte_encryptedEmail);
 				email = null;
 				// Se "ricordami" non è selezionato, continua senza impostare il cookie
-				DisplayMessage.showPanel("Login senza meccanismo dei cookie effettuato correttamente!");
 				response.sendRedirect("userLoggedIndex.jsp");
+				DisplayMessage.showPanel("Login senza meccanismo dei cookie effettuato correttamente!");
 			}
 		} else {
 
@@ -111,8 +111,8 @@ public final class LoginServlet extends HttpServlet {
 			PasswordManager.clearBytes(pad_email);
 			PasswordManager.clearBytes(byte_encryptedEmail);
 			email = null;
-			DisplayMessage.showPanel("Password errata! Riprovare");
 			response.sendRedirect("userNotLoggedLogin.jsp");  // Reindirizzamento in caso di autenticazione fallita
+			DisplayMessage.showPanel("Password errata! Riprovare");
 		}
 
 

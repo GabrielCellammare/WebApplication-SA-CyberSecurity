@@ -6,25 +6,25 @@ import javax.swing.JFrame;
 
 public final class DisplayMessage{
 
-    public static void showPanel(String message) {
-        // Crea una finestra e aggiungi il pannello
-        JFrame frame = new JFrame("MESSAGGIO DALLA WEB APPLICATION: ");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	public static void showPanel(String message) {
+		// Crea una finestra e aggiungi il pannello
+		SecureJFrame frame = new SecureJFrame("MESSAGGIO WEB APP");
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        Label panel = new Label(message);
-        frame.getContentPane().add(panel);
-        
-        frame.pack(); 
-        frame.setLocationRelativeTo(null);
-        frame.setAlwaysOnTop(true);
+		SecureJPanel panel = new SecureJPanel(message);
+		frame.getContentPane().add(panel);
 
-        frame.setVisible(true);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		frame.setAlwaysOnTop(true);
 
-        frame.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                frame.setVisible(false);
-            }
-        });
-    }
+		frame.setVisible(true);
+
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				frame.setVisible(false);
+			}
+		});
+	}
 }

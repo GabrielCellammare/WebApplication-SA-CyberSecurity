@@ -69,16 +69,16 @@ public final class RegistrationServlet extends HttpServlet {
 								filePart = null;
 								PasswordManager.clearBytes(SaltedPassword);
 								PasswordManager.clearBytes(salt);
-								response.sendRedirect("userNotLoggedIndex.jsp");
 								DisplayMessage.showPanel("Registrazione effettuata correttamente!");
-
+								response.sendRedirect("userNotLoggedIndex.jsp");
 							} else {
 								email = null;
 								filePart = null;
 								PasswordManager.clearBytes(SaltedPassword);
 								PasswordManager.clearBytes(salt);
-								request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 								DisplayMessage.showPanel("Errore durante la registrazione!");
+								request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
+								
 
 							}
 						} catch (Exception e) {
@@ -87,8 +87,8 @@ public final class RegistrationServlet extends HttpServlet {
 							filePart = null;
 							PasswordManager.clearBytes(SaltedPassword);
 							PasswordManager.clearBytes(salt);
-							request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 							DisplayMessage.showPanel("Errore durante la registrazione!");
+							request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 						}
 
 
@@ -97,17 +97,18 @@ public final class RegistrationServlet extends HttpServlet {
 						filePart = null;
 						PasswordManager.clearBytes(password);
 						PasswordManager.clearBytes(retypePassword);
-						request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 						DisplayMessage.showPanel("Immagine non valida!");
-
+						request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
+						
 					}
 				} else {
 					email = null;
 					filePart = null;
 					PasswordManager.clearBytes(password);
 					PasswordManager.clearBytes(retypePassword);
-					request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 					DisplayMessage.showPanel("Le password non corrispondono!");
+					request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
+				
 
 				}
 			} else {
@@ -115,9 +116,8 @@ public final class RegistrationServlet extends HttpServlet {
 				filePart = null;
 				PasswordManager.clearBytes(password);
 				PasswordManager.clearBytes(retypePassword);
-				request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 				DisplayMessage.showPanel("La password non rispetta i requisiti minimi di sicurezza!");
-				
+				request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 			}
 
 		} else {
@@ -125,10 +125,8 @@ public final class RegistrationServlet extends HttpServlet {
 			filePart = null;
 			PasswordManager.clearBytes(password);
 			PasswordManager.clearBytes(retypePassword);
-			DisplayMessage.showPanel("L'email contiene caratteri non validi o eccede la lunghezza massima!");
 			request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
-
-
+			DisplayMessage.showPanel("L'email contiene caratteri non validi o eccede la lunghezza massima!");
 		}
 	}
 

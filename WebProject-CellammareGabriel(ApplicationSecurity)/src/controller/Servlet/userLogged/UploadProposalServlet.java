@@ -18,6 +18,7 @@ import javax.servlet.http.Part;
 import com.google.gson.Gson;
 
 import application.util.ConvertingType;
+import application.util.ReadByteSecure;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
@@ -107,7 +108,7 @@ public final class UploadProposalServlet extends HttpServlet {
 		byte[] checksumOriginalFile = Encryption.calculateChecksumFromPart(filePart);
 		
 		try (InputStream inputStream = filePart.getInputStream()) {
-		    fileContent = inputStream.readAllBytes();
+		    fileContent = ReadByteSecure.readAllBytesSecurely(inputStream);
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -145,8 +146,8 @@ public final class UploadProposalServlet extends HttpServlet {
 					PasswordManager.clearBytes(newCsrfToken);
 					DisplayMessage.showPanel("La proposta è stata correttamente caricata!");
 				} else {
-					DisplayMessage.showPanel("Non è stato possibile caricare il file della proposta!");
 					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					DisplayMessage.showPanel("Non è stato possibile caricare il file della proposta!");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -154,8 +155,8 @@ public final class UploadProposalServlet extends HttpServlet {
 			}
 
 		} else {
-			DisplayMessage.showPanel("File non valido o sessione non autentica!");
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			DisplayMessage.showPanel("File non valido o sessione non autentica!");
 		}
 	}
 

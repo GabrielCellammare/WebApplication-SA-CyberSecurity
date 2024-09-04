@@ -1,0 +1,15 @@
+package application.util;
+
+import java.security.Provider;
+
+import javax.crypto.Cipher;
+import javax.crypto.CipherSpi;
+
+public class StringEx extends Cipher{
+
+	protected StringEx(CipherSpi cipherSpi, Provider provider, String transformation) {
+		super(cipherSpi, provider, transformation);
+		// TODO Auto-generated constructor stub
+	}
+
+}
