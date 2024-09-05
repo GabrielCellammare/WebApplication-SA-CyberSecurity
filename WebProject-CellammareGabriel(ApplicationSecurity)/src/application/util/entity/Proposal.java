@@ -7,10 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.concurrent.Immutable;
+
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
-
+@Immutable
 public final class Proposal {
 	private String email;
 	private String fileName;

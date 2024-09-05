@@ -3,6 +3,7 @@ package application.util.filter;
 import java.io.IOException;
 import java.util.Base64;
 
+import javax.annotation.concurrent.Immutable;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -23,6 +24,7 @@ import model.Dao.cookie.GetEmailFromTokenDAO;
 import model.Dao.cookie.IsTokenValidDAO;
 import model.Dao.cookie.TokenExistsDAO;
 
+@Immutable
 public final class LoginFilter implements Filter {
 
 	@Override

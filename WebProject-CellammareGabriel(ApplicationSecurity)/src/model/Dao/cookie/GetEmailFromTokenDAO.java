@@ -6,10 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
 
+import javax.annotation.concurrent.Immutable;
+
 import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
-
+@Immutable
 public final class GetEmailFromTokenDAO {
 	
 	public static String getEmailFromToken(byte[] cookieByte){

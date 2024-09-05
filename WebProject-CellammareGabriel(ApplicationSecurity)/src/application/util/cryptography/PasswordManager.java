@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import javax.annotation.concurrent.Immutable;
+@Immutable
 public final class PasswordManager {
 
 	private final static char[] specialCharacters = {'!','@','#','$','%','^','&','.','*','(',')','-','_','+','=','<','>','?','.'};

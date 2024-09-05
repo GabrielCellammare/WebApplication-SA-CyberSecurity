@@ -7,8 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import application.util.customMessage.DisplayMessage;
+import javax.annotation.concurrent.Immutable;
 
+import application.util.customMessage.DisplayMessage;
+@Immutable
 public final class DatabaseConnection {
 
 	private final static String URL;

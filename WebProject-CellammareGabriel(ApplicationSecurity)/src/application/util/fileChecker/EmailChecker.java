@@ -2,6 +2,9 @@ package application.util.fileChecker;
 
 import java.util.regex.Pattern;
 
+import javax.annotation.concurrent.Immutable;
+
+@Immutable
 public final class EmailChecker {
 	
 	public final static boolean isValidEmail(String email) {

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Base64;
 
+import javax.annotation.concurrent.Immutable;
+
 import application.util.ConvertingType;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
@@ -12,7 +14,7 @@ import application.util.customMessage.DisplayMessage;
 import model.Dao.TakeUserIdDAO;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
-
+@Immutable
 public final class StoreCookieDAO {
 
 	public static boolean storeCookie(byte[] byte_encryptedEmail, byte[] token){

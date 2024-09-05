@@ -6,9 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.annotation.concurrent.Immutable;
+
 import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseQuery;
-
+@Immutable
 final class TakeUserSaltDAO {
 
 	static Blob takeUserSalt(Connection con_read, int id_user) {

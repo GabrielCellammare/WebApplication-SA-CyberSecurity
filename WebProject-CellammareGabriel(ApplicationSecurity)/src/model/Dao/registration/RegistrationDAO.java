@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
+
+import javax.annotation.concurrent.Immutable;
 import javax.servlet.http.Part;
 
 import application.util.cryptography.Encryption;
@@ -12,7 +14,7 @@ import application.util.customMessage.DisplayMessage;
 import model.Dao.TakeUserIdDAO;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
-
+@Immutable
 public final class RegistrationDAO {
 
 

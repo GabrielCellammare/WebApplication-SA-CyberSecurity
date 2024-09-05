@@ -1,6 +1,7 @@
 package application.util.cryptography;
 
 import java.io.IOException;
+
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -8,6 +9,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Properties;
+
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
@@ -16,7 +20,8 @@ import javax.servlet.http.Part;
 
 import application.util.ConvertingType;
 import application.util.ReadByteSecure;
-
+@Immutable
+@ThreadSafe
 public final class Encryption {
 
 	public static byte[] encrypt(byte[] data) throws Exception {

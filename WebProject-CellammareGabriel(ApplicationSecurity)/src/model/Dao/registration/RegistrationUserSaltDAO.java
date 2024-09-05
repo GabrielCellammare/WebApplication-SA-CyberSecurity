@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import model.Dao.db.DatabaseQuery;
+import javax.annotation.concurrent.Immutable;
 
+import model.Dao.db.DatabaseQuery;
+@Immutable
 final class RegistrationUserSaltDAO {
 	static int registrationUserSalt(Connection con_write, int id_user, byte[] salt) throws SQLException {
 		try {

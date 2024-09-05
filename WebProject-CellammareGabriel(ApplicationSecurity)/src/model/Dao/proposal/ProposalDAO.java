@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.annotation.concurrent.Immutable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,7 @@ import application.util.fileChecker.ProposalChecker;
 import model.Dao.TakeUserIdDAO;
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
-
+@Immutable
 public final class ProposalDAO {
 	public static boolean uploadFile(HttpServletRequest request, HttpServletResponse response, HttpSession session,String email, String filename,byte[] fileContent,byte[] checksumOriginal)
 			throws IOException {

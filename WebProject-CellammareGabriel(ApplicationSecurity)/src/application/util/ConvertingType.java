@@ -6,6 +6,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+import javax.annotation.concurrent.Immutable;
+
+@Immutable
 public final class ConvertingType {
 	
 	public static byte[] charToBytes(char[] chars) {

@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
-import com.sun.istack.logging.Logger;
+import javax.annotation.concurrent.Immutable;
 
 import application.util.ConvertingType;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
-
+@Immutable
 public final class UserLogged {
 
 	private byte[] byte_encryptedEmail;

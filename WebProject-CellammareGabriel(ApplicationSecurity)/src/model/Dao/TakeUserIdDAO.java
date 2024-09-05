@@ -4,11 +4,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.annotation.concurrent.Immutable;
+
 import application.util.customMessage.DisplayMessage;
 
 import java.sql.Connection;
 import model.Dao.db.DatabaseQuery;
 
+@Immutable
 public final class TakeUserIdDAO {
 
 	public static int takeUserId(Connection con_read, String email) {

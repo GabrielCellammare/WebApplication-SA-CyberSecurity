@@ -4,9 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.annotation.concurrent.Immutable;
+
 import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 
+@Immutable
 public final class CleanExpiredTokenDAO {
 	
 	//Cookie orfani

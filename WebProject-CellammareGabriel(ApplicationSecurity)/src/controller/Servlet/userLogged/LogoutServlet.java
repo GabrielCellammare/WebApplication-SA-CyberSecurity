@@ -61,7 +61,6 @@ public final class LogoutServlet extends HttpServlet {
 					PasswordManager.clearBytes(cookieByte);
 					
 				}else {
-					response.sendRedirect("userNotLoggedIndex.jsp");
 					DisplayMessage.showPanel("Logout manuale senza cookie effettuato correttamente!");
 				}
 			}

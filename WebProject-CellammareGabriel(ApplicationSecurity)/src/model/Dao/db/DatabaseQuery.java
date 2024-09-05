@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.annotation.concurrent.Immutable;
+@Immutable
 public final class DatabaseQuery {
 
     private static Properties appProperties;

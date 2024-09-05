@@ -1,9 +1,10 @@
 package application.util.customMessage;
 
+import javax.annotation.concurrent.Immutable;
 import javax.swing.JFrame;
 
 
-
+@Immutable
 public final class DisplayMessage{
 
 	public static void showPanel(String message) {

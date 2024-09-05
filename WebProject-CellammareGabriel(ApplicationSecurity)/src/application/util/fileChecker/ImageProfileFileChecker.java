@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
+import javax.annotation.concurrent.Immutable;
 import javax.servlet.http.Part;
 import org.apache.tika.Tika;
 import org.apache.tika.metadata.Metadata;
@@ -15,7 +16,7 @@ import org.apache.tika.sax.BodyContentHandler;
 import application.util.cryptography.Encryption;
 import application.util.customMessage.DisplayMessage;
 
-
+@Immutable
 public final class ImageProfileFileChecker {
 
 

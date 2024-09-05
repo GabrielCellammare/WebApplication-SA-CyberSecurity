@@ -58,7 +58,7 @@ $(document).ready(function() {
                 	window.location.href = "userNotLoggedIndex.jsp";
                 }
             });
-        	}, 900000); // Imposta un nuovo timer per il logout dopo 15 minuti di inattività
+        	}, 9000); // Imposta un nuovo timer per il logout dopo 15 minuti di inattività
     }
 
     // Eventi che indicano attività dell'utente

@@ -1,14 +1,17 @@
 package application.util;
 
 import java.io.ByteArrayOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 
-import application.util.cryptography.PasswordManager;
+import javax.annotation.concurrent.Immutable;
 
+import application.util.cryptography.PasswordManager;
+@Immutable
 public final class ReadByteSecure{
 
-	public static byte[] readAllBytesSecurely(InputStream inputStream) throws IOException {
+	public static byte[] readAllBytesSecurely(InputStream inputStream) throws IOException {	
 	    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 	    byte[] data = new byte[1024];
 	    int bytesRead;
