@@ -38,7 +38,7 @@ public final class ConvertingType {
 		return str.getBytes(java.nio.charset.StandardCharsets.UTF_8);
 	}
 
-	public final static boolean areCharArraysEqual(char[] array1, char[] array2) {
+	public static boolean areCharArraysEqual(char[] array1, char[] array2) {
 		if (array1 == null || array2 == null) {
 			return array1 == array2;
 		}

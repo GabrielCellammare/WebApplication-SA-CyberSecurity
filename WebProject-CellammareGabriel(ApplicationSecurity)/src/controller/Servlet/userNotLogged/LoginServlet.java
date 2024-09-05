@@ -24,8 +24,7 @@ import model.Dao.login.LoginDAO;
 @WebServlet("/LoginServlet")
 public final class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final int COOKIE_MAX_AGE = 60 * 60 * 24; // 1 giorno
-
+	
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -40,6 +39,7 @@ public final class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		final int COOKIE_MAX_AGE = 60 * 60 * 24; // 1 giorno
 
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=UTF-8");

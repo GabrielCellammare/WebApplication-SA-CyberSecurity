@@ -100,7 +100,7 @@ public final class ProposalChecker {
 	                byte[] contentBytes = ReadByteSecure.readAllBytesSecurely(fileContentStream);
 
 	                // Usa Jsoup per rimuovere gli script JavaScript
-	                Document document = Jsoup.parse(ConvertingType.byteArrayToString(contentBytes)); //aggiunge i tag
+	                Document document = Jsoup.parse(ConvertingType.byteArrayToString(contentBytes)); //aggiunge i tag html
 	                document.select("script, [type=application/javascript], [type=text/javascript]").remove();
 	                document.select("[text]").unwrap(); // Rimuove anche il testo all'interno dei tag script
 
@@ -174,8 +174,9 @@ public final class ProposalChecker {
 			
 			PasswordManager.clearBytes(lastChecksum);
 			PasswordManager.clearBytes(checksumOriginalFile);
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			DisplayMessage.showPanel("Non è stato possibile caricare il file della proposta, i file sembrano diversi!");
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
 		}else {
 			DisplayMessage.showPanel("Nessun cambiamento rilevato durante il controllo del checksum della proposta");
 		}

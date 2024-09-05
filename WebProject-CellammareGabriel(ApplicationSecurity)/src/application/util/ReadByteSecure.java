@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import application.util.cryptography.PasswordManager;
+
 public final class ReadByteSecure{
 
 	public static byte[] readAllBytesSecurely(InputStream inputStream) throws IOException {
@@ -13,6 +15,7 @@ public final class ReadByteSecure{
 	    while ((bytesRead = inputStream.read(data, 0, data.length)) != -1) {
 	        buffer.write(data, 0, bytesRead);
 	    }
+	    PasswordManager.clearBytes(data);
 	    return buffer.toByteArray();
 	}
 }

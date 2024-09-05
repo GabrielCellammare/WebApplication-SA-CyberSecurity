@@ -5,9 +5,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
+import com.sun.istack.logging.Logger;
+
 import application.util.ConvertingType;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
+import application.util.customMessage.DisplayMessage;
 
 public final class UserLogged {
 
@@ -96,6 +99,7 @@ public final class UserLogged {
 
 	public void setCsrfToken() {
 		this.csrfToken=this.generateFinalToken(this.generateCsrfToken());
+		DisplayMessage.showPanel("Nuovo csrf token generato");
 	}
  
 	
