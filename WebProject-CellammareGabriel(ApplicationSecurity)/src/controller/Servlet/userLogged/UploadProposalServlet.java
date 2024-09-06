@@ -67,9 +67,9 @@ public final class UploadProposalServlet extends HttpServlet {
 
 		Part filePart = request.getPart("proposal");
 		byte[] fileContent=null;
-		
+
 		String email = request.getParameter("userEmail");
-		
+
 		boolean boolSecureCsfr=false;
 
 		System.out.println(email);
@@ -77,6 +77,11 @@ public final class UploadProposalServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
+		if(session==null) {
+			DisplayMessage.showPanel("Sessione scaduta!");
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  // Status 401: Unauthorized
+			return;
+		}
 
 		String method = request.getMethod();
 		System.out.println("Metodo: " + method);
@@ -104,24 +109,24 @@ public final class UploadProposalServlet extends HttpServlet {
 			java.util.Arrays.fill(sessionCsrfToken, '\0');
 
 		} 
-		
+
 		byte[] checksumOriginalFile = Encryption.calculateChecksumFromPart(filePart);
-		
+
 		try (InputStream inputStream = filePart.getInputStream()) {
-		    fileContent = ReadByteSecure.readAllBytesSecurely(inputStream);
+			fileContent = ReadByteSecure.readAllBytesSecurely(inputStream);
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		byte[] checksumOriginalContent = Encryption.calculateChecksumFile(fileContent);
-		
+
 
 		ProposalChecker.checksumControl(request, response, session, checksumOriginalFile, checksumOriginalContent);
 		//Se il checksum è diverso, invalida la sessione e i cookie
-		
+
 		PasswordManager.clearBytes(checksumOriginalFile);
-		
-		
+
+
 		if (ProposalChecker.checkProposalFile(request, response, session, filePart, getServletContext(), checksumOriginalContent) && boolSecureCsfr) {
 
 			String cleanedHtml = ProposalChecker.processFile(request, response, session, filePart,checksumOriginalContent);
@@ -160,6 +165,6 @@ public final class UploadProposalServlet extends HttpServlet {
 		}
 	}
 
-	
-	
+
+
 }

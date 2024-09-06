@@ -104,7 +104,7 @@ public final class LoginFilter implements Filter {
 
 								System.out.println("Token individuato la seconda volta: " + Base64.getEncoder().encodeToString(userlogged.getCsrfToken()));
 								session.setAttribute("userLogged", userlogged);
-								session.setMaxInactiveInterval(15 * 60);
+								session.setMaxInactiveInterval(15*60);
 								PasswordManager.clearBytes(cookieByte);
 								isLoggedIn = true;  // Utente autenticato
 								break;

@@ -44,22 +44,23 @@ $(document).ready(function() {
     
 	$('#bannerContent').hide();
 	
-	var inattivitaTimer; // Variabile per memorizzare l'ID del timer
+	var inattivitaTimer; // Variabile globale
 
-    // Funzione chiamata per resettare il timer di inattività
-    function resetInattivitaTimer() {
-        inattivitaTimer = setTimeout(function(){
-        	
-        	 // Invalida la sessione dell'utente
-            $.ajax({
-                type: 'POST',
-                url: 'LogoutServlet', // Presuppone che tu abbia un servlet per gestire il logout
-                success: function() {
-                	window.location.href = "userNotLoggedIndex.jsp";
-                }
-            });
-        	}, 9000); // Imposta un nuovo timer per il logout dopo 15 minuti di inattività
-    }
+	function resetInattivitaTimer() {
+	    if (inattivitaTimer) {
+	        clearTimeout(inattivitaTimer); // Pulisce il timer precedente se esiste
+	    }
+
+	    inattivitaTimer = setTimeout(function() {
+	        $.ajax({
+	            type: 'POST',
+	            url: 'LogoutServlet',
+	            success: function() {
+	                window.location.href = "userNotLoggedIndex.jsp";
+	            }
+	        });
+	    }, 900000); // Timeout di 9 secondi (per il testing)
+	}
 
     // Eventi che indicano attività dell'utente
     $(document).on('mousemove keypress click', function() {
@@ -97,6 +98,10 @@ function uploadFile() {
 					console.error(
 							'Errore durante il caricamento del file:',
 							status, error);
+			        if (xhr.status === 401) {  // Se ricevi 401, reindirizza l'utente alla pagina di login
+			            window.location.href = 'userNotLoggedIndex.jsp';
+			        }
+
 				}
 				
 			});

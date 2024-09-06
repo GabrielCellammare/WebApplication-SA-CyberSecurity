@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.apache.tika.exception.TikaException"/>
-    <fullyQualifiedTypeName name="com.drew.metadata.Metadata"/>
-    <fullyQualifiedTypeName name="model.Dao.RegistrationDAO"/>
     <fullyQualifiedTypeName name="application.util.ImageProfileFileChecker"/>
     <fullyQualifiedTypeName name="java.io.FileInputStream"/>
     <fullyQualifiedTypeName name="org.apache.tika.sax.BodyContentHandler"/>
@@ -44,13 +41,11 @@
     <fullyQualifiedTypeName name="model.Dao.cookie.GetEmailFromTokenDAO"/>
     <fullyQualifiedTypeName name="model.Dao.cookie.CleanExpiredTokenDAO"/>
     <fullyQualifiedTypeName name="model.Dao.cookie.DeleteTokenDAO"/>
-    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
     <fullyQualifiedTypeName name="java.nio.CharBuffer"/>
     <fullyQualifiedTypeName name="java.nio.ByteBuffer"/>
     <fullyQualifiedTypeName name="java.nio.charset.Charset"/>
     <fullyQualifiedTypeName name="application.util.cryptography.Encryption"/>
     <fullyQualifiedTypeName name="application.util.fileChecker.ProposalChecker"/>
-    <fullyQualifiedTypeName name="application.util.cryptography.PasswordManager"/>
     <fullyQualifiedTypeName name="java.util.Base64"/>
     <fullyQualifiedTypeName name="application.util.ConvertingType"/>
     <fullyQualifiedTypeName name="javax.crypto.Cipher"/>
@@ -60,4 +55,9 @@
     <fullyQualifiedTypeName name="javax.swing.JLabel"/>
     <fullyQualifiedTypeName name="java.awt.Dimension"/>
     <fullyQualifiedTypeName name="javax.swing.JFrame"/>
+    <fullyQualifiedTypeName name="application.util.cryptography.PasswordManager"/>
+    <fullyQualifiedTypeName name="com.sun.istack.logging.Logger"/>
+    <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
+    <fullyQualifiedTypeName name="javax.annotation.concurrent.Immutable"/>
+    <fullyQualifiedTypeName name="javax.annotation.concurrent.ThreadSafe"/>
 </qualifiedTypeNameHistroy>
