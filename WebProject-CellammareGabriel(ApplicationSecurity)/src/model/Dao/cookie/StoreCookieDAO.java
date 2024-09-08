@@ -20,8 +20,6 @@ public final class StoreCookieDAO {
 	public static boolean storeCookie(byte[] byte_encryptedEmail, byte[] token){
 
 		boolean status = false;
-		String email=null;
-
 
 		try {
 
@@ -39,9 +37,7 @@ public final class StoreCookieDAO {
 				}
 
 				decryptedEmailBytes=Encryption.removePadding(decryptedEmailBytes);
-				email=ConvertingType.byteArrayToString(decryptedEmailBytes);
-
-				int id_user=TakeUserIdDAO.takeUserId(con_read, email);
+				int id_user=TakeUserIdDAO.takeUserId(con_read, ConvertingType.byteArrayToString(decryptedEmailBytes));
 
 				try(Connection con_write=DatabaseConnection.getConnectionWrite();
 						PreparedStatement ps_cookie = con_write.prepareStatement(DatabaseQuery.insertCookie())){
@@ -57,7 +53,6 @@ public final class StoreCookieDAO {
 
 					if (status) {
 
-						email = null;
 						PasswordManager.clearBytes(decryptedEmailBytes);
 						DisplayMessage.showPanel("Cookie registrato correttamente!");
 						return status;
@@ -66,7 +61,6 @@ public final class StoreCookieDAO {
 
 
 					else{
-						email = null;
 						PasswordManager.clearBytes(decryptedEmailBytes);
 						DisplayMessage.showPanel("Cookie non registrato correttamente!");
 

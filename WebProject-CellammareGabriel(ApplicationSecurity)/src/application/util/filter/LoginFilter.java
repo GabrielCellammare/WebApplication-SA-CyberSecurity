@@ -128,7 +128,7 @@ public final class LoginFilter implements Filter {
 							expiredCookie.setHttpOnly(true);
 							expiredCookie.setSecure(true);
 							httpResponse.addCookie(expiredCookie);
-
+							
 							PasswordManager.clearBytes(cookieByte);
 							isLoggedIn = false;  // Imposta come non autenticato
 							break;

@@ -109,7 +109,7 @@ public final class UploadProposalServlet extends HttpServlet {
 			java.util.Arrays.fill(sessionCsrfToken, '\0');
 
 		} 
-
+		//Inizio toc
 		byte[] checksumOriginalFile = Encryption.calculateChecksumFromPart(filePart);
 
 		try (InputStream inputStream = filePart.getInputStream()) {

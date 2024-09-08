@@ -52,7 +52,7 @@ public final class LoginDAO {
 						System.out.println("Salt è nullo");
 					}
 				} else {
-					DisplayMessage.showPanel("ID Non valido. Riprovare con un mail corretta!"); //VALUTARE DI ELIMINARE?
+					DisplayMessage.showPanel("ID Non valido. Riprovare con un mail corretta!"); 
 					System.out.println("Nessun risultato trovato per l'utente: " + email);
 				}
 			} 

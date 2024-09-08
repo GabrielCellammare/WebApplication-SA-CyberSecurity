@@ -76,7 +76,7 @@ public final class RegistrationServlet extends HttpServlet {
 								filePart = null;
 								PasswordManager.clearBytes(SaltedPassword);
 								PasswordManager.clearBytes(salt);
-								DisplayMessage.showPanel("Errore durante la registrazione!");
+								DisplayMessage.showPanel("Errore durante la registrazione nel DB!");
 								request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 								
 
@@ -87,7 +87,7 @@ public final class RegistrationServlet extends HttpServlet {
 							filePart = null;
 							PasswordManager.clearBytes(SaltedPassword);
 							PasswordManager.clearBytes(salt);
-							DisplayMessage.showPanel("Errore durante la registrazione!");
+							DisplayMessage.showPanel("Errore durante la registrazione a causa di problemi di connessione!");
 							request.getRequestDispatcher("userNotLoggedRegistration.jsp").forward(request, response);
 						}
 

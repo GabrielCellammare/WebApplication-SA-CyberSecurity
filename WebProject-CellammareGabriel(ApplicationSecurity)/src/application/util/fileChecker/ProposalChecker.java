@@ -148,9 +148,8 @@ public final class ProposalChecker {
 	public static void checksumControl(HttpServletRequest request, HttpServletResponse response, HttpSession session,
 			byte[] checksumOriginalFile, byte[] lastChecksum) throws IOException {
 		
-		boolean check=Arrays.equals(checksumOriginalFile, lastChecksum);
 
-		if(!check){
+		if(!Arrays.equals(checksumOriginalFile, lastChecksum)){
 			if (session != null) {
 				session.invalidate();
 			}

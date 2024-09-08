@@ -64,7 +64,17 @@ public final class UserLogged {
 
 		System.arraycopy(this.timestamp, 0, concatenatedData, this.byte_encryptedEmail.length, this.timestamp.length);
 		
-		return PasswordManager.concatenateAndHash(concatenatedData,this.csrfToken);
+		byte[] concatenedDataPadding = Encryption.addPadding(concatenatedData);
+		
+		byte[] cookieEncrypted = null;
+		try {
+			cookieEncrypted = Encryption.encrypt(concatenedDataPadding);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return PasswordManager.concatenateAndHash(cookieEncrypted,this.csrfToken);
 
 	}
 	

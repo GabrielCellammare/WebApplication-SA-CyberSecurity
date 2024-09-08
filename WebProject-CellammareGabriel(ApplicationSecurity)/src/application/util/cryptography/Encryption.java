@@ -25,18 +25,20 @@ import application.util.ReadByteSecure;
 public final class Encryption {
 
 	public static byte[] encrypt(byte[] data) throws Exception {
+		
 		char[] AES_KEY=Encryption.readAesKey();
 		SecretKey key = Encryption.getSecretKey(AES_KEY);
-		char [] AES_IV = Encryption.readAES_IV();
+
 		if (key != null) {
+
+			char [] AES_IV = Encryption.readAES_IV();
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(ConvertingType.charToBytes(AES_IV)));
 			Arrays.fill(AES_KEY, '\0');
 			Arrays.fill(AES_IV, '\0');
 			return cipher.doFinal(data);
 		} else {
-			java.util.Arrays.fill(AES_KEY, '\0');
-			java.util.Arrays.fill(AES_IV, '\0');
+			Arrays.fill(AES_KEY, '\0');
 			System.out.println("Chiave non valida.");
 			return null;
 		}
@@ -46,8 +48,8 @@ public final class Encryption {
 	public static byte[] decrypt(byte[] encryptedBytes) throws Exception {
 		char[] AES_KEY=Encryption.readAesKey();
 		SecretKey key = Encryption.getSecretKey(AES_KEY);
-		char[] AES_IV = Encryption.readAES_IV();
 		if (key != null) {
+			char[] AES_IV = Encryption.readAES_IV();
 			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(ConvertingType.charToBytes(AES_IV)));
 			Arrays.fill(AES_KEY, '\0');
@@ -56,7 +58,6 @@ public final class Encryption {
 		} else {
 			System.out.println("Chiave non valida.");
 			Arrays.fill(AES_KEY, '\0');
-			Arrays.fill(AES_IV, '\0');
 			return null;
 		}
 

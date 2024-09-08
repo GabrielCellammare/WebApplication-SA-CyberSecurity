@@ -38,12 +38,14 @@ public final class DatabaseConnection {
 			USERNAME_DELETE = prop.getProperty("db.username_delete");
 			PASSWORD_DELETE = prop.getProperty("db.password_delete");
 			
+			/**
 			// Log per il debug
 			System.out.println("Configurazione caricata correttamente:");
 			System.out.println("URL: " + URL);
 			System.out.println("USERNAME_DELETE: " + USERNAME_DELETE);
 			// NOTA: NON stampare la password in ambienti di produzione o log pubblici!
 			System.out.println("PASSWORD_DELETE: " + PASSWORD_DELETE); 
+			*/
 			
 		} catch (IOException e) {
 			e.printStackTrace();

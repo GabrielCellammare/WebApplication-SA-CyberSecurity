@@ -21,7 +21,6 @@ public final class RegistrationDAO {
 	public static boolean userRegistration(String email, byte[] password, byte[] salt, Part filePart, byte[] checksumOriginal)
 			throws IOException {
 
-		boolean check = false;
 		try {
 			//Inizializza il driver per comunicare con il dB
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -44,9 +43,8 @@ public final class RegistrationDAO {
 						
 						byte[] lastChecksum = Encryption.calculateChecksumFromPart(filePart);
 
-						check=Arrays.equals(checksumOriginal, lastChecksum);
 
-						if(!check) {
+						if(!Arrays.equals(checksumOriginal, lastChecksum)) {
 							DisplayMessage.showPanel("Non è stato possibile terminare la registrazione, le immagini profilo non risultano uguali!");
 							return false; 
 						}
@@ -70,12 +68,12 @@ public final class RegistrationDAO {
 								return (RegistrationUserSaltDAO.registrationUserSalt(con_write, id_user, salt) > 0); // Restituisci true se anche la seconda query ha avuto successo
 							}
 							else {
-								DisplayMessage.showPanel("ID Non valido. Riprovare con un mail corretta. Sale non registrato!"); //VALUTARE DI ELIMINARE?
+								DisplayMessage.showPanel("ID Non valido. Riprovare con un mail corretta. Sale non registrato!"); 
 
 							}
 
 						}else {
-							DisplayMessage.showPanel("Non è stato possibile terminare la registrazione. Riprovare!"); //VALUTARE DI ELIMINARE?
+							DisplayMessage.showPanel("Non è stato possibile terminare la registrazione. Riprovare!"); 
 
 						}
 					}

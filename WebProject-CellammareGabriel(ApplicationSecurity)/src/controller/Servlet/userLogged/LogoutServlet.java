@@ -40,7 +40,9 @@ public final class LogoutServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			session.invalidate();
+			DisplayMessage.showPanel("Sessione invalidata correttamente!");
 		}
+		
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
@@ -75,6 +77,7 @@ public final class LogoutServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			session.invalidate();
+			DisplayMessage.showPanel("Sessione invalidata correttamente!");
 		}
 	
 		DisplayMessage.showPanel("Logout automatico effettuato correttamente!");

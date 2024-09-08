@@ -1,5 +1,0 @@
-package application.util.cryptography;
-
-public class CookieUtil {
-
-}
