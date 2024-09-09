@@ -2,7 +2,7 @@ package application.util.filter;
 
 import java.io.IOException;
 
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@Immutable
+@ThreadSafe
 public final class UserLoggedFilter implements Filter {
 
 	@Override

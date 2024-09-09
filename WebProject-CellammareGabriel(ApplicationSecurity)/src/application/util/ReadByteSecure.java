@@ -8,6 +8,7 @@ import java.io.InputStream;
 import javax.annotation.concurrent.Immutable;
 
 import application.util.cryptography.PasswordManager;
+
 @Immutable
 public final class ReadByteSecure{
 

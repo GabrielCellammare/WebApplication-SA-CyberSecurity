@@ -1,9 +1,10 @@
 package application.util.customMessage;
 
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.swing.JFrame;
 import java.awt.event.WindowListener;
-@Immutable
+
+@ThreadSafe
 final class SecureJFrame extends JFrame {
 
 	/**

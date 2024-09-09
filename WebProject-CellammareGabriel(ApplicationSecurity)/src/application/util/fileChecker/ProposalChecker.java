@@ -7,8 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Base64;
-
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,7 @@ import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
 import model.Dao.cookie.DeleteTokenDAO;
-@Immutable
+@ThreadSafe
 public final class ProposalChecker {
 
 	public static boolean checkProposalFile(HttpServletRequest request, HttpServletResponse response, HttpSession session,Part filePart, ServletContext context, byte[] checksumOriginal) throws IOException {

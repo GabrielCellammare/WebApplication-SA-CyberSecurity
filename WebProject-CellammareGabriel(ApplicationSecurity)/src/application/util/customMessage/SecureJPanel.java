@@ -1,11 +1,11 @@
 package application.util.customMessage;
 
 import java.awt.Dimension;
-
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-@Immutable
+
+@ThreadSafe
 final class SecureJPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;

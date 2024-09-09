@@ -1,11 +1,12 @@
 package application.util.cryptography;
 
 import java.security.MessageDigest;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-import javax.annotation.concurrent.Immutable;
-@Immutable
+import javax.annotation.concurrent.ThreadSafe;
+@ThreadSafe
 public final class PasswordManager {
 
 	public static void clearBytes(byte[] password) {

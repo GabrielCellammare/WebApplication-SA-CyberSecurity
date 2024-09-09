@@ -16,7 +16,18 @@
 			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
-	
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Restricted Area</web-resource-name>
+			<url-pattern>/WEB-INF/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>none</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+
 	<filter>
 		<filter-name>LoginFilter</filter-name>
 		<filter-class>application.util.filter.LoginFilter</filter-class>
@@ -26,8 +37,8 @@
 		<filter-name>LoginFilter</filter-name>
 		<url-pattern>/userNotLoggedLogin.jsp</url-pattern>
 	</filter-mapping>
-	
-		
+
+
 	<filter>
 		<filter-name>UserLoggedFilter</filter-name>
 		<filter-class>application.util.filter.UserLoggedFilter</filter-class>

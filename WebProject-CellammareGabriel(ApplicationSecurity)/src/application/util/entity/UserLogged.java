@@ -5,13 +5,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import application.util.ConvertingType;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
-@Immutable
+
+@NotThreadSafe
 public final class UserLogged {
 
 	private byte[] byte_encryptedEmail;

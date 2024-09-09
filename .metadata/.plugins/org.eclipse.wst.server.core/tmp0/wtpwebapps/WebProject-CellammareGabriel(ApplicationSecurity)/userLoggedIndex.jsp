@@ -59,7 +59,7 @@ $(document).ready(function() {
 	                window.location.href = "userNotLoggedIndex.jsp";
 	            }
 	        });
-	    }, 900000); // Timeout di 9 secondi (per il testing)
+	    }, 900000); // Timeout di 15 minuti (uguale per la sessione)
 	}
 
     // Eventi che indicano attività dell'utente

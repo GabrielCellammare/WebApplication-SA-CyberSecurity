@@ -1,6 +1,6 @@
 
 package application.util.routine;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -9,7 +9,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import model.Dao.cookie.CleanExpiredTokenDAO;
 
-@Immutable
+@ThreadSafe
 @WebListener // Annotazione che registra il listener
 public final class ApplicationStartupListener implements ServletContextListener {
 
