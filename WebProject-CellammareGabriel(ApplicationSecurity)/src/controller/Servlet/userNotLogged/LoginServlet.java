@@ -3,6 +3,7 @@ package controller.Servlet.userNotLogged;
 import java.io.IOException;
 import java.util.Base64;
 
+import javax.annotation.concurrent.ThreadSafe;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -14,6 +15,7 @@ import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
 import application.util.entity.UserLogged;
+import application.util.fileChecker.EmailChecker;
 import model.Dao.cookie.StoreCookieDAO;
 import model.Dao.login.LoginDAO;
 
@@ -21,6 +23,7 @@ import model.Dao.login.LoginDAO;
 /**
  * Servlet implementation class LoginServlet
  */
+@ThreadSafe
 @WebServlet("/LoginServlet")
 public final class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -45,6 +48,14 @@ public final class LoginServlet extends HttpServlet {
 		response.setContentType("application/json; charset=UTF-8");
 
 		String email = request.getParameter("email");
+		
+		if(!EmailChecker.isValidEmail(email)) {
+			email = null;
+			response.sendRedirect("userNotLoggedIndex.jsp");  // Reindirizzamento in caso di autenticazione fallita
+			DisplayMessage.showPanel("Caratteri non validi!");
+			return;
+		}
+		
 		byte[] byte_email = email.getBytes(java.nio.charset.StandardCharsets.UTF_8); 
 		byte[] pad_email = Encryption.addPadding(byte_email);
 		byte[] byte_encryptedEmail = null;

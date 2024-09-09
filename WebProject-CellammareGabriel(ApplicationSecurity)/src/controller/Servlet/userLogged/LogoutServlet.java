@@ -3,6 +3,7 @@ package controller.Servlet.userLogged;
 import java.io.IOException;
 import java.util.Base64;
 
+import javax.annotation.concurrent.ThreadSafe;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -19,6 +20,7 @@ import model.Dao.cookie.DeleteTokenDAO;
 /**
  * Servlet implementation class LogoutServlet
  */
+@ThreadSafe
 @WebServlet("/LogoutServlet")
 public final class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

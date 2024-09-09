@@ -3,6 +3,7 @@ package controller.Servlet.userNotLogged;
 import java.io.IOException;
 import java.util.Arrays;
 
+import javax.annotation.concurrent.ThreadSafe;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +22,7 @@ import model.Dao.registration.RegistrationDAO;
 
 
 @MultipartConfig
+@ThreadSafe
 @WebServlet("/RegistrationServlet")
 public final class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

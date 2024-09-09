@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="application.util.ImageProfileFileChecker"/>
-    <fullyQualifiedTypeName name="java.io.FileInputStream"/>
-    <fullyQualifiedTypeName name="org.apache.tika.sax.BodyContentHandler"/>
     <fullyQualifiedTypeName name="org.apache.tika.metadata.Metadata"/>
     <fullyQualifiedTypeName name="org.apache.tika.parser.Parser"/>
     <fullyQualifiedTypeName name="org.apache.tika.parser.ParseContext"/>
@@ -59,5 +56,8 @@
     <fullyQualifiedTypeName name="com.sun.istack.logging.Logger"/>
     <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
     <fullyQualifiedTypeName name="javax.annotation.concurrent.Immutable"/>
+    <fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
+    <fullyQualifiedTypeName name="javax.annotation.concurrent.NotThreadSafe"/>
     <fullyQualifiedTypeName name="javax.annotation.concurrent.ThreadSafe"/>
+    <fullyQualifiedTypeName name="application.util.fileChecker.EmailChecker"/>
 </qualifiedTypeNameHistroy>

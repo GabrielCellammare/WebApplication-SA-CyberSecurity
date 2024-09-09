@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 
+import javax.annotation.concurrent.ThreadSafe;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -31,6 +32,7 @@ import model.Dao.proposal.ProposalDAO;
  * Servlet implementation class UploadProposalServlet
  */
 @MultipartConfig
+@ThreadSafe
 @WebServlet("/UploadProposalServlet")
 public final class UploadProposalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
