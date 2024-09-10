@@ -2,7 +2,6 @@ package application.util.fileChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -109,7 +108,7 @@ public final class ProposalChecker {
 
 	                String cleanedHtml = document.toString();
 	                
-	                checksumOriginal = Encryption.calculateChecksumFile(cleanedHtml.getBytes(StandardCharsets.UTF_8));
+	                checksumOriginal = Encryption.calculateChecksumFile(ConvertingType.stringToByteArray(cleanedHtml));
 	                System.out.println("Checksum 4: " + checksumOriginal.toString());
 	                return cleanedHtml;
 	            }

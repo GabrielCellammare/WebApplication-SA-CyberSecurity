@@ -287,8 +287,7 @@ function closeBanner() {
 		<div id="form-container">
 			<table>
 				<tr>
-					<td class="loading-proposal"><b>Carica proposta
-							progettuale<b></td>
+					<td class="loading-proposal"><b>Carica proposta progettuale</b></td>
 					<td><input id="uploadProposalFile" type="file" name="proposal"
 						autocomplete="off"></td>
 				</tr>

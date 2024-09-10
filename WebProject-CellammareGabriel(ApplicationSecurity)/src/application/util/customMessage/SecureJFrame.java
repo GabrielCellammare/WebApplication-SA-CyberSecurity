@@ -18,19 +18,19 @@ final class SecureJFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
-	// Sovrascrivi setVisible per loggare o bloccare tentativi di manipolazione.
+	// Sovrascrivere setVisible per loggare o bloccare tentativi di manipolazione.
 	@Override
 	public void setVisible(boolean b) {
 		super.setVisible(b);
 	}
 
-	// Sovrascrivi dispose per loggare o bloccare tentativi di manipolazione.
+	// Sovrascrivere dispose per loggare o bloccare tentativi di manipolazione.
 	@Override
 	public void dispose() {
 		super.dispose();
 	}
 
-	// Sovrascrivi metodi chiave che non vuoi siano manipolati, ad esempio:
+	// Sovrascriviere metodi chiave 
 	@Override
 	public void addWindowListener(WindowListener l) {
 		super.addWindowListener(l);

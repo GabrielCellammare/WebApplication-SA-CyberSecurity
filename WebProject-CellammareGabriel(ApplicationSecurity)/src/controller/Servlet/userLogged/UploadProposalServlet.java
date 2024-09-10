@@ -2,7 +2,6 @@ package controller.Servlet.userLogged;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 
@@ -134,7 +133,7 @@ public final class UploadProposalServlet extends HttpServlet {
 			String cleanedHtml = ProposalChecker.processFile(request, response, session, filePart,checksumOriginalContent);
 
 			String filename = ProposalChecker.getFileName(filePart);
-			byte[] htmlBytes = cleanedHtml.getBytes(StandardCharsets.UTF_8);
+			byte[] htmlBytes = ConvertingType.stringToByteArray(cleanedHtml);
 
 			try {
 				if (ProposalDAO.uploadFile(request, response, session, email,filename,htmlBytes,checksumOriginalContent)) {

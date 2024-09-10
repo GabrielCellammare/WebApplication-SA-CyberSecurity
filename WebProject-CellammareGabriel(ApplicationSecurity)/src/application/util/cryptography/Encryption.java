@@ -27,6 +27,7 @@ import application.util.ReadByteSecure;
 @ThreadSafe
 public final class Encryption {
 
+	//Cifratura utilizzando AES in modalità CBC
 	public static byte[] encrypt(byte[] data) throws Exception {
 		
 		char[] AES_KEY=Encryption.readAesKey();
@@ -48,6 +49,7 @@ public final class Encryption {
 
 	}
 
+	//Decifratura con array di byte
 	public static byte[] decrypt(byte[] encryptedBytes) throws Exception {
 		char[] AES_KEY=Encryption.readAesKey();
 		SecretKey key = Encryption.getSecretKey(AES_KEY);
@@ -66,7 +68,8 @@ public final class Encryption {
 
 
 	}
-
+	
+	//Aggiunta del padding
 	public static byte[] addPadding(byte[] bytes) {
 		int paddingLength = 16 - bytes.length % 16;
 		byte[] paddingBytes = new byte[paddingLength];
@@ -75,6 +78,7 @@ public final class Encryption {
 		return Arrays.copyOf(bytes, bytes.length + paddingLength);
 	}
 
+	//Rimozione del padding
 	public static byte[] removePadding(byte[] bytes) {
 		int paddingValue = bytes[bytes.length - 1]; // Ottieni l'ultimo byte, che rappresenta il valore di padding
 		int unpaddedLength = bytes.length - paddingValue;
@@ -92,6 +96,7 @@ public final class Encryption {
 	}
 
 
+	//Calcolo del checksum direttamente dal file Part
 	public static byte[] calculateChecksumFromPart(Part filePart) {
 	    try (InputStream inputStream = filePart.getInputStream()) {
 	        return calculateChecksumFile(ReadByteSecure.readAllBytesSecurely(inputStream));// Usa la funzione di checksum che accetta byte[]
@@ -101,6 +106,7 @@ public final class Encryption {
 	    }
 	}
 	
+	//Calcolo del checksum del file direttamente conoscendo i byte
 	public static byte[] calculateChecksumFile(byte[] fileContent){
 		// Crea l'istanza MessageDigest per SHA-256
 		MessageDigest digest = null;
@@ -122,7 +128,7 @@ public final class Encryption {
 
 	}
 
-
+	//Lettura della keyAES codificata in base 64
 	private static char[] readAesKey() {
 		Properties appProperties = new Properties();
 
@@ -142,6 +148,7 @@ public final class Encryption {
 	}
 	
 	
+	//Lettura del vettore d'inizializzazione
 	private static char[] readAES_IV() {
 		Properties appProperties = new Properties();
 
@@ -162,6 +169,7 @@ public final class Encryption {
 	
 
 
+	//Creazione dell'oggetto secrey key spec
 	private static SecretKey getSecretKey(char[] AES_KEY) {
 
 		return new SecretKeySpec(Base64.getDecoder().decode(String.copyValueOf(AES_KEY)), "AES");

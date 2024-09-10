@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import application.util.ConvertingType;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
@@ -82,7 +83,7 @@ public final class LoginFilter implements Filter {
 								// Autenticazione tramite cookie riuscita
 								String email = GetEmailFromTokenDAO.getEmailFromToken(cookieByte);
 
-								byte[] byte_email = email.getBytes(java.nio.charset.StandardCharsets.UTF_8); 
+								byte[] byte_email = ConvertingType.stringToByteArray(email);
 								byte[] pad_email = Encryption.addPadding(byte_email);
 								byte[] byte_encryptedEmail = null;
 
@@ -123,6 +124,8 @@ public final class LoginFilter implements Filter {
 								break;
 							}
 						}else {
+							
+							//Cookie non trovato
 							Cookie expiredCookie = new Cookie("rememberMe", null);
 							expiredCookie.setMaxAge(0);
 							expiredCookie.setHttpOnly(true);

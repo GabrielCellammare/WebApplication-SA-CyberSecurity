@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import application.util.ConvertingType;
 import application.util.cryptography.Encryption;
 import application.util.cryptography.PasswordManager;
 import application.util.customMessage.DisplayMessage;
@@ -51,12 +53,12 @@ public final class LoginServlet extends HttpServlet {
 		
 		if(!EmailChecker.isValidEmail(email)) {
 			email = null;
-			response.sendRedirect("userNotLoggedIndex.jsp");  // Reindirizzamento in caso di autenticazione fallita
+			response.sendRedirect("userNotLoggedIndex.jsp");  // Reindirizzamento in caso di email non valida, sanificazione dell'input
 			DisplayMessage.showPanel("Caratteri non validi!");
 			return;
 		}
 		
-		byte[] byte_email = email.getBytes(java.nio.charset.StandardCharsets.UTF_8); 
+		byte[] byte_email = ConvertingType.stringToByteArray(email);
 		byte[] pad_email = Encryption.addPadding(byte_email);
 		byte[] byte_encryptedEmail = null;
 

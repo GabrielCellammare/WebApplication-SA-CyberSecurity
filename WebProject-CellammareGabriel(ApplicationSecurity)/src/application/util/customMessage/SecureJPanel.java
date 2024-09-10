@@ -16,19 +16,19 @@ final class SecureJPanel extends JPanel {
 		add(label);
 	}
 
-	// Sovrascrivi il metodo add per loggare o impedire l'aggiunta di componenti non autorizzati.
+	// Sovrascrivere il metodo add per loggare o impedire l'aggiunta di componenti non autorizzati.
 	@Override
 	public void addNotify() {
 		super.addNotify();
 	}
 
-	// Sovrascrivi il metodo remove per loggare o impedire la rimozione di componenti.
+	// Sovrascrivere il metodo remove per loggare o impedire la rimozione di componenti.
 	@Override
 	public void removeNotify() {
 		super.removeNotify();
 	}
 
-	// Sovrascrivi il metodo getPreferredSize per evitare manipolazioni delle dimensioni del pannello.
+	// Sovrascrivere il metodo getPreferredSize per evitare manipolazioni delle dimensioni del pannello.
 	@Override
 	public Dimension getPreferredSize() {
 		Dimension preferredSize = super.getPreferredSize();

@@ -11,6 +11,7 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class ConvertingType {
 	
+	//Trasforma un'array di char in un array di byte
 	public static byte[] charToBytes(char[] chars) {
 		CharBuffer charBuffer = CharBuffer.wrap(chars);
 		ByteBuffer byteBuffer = Charset.forName("UTF-8").encode(charBuffer);
@@ -20,6 +21,7 @@ public final class ConvertingType {
 		return bytes;
 	}
 
+	//Trasforma una string in un'array di char
 	public  static char[] parseStringtoCharArray(String str) {
 		char[] arr = new char[str.length()]; 
 
@@ -33,14 +35,17 @@ public final class ConvertingType {
 
 	}
 	
+	//Trasforma un'array di byte in una stringa
 	public  static String byteArrayToString(byte[] byteArray) {
 		return new String(byteArray, StandardCharsets.UTF_8);
 	}
 	
+	//Trasforma una stringa in un byte di array
 	public  static byte[] stringToByteArray(String str) {
 		return str.getBytes(java.nio.charset.StandardCharsets.UTF_8);
 	}
 
+	//Confronta due array di char
 	public static boolean areCharArraysEqual(char[] array1, char[] array2) {
 		if (array1 == null || array2 == null) {
 			return array1 == array2;

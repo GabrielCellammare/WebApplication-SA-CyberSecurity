@@ -44,7 +44,6 @@
     <fullyQualifiedTypeName name="application.util.cryptography.Encryption"/>
     <fullyQualifiedTypeName name="application.util.fileChecker.ProposalChecker"/>
     <fullyQualifiedTypeName name="java.util.Base64"/>
-    <fullyQualifiedTypeName name="application.util.ConvertingType"/>
     <fullyQualifiedTypeName name="javax.crypto.Cipher"/>
     <fullyQualifiedTypeName name="java.util.Arrays"/>
     <fullyQualifiedTypeName name="java.io.InputStream"/>
@@ -60,4 +59,5 @@
     <fullyQualifiedTypeName name="javax.annotation.concurrent.NotThreadSafe"/>
     <fullyQualifiedTypeName name="javax.annotation.concurrent.ThreadSafe"/>
     <fullyQualifiedTypeName name="application.util.fileChecker.EmailChecker"/>
+    <fullyQualifiedTypeName name="application.util.ConvertingType"/>
 </qualifiedTypeNameHistroy>

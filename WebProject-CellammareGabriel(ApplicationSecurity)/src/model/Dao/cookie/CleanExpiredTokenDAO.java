@@ -18,7 +18,7 @@ public final class CleanExpiredTokenDAO {
 		try {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			// Pseudo-codice per la pulizia dei token scaduti
+			// codice per la pulizia dei token scaduti
 			try (Connection con_delete = DatabaseConnection.getConnectionDelete();PreparedStatement ps_cookieRoutineDelete = con_delete.prepareStatement(DatabaseQuery.deleteCookieRoutine())) {
 
 				int rowsDeleted = ps_cookieRoutineDelete.executeUpdate();

@@ -9,6 +9,7 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class PasswordManager {
 
+	//Pulizia dall'array degli elementi
 	public static void clearBytes(byte[] password) {
 		if (password != null) {
 
@@ -18,6 +19,7 @@ public final class PasswordManager {
 		}
 	}
 
+	//Calcolo dell'hash
 	public static byte[] concatenateAndHash(byte[] password, byte[] salt) {
 		try {
 
@@ -43,6 +45,7 @@ public final class PasswordManager {
 		
 	}
 
+	//Generazione sicura di byte
 	public static byte[] generateRandomBytes(int saltLenghts) {
 
 		SecureRandom secureRandom = new SecureRandom();
@@ -52,6 +55,8 @@ public final class PasswordManager {
 		return salt;
 	}
 
+	
+	//Controllo sicurezza password
 	public static boolean isStrongPassword(byte[] password) {
 		
 		final char[] specialCharacters = {'!','@','#','$','%','^','&','.','*','(',')','-','_','+','=','<','>','?','.'};
