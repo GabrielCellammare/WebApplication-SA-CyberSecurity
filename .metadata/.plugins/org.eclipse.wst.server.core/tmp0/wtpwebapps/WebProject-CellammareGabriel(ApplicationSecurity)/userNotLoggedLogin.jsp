@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login Web Application</title>
+        <title>Login Web Application Cellammare Gabriel</title>
         <style>
          	<%@include file="/WEB-INF/css/styleLogin.css"%>
          </style>

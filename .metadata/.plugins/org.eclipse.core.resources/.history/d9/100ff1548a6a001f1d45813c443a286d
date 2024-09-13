@@ -1,6 +1,0 @@
-package application.util;
-
-public final class SecureJFrame extends JFrame {
-	
-
-}

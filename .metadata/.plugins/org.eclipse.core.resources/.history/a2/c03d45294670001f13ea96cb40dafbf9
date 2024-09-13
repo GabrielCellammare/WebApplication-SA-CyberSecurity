@@ -34,7 +34,7 @@ public final class UserLogged {
 		this.byte_encryptedEmail=byte_encryptedEmail;
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		this.timestamp = this.calculateTimeStamp(ConvertingType.stringToByteArray(currentDateTime.format(formatter)));	
+		this.timestamp = this.calculateTimeStamp(currentDateTime.format(formatter).getBytes(java.nio.charset.StandardCharsets.UTF_8));	
 		this.csrfToken=this.generateFinalToken(this.generateCsrfToken());
 		this.cookieToken=cookieToken;
 	}

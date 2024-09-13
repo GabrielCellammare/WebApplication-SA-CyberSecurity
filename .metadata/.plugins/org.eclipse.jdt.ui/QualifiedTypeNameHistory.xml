@@ -54,10 +54,10 @@
     <fullyQualifiedTypeName name="application.util.cryptography.PasswordManager"/>
     <fullyQualifiedTypeName name="com.sun.istack.logging.Logger"/>
     <fullyQualifiedTypeName name="application.util.customMessage.DisplayMessage"/>
-    <fullyQualifiedTypeName name="javax.annotation.concurrent.Immutable"/>
     <fullyQualifiedTypeName name="javax.swing.SwingUtilities"/>
     <fullyQualifiedTypeName name="javax.annotation.concurrent.NotThreadSafe"/>
     <fullyQualifiedTypeName name="javax.annotation.concurrent.ThreadSafe"/>
     <fullyQualifiedTypeName name="application.util.fileChecker.EmailChecker"/>
     <fullyQualifiedTypeName name="application.util.ConvertingType"/>
+    <fullyQualifiedTypeName name="javax.annotation.concurrent.Immutable"/>
 </qualifiedTypeNameHistroy>

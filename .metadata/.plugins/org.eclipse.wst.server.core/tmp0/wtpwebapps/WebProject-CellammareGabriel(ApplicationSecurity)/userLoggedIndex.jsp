@@ -26,7 +26,7 @@ var isRefreshing = false;
 var isProposteLoading = false;
 
 
-// Chiamata AJAX separata per caricare la lista delle proposte quando la pagina si carica
+// Chiamata AJAX separata per caricare la lista delle proposte quando la pagina si carica La funzione $(document).ready(function()) in jQuery viene utilizzata per assicurarsi che il codice JavaScript all'interno della funzione venga eseguito solo dopo che il documento HTML è stato completamente caricato e il DOM è pronto per essere manipolato.
 $(document).ready(function() {
 	loadProposalList();
 	$('#closeBannerButton').hide()
@@ -59,7 +59,7 @@ $(document).ready(function() {
 	                window.location.href = "userNotLoggedIndex.jsp";
 	            }
 	        });
-	    }, 9000); // Timeout di 15 minuti (uguale per la sessione)
+	    }, 900000); // Timeout di 15 minuti (uguale per la sessione)
 	}
 
     // Eventi che indicano attività dell'utente
@@ -287,8 +287,7 @@ function closeBanner() {
 		<div id="form-container">
 			<table>
 				<tr>
-					<td class="loading-proposal"><b>Carica proposta
-							progettuale<b></td>
+					<td class="loading-proposal"><b>Carica proposta progettuale</b></td>
 					<td><input id="uploadProposalFile" type="file" name="proposal"
 						autocomplete="off"></td>
 				</tr>

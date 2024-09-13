@@ -1,7 +1,0 @@
-package application.util;
-
-import javax.crypto.Cipher;
-
-public class StringEx extends Cipher{
-
-}
