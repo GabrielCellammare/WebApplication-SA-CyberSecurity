@@ -14,9 +14,9 @@ import model.Dao.db.DatabaseQuery;
 
 @Immutable
 public final class Proposal {
-	private String email;
-	private String fileName;
-	private String htmlContent;
+	private final String email;
+	private final String fileName;
+	private final String htmlContent;
 
 	public Proposal(String email, String fileName, String htmlContent) {
 		this.email = email;

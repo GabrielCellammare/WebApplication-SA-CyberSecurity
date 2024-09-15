@@ -22,7 +22,7 @@ public final class TakeUserIdDAO {
 				psIdSelect.setString(1, email);
 				try(ResultSet rsId= psIdSelect.executeQuery()){ 
 					if (rsId.next()) {
-						System.out.println("\nID = " + rsId.getInt("id"));
+						System.out.println("\nID utente = " + rsId.getInt("id"));
 						return rsId.getInt("id"); 
 					}else {
 						DisplayMessage.showPanel("Errore nell'individuazione dell'ID nel DB. Riprovare con una mail corretta!");

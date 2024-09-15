@@ -54,7 +54,7 @@ public final class LoginServlet extends HttpServlet {
 		if(!EmailChecker.isValidEmail(email)) {
 			email = null;
 			response.sendRedirect("userNotLoggedIndex.jsp");  // Reindirizzamento in caso di email non valida, sanificazione dell'input
-			DisplayMessage.showPanel("Caratteri non validi!");
+			DisplayMessage.showPanel("Caratteri email non validi!");
 			return;
 		}
 		

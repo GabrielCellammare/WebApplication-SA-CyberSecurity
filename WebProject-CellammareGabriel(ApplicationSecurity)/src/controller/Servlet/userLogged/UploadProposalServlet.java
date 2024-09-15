@@ -73,7 +73,7 @@ public final class UploadProposalServlet extends HttpServlet {
 
 		boolean boolSecureCsfr=false;
 
-		System.out.println(email);
+		System.out.println("Email individuata durante il caricamento della propsota: " + email);
 		System.out.println("Dentro il filtro POST 1");
 
 		HttpSession session = request.getSession(false);
@@ -87,7 +87,7 @@ public final class UploadProposalServlet extends HttpServlet {
 		String method = request.getMethod();
 		System.out.println("Metodo: " + method);
 		System.out.println("csrfToken Richiesta: " + request.getParameter("csrfToken"));
-		System.out.println("csrfToken Richiesta: " + (String) session.getAttribute("csrfToken"));
+		System.out.println("csrfToken Sessione: " + (String) session.getAttribute("csrfToken"));
 		UserLogged userlogged = (UserLogged) session.getAttribute("userLogged");
 
 		// Controllo solo le richieste POST, PUT e DELETE per CSRF
@@ -103,9 +103,9 @@ public final class UploadProposalServlet extends HttpServlet {
 			}
 
 
-			System.out.println(csrfToken.length);
-			System.out.println(sessionCsrfToken.length);
-			System.out.println(ConvertingType.areCharArraysEqual(sessionCsrfToken,csrfToken));
+			System.out.println("Lunghezza token CSRF richiesta" + csrfToken.length);
+			System.out.println("Lunghezza token CSRF sessione" + sessionCsrfToken.length);
+			System.out.println("I token sono uguali: " + ConvertingType.areCharArraysEqual(sessionCsrfToken,csrfToken));
 			java.util.Arrays.fill(csrfToken, '\0');
 			java.util.Arrays.fill(sessionCsrfToken, '\0');
 

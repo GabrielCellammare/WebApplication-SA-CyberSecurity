@@ -45,7 +45,7 @@ public final class UserLoggedFilter implements Filter {
 		// Stampa di debug per la sessione e l'email
 		if (session != null) {
 			System.out.println("isLOGGEDINProtected: " + isLoggedInProtected);
-			System.out.println("EmailProtected: " + session.getAttribute("email"));
+			System.out.println("Email sessione: " + session.getAttribute("email"));
 		}
 
 		// Se l'utente non è loggato, reindirizza alla pagina di login

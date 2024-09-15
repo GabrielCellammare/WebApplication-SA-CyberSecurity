@@ -34,7 +34,7 @@ public final class ProposalChecker {
 		
 		ProposalChecker.checksumControl(request, response, session, checksumOriginal, lastChecksum);
 		
-		System.out.println("Checksum 2: " + lastChecksum.toString());
+		System.out.println("Checksum proposta: " + lastChecksum.toString());
 		
 
 		PasswordManager.clearBytes(lastChecksum);
@@ -44,7 +44,7 @@ public final class ProposalChecker {
 			// Ottieni il nome del file
 			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
-			System.out.println("fileName: " + fileName);
+			System.out.println("Nome del file proposta: " + fileName);
 			// Controlla l'estensione del file
 			String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
 			if ("txt".equals(fileExtension)) {
@@ -83,7 +83,7 @@ public final class ProposalChecker {
 			
 			ProposalChecker.checksumControl(request, response, session, checksumOriginal, lastChecksum);
 
-			System.out.println("Checksum 3: " + lastChecksum.toString());
+			System.out.println("Checksum Proposta: " + lastChecksum.toString());
 			PasswordManager.clearBytes(lastChecksum);
 			
 			
@@ -109,7 +109,7 @@ public final class ProposalChecker {
 	                String cleanedHtml = document.toString();
 	                
 	                checksumOriginal = Encryption.calculateChecksumFile(ConvertingType.stringToByteArray(cleanedHtml));
-	                System.out.println("Checksum 4: " + checksumOriginal.toString());
+	                System.out.println("Checksum Proposta: " + checksumOriginal.toString());
 	                return cleanedHtml;
 	            }
 	        } else {

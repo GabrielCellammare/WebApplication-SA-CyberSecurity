@@ -50,7 +50,7 @@ public final class LoginFilter implements Filter {
 		// Recupera la sessione corrente, se esiste
 		HttpSession session = httpRequest.getSession(false);
 		boolean isLoggedIn = (session != null && session.getAttribute("email") != null);
-		System.out.println("Sessione: "+ httpRequest.getSession(false));
+		System.out.println("Sessione: "+ httpRequest.getSession(false).toString());
 		
 		// Stampa di debug per la sessione e l'email
 		if (session != null) {
@@ -103,7 +103,7 @@ public final class LoginFilter implements Filter {
 								session.setAttribute("login", true);
 								session.setAttribute("csrfToken", Base64.getEncoder().encodeToString(userlogged.getCsrfToken()));
 
-								System.out.println("Token individuato la seconda volta: " + Base64.getEncoder().encodeToString(userlogged.getCsrfToken()));
+								System.out.println("Token CSRF individuato la seconda volta: " + Base64.getEncoder().encodeToString(userlogged.getCsrfToken()));
 								session.setAttribute("userLogged", userlogged);
 								session.setMaxInactiveInterval(15*60);
 								PasswordManager.clearBytes(cookieByte);

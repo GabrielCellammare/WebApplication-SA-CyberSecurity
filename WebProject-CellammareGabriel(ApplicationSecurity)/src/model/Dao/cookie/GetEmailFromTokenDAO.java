@@ -27,21 +27,21 @@ public final class GetEmailFromTokenDAO {
 				try(ResultSet rsId = ps_cookieID.executeQuery()){ 
 					if (rsId.next()) {
 						id_user=rsId.getInt("id_user");
-						System.out.println("\nID = " + rsId.getInt("id_user"));
+						System.out.println("\nID  utente = " + rsId.getInt("id_user"));
 						try(PreparedStatement ps_cookieEmail=con_read.prepareStatement(DatabaseQuery.takeUserEmail())){
 							ps_cookieEmail.setInt(1,id_user);
 							try(ResultSet rsEmail=ps_cookieEmail.executeQuery()){
 								if(rsEmail.next()) {
 									return rsEmail.getString("email");
 								}else {
-									DisplayMessage.showPanel("Cookie1: Errore nell'individuazione dell'email nel DB. Riprovare!");
+									DisplayMessage.showPanel("Errore Cookie: Errore nell'individuazione dell'email nel DB. Riprovare!");
 									return null;
 								}
 							}
 						}
 
 					}else {
-						DisplayMessage.showPanel("Cookie2: Errore nell'individuazione dell'ID nel DB. Riprovare!");
+						DisplayMessage.showPanel("Errore Cookie: Errore nell'individuazione dell'ID nel DB. Nessun ID trovato. Riprovare!");
 						return null;
 					}
 				}

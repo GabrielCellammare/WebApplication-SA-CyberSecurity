@@ -120,9 +120,9 @@ public final class Encryption {
 		digest.update(fileContent);
 
 		// Calcola l'hash
-		String string = new String(digest.digest(), StandardCharsets.UTF_8);
+		String checksum = new String(digest.digest(), StandardCharsets.UTF_8);
 
-		System.out.println(string); // Output: Hello
+		System.out.println("Checksum calcolato: " + checksum); // Output: Hello
 		return digest.digest();
 
 

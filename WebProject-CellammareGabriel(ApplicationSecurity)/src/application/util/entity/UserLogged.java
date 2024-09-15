@@ -15,10 +15,10 @@ import application.util.customMessage.DisplayMessage;
 @NotThreadSafe
 public final class UserLogged {
 
-	private byte[] byte_encryptedEmail;
-	private byte[] timestamp;
+	private final byte[] byte_encryptedEmail;
+	private final byte[] timestamp;
 	private byte[] csrfToken; //Base64 byte encoding
-	private byte[] cookieToken; //Base64 byte encoding
+	private final byte[] cookieToken; //Base64 byte encoding
 
 
 	public UserLogged(byte[] byte_encryptedEmail){
@@ -93,26 +93,25 @@ public final class UserLogged {
 	}
 
 	public byte[] getByte_encryptedEmail() {
-		return byte_encryptedEmail;
+		return this.byte_encryptedEmail;
 	}
 
 	public byte[] getTimestamp() {
-		return timestamp;
+		return this.timestamp;
 	}
 
 	public byte[] getCsrfToken() {
-		return csrfToken;
+		return this.csrfToken;
 	}
 
 	public byte[] getCookieToken() {
-		return cookieToken;
+		return this.cookieToken;
 	}
 
 	public void setCsrfToken() {
 		this.csrfToken=this.generateFinalToken(this.generateCsrfToken());
 		DisplayMessage.showPanel("Nuovo csrf token generato");
 	}
- 
 	
 
 }
