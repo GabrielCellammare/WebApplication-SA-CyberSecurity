@@ -20,6 +20,14 @@ import application.util.customMessage.DisplayMessage;
 public final class ImageProfileFileChecker {
 
 
+	/**
+	 * Metodo che controlla che il checksum sia corretto (Vulnerabilità TOC-TOU), verifica la dimensione dell'immagine del profilo
+	 * e che l'estensione del file sia quella dichiarata
+	 * @param filePart
+	 * @param checksumOriginal
+	 * @return
+	 * @throws IOException
+	 */
 	public static boolean checkImageFile(Part filePart, byte[] checksumOriginal) throws IOException{
 		final long maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
 		Tika tika = new Tika();
@@ -91,8 +99,13 @@ public final class ImageProfileFileChecker {
 	}
 
 
-
-
+	
+	/**
+	 * Metodo privato che si occupa della stampa di tutti i metadati del file correlato
+	 * @param filePart
+	 * @param tika
+	 * @throws Exception
+	 */
 	private static void printMetadata(Part filePart, Tika tika) throws Exception {
 
 		try(InputStream inputstream = filePart.getInputStream()){

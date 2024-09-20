@@ -26,6 +26,11 @@ import model.Dao.cookie.IsTokenValidDAO;
 import model.Dao.cookie.TokenExistsDAO;
 
 @Immutable
+/**
+ * Filtro che intercetta tutte le richiesta alla pagina userNotLoggedLogin.jsp
+ * @author gabri
+ *
+ */
 public final class LoginFilter implements Filter {
 
 	@Override
@@ -33,6 +38,9 @@ public final class LoginFilter implements Filter {
 	}
 
 	@Override
+	/**
+	 * Verifica che la sessione o i cookie siano presenti impostando un flag, di conseguenza effettua gli indirizzamenti opportuni
+	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
@@ -50,7 +58,7 @@ public final class LoginFilter implements Filter {
 		// Recupera la sessione corrente, se esiste
 		HttpSession session = httpRequest.getSession(false);
 		boolean isLoggedIn = (session != null && session.getAttribute("email") != null);
-		System.out.println("Sessione: "+ httpRequest.getSession(false).toString());
+		//System.out.println("Sessione: "+ httpRequest.getSession(false).toString());
 		
 		// Stampa di debug per la sessione e l'email
 		if (session != null) {

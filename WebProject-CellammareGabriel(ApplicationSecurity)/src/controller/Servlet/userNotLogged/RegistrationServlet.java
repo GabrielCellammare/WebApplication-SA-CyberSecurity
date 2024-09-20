@@ -24,6 +24,12 @@ import model.Dao.registration.RegistrationDAO;
 @MultipartConfig
 @ThreadSafe
 @WebServlet("/RegistrationServlet")
+/**
+ * Servlet che si occupa della registrazione dell'utente verificando che i parametri siano corretti e che non esista un altro utente
+ * registrato con la stessa email
+ * @author gabri
+ *
+ */
 public final class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

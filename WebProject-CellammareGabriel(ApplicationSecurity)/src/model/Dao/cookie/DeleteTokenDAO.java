@@ -13,6 +13,11 @@ import model.Dao.db.DatabaseQuery;
 @Immutable
 public final class DeleteTokenDAO {
 
+	/**
+	 * Metodo che elimina il cookie dal Database se scaduto
+	 * @param cookieByte
+	 * @return
+	 */
 	public static boolean deleteToken(byte[] cookieByte){
 		boolean status = false;
 

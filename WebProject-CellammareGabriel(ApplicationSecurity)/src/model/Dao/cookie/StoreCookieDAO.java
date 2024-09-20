@@ -17,6 +17,12 @@ import model.Dao.db.DatabaseQuery;
 @Immutable
 public final class StoreCookieDAO {
 
+	/**
+	 * Metodo che si occupa dell'archiviazione dei cookie all'interno del Database
+	 * @param byte_encryptedEmail
+	 * @param token
+	 * @return
+	 */
 	public static boolean storeCookie(byte[] byte_encryptedEmail, byte[] token){
 
 		boolean status = false;

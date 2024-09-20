@@ -33,6 +33,11 @@ import model.Dao.proposal.ProposalDAO;
 @MultipartConfig
 @ThreadSafe
 @WebServlet("/UploadProposalServlet")
+/**
+ * Servlet che si occupa della gestione del caricamento e della visualizzazione delle proposte
+ * @author gabri
+ *
+ */
 public final class UploadProposalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -46,6 +51,7 @@ public final class UploadProposalServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Restituisce in formato json tutte quante le proposte presenti in una lista restituita dal metodo statico della classe Proposal
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -63,6 +69,7 @@ public final class UploadProposalServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Carica le proposte nel Database prima di aver verificato la sessione e il Token CSRF
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

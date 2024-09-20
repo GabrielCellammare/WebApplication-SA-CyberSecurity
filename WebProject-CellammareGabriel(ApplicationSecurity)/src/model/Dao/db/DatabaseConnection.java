@@ -11,6 +11,12 @@ import javax.annotation.concurrent.Immutable;
 
 import application.util.customMessage.DisplayMessage;
 @Immutable
+/**
+ * Classe che istanzia le informazioni necessarie per eseguire le query, tra cui username e password degli utenti d'interesse
+ * 
+ * @author gabri
+ *
+ */
 public final class DatabaseConnection {
 
 	private final static String URL;

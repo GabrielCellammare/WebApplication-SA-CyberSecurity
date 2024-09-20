@@ -13,6 +13,12 @@ import model.Dao.db.DatabaseQuery;
 @Immutable
 final class TakeUserSaltDAO {
 
+	/**
+	 * Metodo che in base all'id fornito come input, restituisce il sale di riferimento
+	 * @param con_read
+	 * @param id_user
+	 * @return
+	 */
 	static Blob takeUserSalt(Connection con_read, int id_user) {
 
 		try {

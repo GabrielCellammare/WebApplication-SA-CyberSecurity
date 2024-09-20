@@ -12,7 +12,9 @@ import model.Dao.db.DatabaseQuery;
 @Immutable
 public final class CleanExpiredTokenDAO {
 	
-	//Cookie orfani
+	/*
+	 * Metodo che si occupa di eliminare i cookie scaduti richiamato dalla routine giornaliera
+	 */
 	public static void cleanupExpiredToken(){
 
 		try {

@@ -19,6 +19,19 @@ import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 @Immutable
 public final class ProposalDAO {
+	/**
+	 * Metodo che si occupa di caricare la proposta nel Database verificando accuratamente che non sia avvenuto uno scambio di file (TOCTOU), 
+	 * utilizzando l'email e il nome del file
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param email
+	 * @param filename
+	 * @param fileContent
+	 * @param checksumOriginal
+	 * @return
+	 * @throws IOException
+	 */
 	public static boolean uploadFile(HttpServletRequest request, HttpServletResponse response, HttpSession session,String email, String filename,byte[] fileContent,byte[] checksumOriginal)
 			throws IOException {
 		try {

@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 @ThreadSafe
 public final class DisplayMessage{
 
+	//Metodo che prende in input il messaggio che verrà visualizzato in un Panel con una Label
 	public static void showPanel(String message) {
 	    SwingUtilities.invokeLater(() -> {
 	        // Crea una finestra e aggiungi il pannello

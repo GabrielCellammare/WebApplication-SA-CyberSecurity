@@ -13,7 +13,12 @@ import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 @Immutable
 public final class TokenExistsDAO {
-
+	
+	/**
+	 * Metodo che verifica l'esistenza del cookie all'interno del database
+	 * @param cookieByte
+	 * @return
+	 */
 	public static boolean tokenExists(byte[] cookieByte){
 		boolean status = false;
 

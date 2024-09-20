@@ -14,6 +14,12 @@ import model.Dao.db.DatabaseQuery;
 @Immutable
 public final class TakeUserIdDAO {
 
+	/**
+	 * Metodo che restituisce l'id univoco associato ad ogni utente attraverso la mail
+	 * @param con_read
+	 * @param email
+	 * @return
+	 */
 	public static int takeUserId(Connection con_read, String email) {
 
 		try {

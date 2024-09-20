@@ -27,6 +27,17 @@ import model.Dao.cookie.DeleteTokenDAO;
 @ThreadSafe
 public final class ProposalChecker {
 
+	/**
+	 * Metodo che verifica il checksum per la vulnerabilità TOC-TOU, ne verifica la dimensione e l'estensione
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param filePart
+	 * @param context
+	 * @param checksumOriginal
+	 * @return
+	 * @throws IOException
+	 */
 	public static boolean checkProposalFile(HttpServletRequest request, HttpServletResponse response, HttpSession session,Part filePart, ServletContext context, byte[] checksumOriginal) throws IOException {
 		
 		
@@ -66,6 +77,16 @@ public final class ProposalChecker {
 		return false;
 	}
 	
+	
+	/**
+	 * Metodo che processa il file verificando la dimensione, estensione e rimuovendo script malevoli
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param filePart
+	 * @param checksumOriginal
+	 * @return
+	 */
 	public static String processFile(HttpServletRequest request, HttpServletResponse response, HttpSession session,Part filePart,byte[] checksumOriginal) {
 		
 		
@@ -123,12 +144,21 @@ public final class ProposalChecker {
 	    }
 	}
 
-
+	/**
+	 * Restituisce il nome del file a partire dal path
+	 * @param filePath
+	 * @return
+	 */
 	private static String getFileNameFromPath(String filePath) {
 		Path path = Paths.get(filePath);
 		return path.getFileName().toString();
 	}
 
+	/**
+	 * Restituisce il nome del file a partire
+	 * @param part
+	 * @return
+	 */
 	public static String getFileName(Part part) {
 		String contentDisposition = part.getHeader("content-disposition");
 		String[] tokens = contentDisposition.split(";");
@@ -142,7 +172,15 @@ public final class ProposalChecker {
 		return "";
 	}	
 	
-	
+	/**
+	 * Controllo del checksum, se diverso viene effettuato il logout, eliminata la sessione e invalidati i cookie
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @param checksumOriginalFile
+	 * @param lastChecksum
+	 * @throws IOException
+	 */
 	public static void checksumControl(HttpServletRequest request, HttpServletResponse response, HttpSession session,
 			byte[] checksumOriginalFile, byte[] lastChecksum) throws IOException {
 		

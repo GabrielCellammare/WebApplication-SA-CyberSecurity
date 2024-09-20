@@ -14,6 +14,9 @@ import model.Dao.db.DatabaseQuery;
 
 @Immutable
 public final class Proposal {
+	/**
+	 * Classe che rappresenta una propsota progettual con email, nome del file e contenuto che verrà renderizzato in html
+	 */
 	private final String email;
 	private final String fileName;
 	private final String htmlContent;
@@ -24,6 +27,10 @@ public final class Proposal {
 		this.htmlContent = htmlContent;
 	}
 
+	/**
+	 * Metodo per ottenere tutte quante le proposte presenti nel dB
+	 * @return
+	 */
 	public static List<Proposal> getProposals() {
 		List<Proposal> proposals = new ArrayList<>();
 

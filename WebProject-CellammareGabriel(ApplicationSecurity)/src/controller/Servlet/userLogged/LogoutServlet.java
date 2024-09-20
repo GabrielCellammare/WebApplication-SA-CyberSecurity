@@ -22,6 +22,11 @@ import model.Dao.cookie.DeleteTokenDAO;
  */
 @ThreadSafe
 @WebServlet("/LogoutServlet")
+/**
+ * Servlet che si occupa del logout dell'utente
+ * @author gabri
+ *
+ */
 public final class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -35,6 +40,7 @@ public final class LogoutServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Richiesta get per effettuare il logout manuale eliminando cookie e invalidando la sessione
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -72,6 +78,9 @@ public final class LogoutServlet extends HttpServlet {
 		
 	}
 	
+	/**
+	 * Richiesta post invalidando la sessione
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		

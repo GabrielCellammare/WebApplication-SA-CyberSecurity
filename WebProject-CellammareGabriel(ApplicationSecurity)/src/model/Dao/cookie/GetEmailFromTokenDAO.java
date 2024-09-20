@@ -14,6 +14,11 @@ import model.Dao.db.DatabaseQuery;
 @Immutable
 public final class GetEmailFromTokenDAO {
 	
+	/**
+	 * Metodo che tramite l'email recupera l'email a partire dal cookie di riferimento
+	 * @param cookieByte
+	 * @return
+	 */
 	public static String getEmailFromToken(byte[] cookieByte){
 		int id_user=0;
 

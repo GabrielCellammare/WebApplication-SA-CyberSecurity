@@ -11,6 +11,13 @@ import application.util.customMessage.DisplayMessage;
 import model.Dao.db.DatabaseQuery;
 @Immutable
 final class UserAlreadyExistDAO {
+	/**
+	 * Metodo che controlla l'esistenza di un utente con la stessa mail
+	 * @param con_read
+	 * @param email
+	 * @return
+	 * @throws SQLException
+	 */
 	static int userAlreadyExists(Connection con_read, String email) throws SQLException {
 
 		try {

@@ -14,6 +14,13 @@ import application.util.customMessage.DisplayMessage;
 
 @NotThreadSafe
 public final class UserLogged {
+	
+	/**
+	 * Classe che rappresenta l'utente loggato, che viene inizializzato con l'email crittografata
+	 * Timestamp del momento in cui viene effettuato il login
+	 * Token csrf per evitare attacchi CSRF
+	 * Cookie token per effettuare registrazione
+	 */
 
 	private final byte[] byte_encryptedEmail;
 	private final byte[] timestamp;
@@ -39,6 +46,10 @@ public final class UserLogged {
 		this.cookieToken=cookieToken;
 	}
 
+	/**
+	 * Funzione privata per generazione csrf token
+	 * @return
+	 */
 	private byte[] generateCsrfToken() {
 
 		final int CSRF_TOKEN_LENGTH = 32; // 32 bytes * 8 = 256 bits
@@ -58,6 +69,10 @@ public final class UserLogged {
 
 	}
 
+	/**
+	 * Funzione per generazione del cookie token
+	 * @return
+	 */
 	private byte[] generateSecureCookieToken() {
 		byte[] concatenatedData = new byte[this.byte_encryptedEmail.length + this.timestamp.length];
 
@@ -79,13 +94,22 @@ public final class UserLogged {
 
 	}
 	
-	
+	/**
+	 * Funzione per la generazione del token finale, concatenato con la mail cifrata
+	 * @param token
+	 * @return
+	 */
 	private byte[] generateFinalToken(byte[] token) {
 		
 		return Base64.getEncoder().encode(PasswordManager.concatenateAndHash(this.byte_encryptedEmail, token));
 
 	}
 	
+	/**
+	 * Calcolo del timestamp, risultato dell'hash con il timestamp e byte randomici
+	 * @param timestamp
+	 * @return
+	 */
 	private byte[] calculateTimeStamp(byte[] timestamp) {
 		
 		return PasswordManager.concatenateAndHash(timestamp, PasswordManager.generateRandomBytes(timestamp.length));

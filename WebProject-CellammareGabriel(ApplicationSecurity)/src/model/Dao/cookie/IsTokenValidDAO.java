@@ -14,6 +14,11 @@ import model.Dao.db.DatabaseQuery;
 @Immutable
 public final class IsTokenValidDAO {
 	
+	/**
+	 * Metodo che controlla la validità del token
+	 * @param cookieByte
+	 * @return
+	 */
 	public static boolean isTokenValid(byte[] cookieByte){
 		boolean status = false;
 

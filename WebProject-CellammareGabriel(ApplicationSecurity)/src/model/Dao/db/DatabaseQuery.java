@@ -6,6 +6,11 @@ import java.util.Properties;
 
 import javax.annotation.concurrent.Immutable;
 @Immutable
+/**
+ * Classe che si occupa di leggere dal file config.ini tutte le ps di riferimento
+ * @author gabri
+ *
+ */
 public final class DatabaseQuery {
 
     private static Properties appProperties;

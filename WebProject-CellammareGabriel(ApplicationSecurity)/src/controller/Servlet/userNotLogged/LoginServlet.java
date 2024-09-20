@@ -23,7 +23,7 @@ import model.Dao.login.LoginDAO;
 
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet che gestisce il login
  */
 @ThreadSafe
 @WebServlet("/LoginServlet")
@@ -42,6 +42,7 @@ public final class LoginServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Verifica che email e password siano corrette e istanzia se necessario i cookie 
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final int COOKIE_MAX_AGE = 60 * 60 * 24; // 1 giorno

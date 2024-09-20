@@ -15,6 +15,13 @@ import model.Dao.db.DatabaseConnection;
 import model.Dao.db.DatabaseQuery;
 @Immutable
 public final class LoginDAO {
+	/**
+	 * Metodo che si occupa di verificare correttamente le credenziali dopo aver individuato il salt corretto, averlo
+	 * concatenato e hashato
+	 * @param email
+	 * @param password
+	 * @return
+	 */
 	public static boolean isUserValid(String email, byte[] password) {
 
 		boolean status = false;

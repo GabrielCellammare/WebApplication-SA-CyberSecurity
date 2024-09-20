@@ -15,6 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @ThreadSafe
+/**
+ * Filtro che intercetta tutte le richiesta alla pagina userLoggedIndex.jsp
+ * @author gabri
+ *
+ */
 public final class UserLoggedFilter implements Filter {
 
 	@Override
@@ -23,6 +28,9 @@ public final class UserLoggedFilter implements Filter {
 	}
 
 	@Override
+	/**
+	 * Verifica che ci sia una sessione attiva e che il parametro email esista per accedere alla pagina protetta
+	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		

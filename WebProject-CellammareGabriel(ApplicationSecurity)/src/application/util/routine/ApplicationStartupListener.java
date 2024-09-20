@@ -11,6 +11,11 @@ import model.Dao.cookie.CleanExpiredTokenDAO;
 
 @ThreadSafe
 @WebListener // Annotazione che registra il listener
+/**
+ * Listener che effettua la pulizia dei cookie orfani ogni 24 ore (Cookie scaduti)
+ * @author gabri
+ *
+ */
 public final class ApplicationStartupListener implements ServletContextListener {
 
     // Esecutore per il task di pulizia

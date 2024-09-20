@@ -17,7 +17,17 @@ import model.Dao.db.DatabaseQuery;
 @Immutable
 public final class RegistrationDAO {
 
-
+	/**
+	 * Registrazione nel Database dell'utente verificando che non ci sia un altro utente registrato con la stessa email e che l'immagine profilo 
+	 * non sia stata sostituita (TOC-TOU)
+	 * @param email
+	 * @param password
+	 * @param salt
+	 * @param filePart
+	 * @param checksumOriginal
+	 * @return
+	 * @throws IOException
+	 */
 	public static boolean userRegistration(String email, byte[] password, byte[] salt, Part filePart, byte[] checksumOriginal)
 			throws IOException {
 

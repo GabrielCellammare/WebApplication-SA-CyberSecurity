@@ -12,7 +12,7 @@ import application.util.cryptography.PasswordManager;
 @Immutable
 public final class ReadByteSecure{
 
-	//lettura di byte da uno stream di input per l'immutabilità
+	//lettura di byte da uno stream di input per l'immutabilità dovuta
 	public static byte[] readAllBytesSecurely(InputStream inputStream) throws IOException {	
 	    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 	    byte[] data = new byte[1024];
